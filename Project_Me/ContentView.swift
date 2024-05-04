@@ -8,14 +8,16 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var viewModel = MenuViewModel()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        Group {
+            if viewModel.userSession != nil {
+                MainMenuView()
+            } else {
+                SignInView()
+            }
+        }// End of Navigation Stack
     }
 }
 
