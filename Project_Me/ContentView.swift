@@ -18,6 +18,7 @@ struct ContentView: View {
                 SignInView()
             }
         }// End of Navigation Stack
+        .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
     }
 }
 
