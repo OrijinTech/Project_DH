@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		043097312BE6F0BD0016FCD8 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043097302BE6F0BD0016FCD8 /* CardView.swift */; };
+		043097332BE6FBD60016FCD8 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043097322BE6FBD60016FCD8 /* LibraryView.swift */; };
+		043097352BE6FE430016FCD8 /* NameCardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043097342BE6FE430016FCD8 /* NameCardListView.swift */; };
+		043097382BE7018C0016FCD8 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043097372BE7018C0016FCD8 /* MockData.swift */; };
 		541D352C2BE3D7E600AF38AF /* AuthServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D35202BE3D7E600AF38AF /* AuthServices.swift */; };
 		541D352D2BE3D7E600AF38AF /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D35212BE3D7E600AF38AF /* LoginViewModel.swift */; };
 		541D352E2BE3D7E600AF38AF /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D35222BE3D7E600AF38AF /* RegisterViewModel.swift */; };
@@ -35,6 +39,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		043097302BE6F0BD0016FCD8 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		043097322BE6FBD60016FCD8 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
+		043097342BE6FE430016FCD8 /* NameCardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameCardListView.swift; sourceTree = "<group>"; };
+		043097372BE7018C0016FCD8 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		541D35202BE3D7E600AF38AF /* AuthServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthServices.swift; sourceTree = "<group>"; };
 		541D35212BE3D7E600AF38AF /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		541D35222BE3D7E600AF38AF /* RegisterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
@@ -74,6 +82,109 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		043097212BE6EB910016FCD8 /* NameCardRepo */ = {
+			isa = PBXGroup;
+			children = (
+				043097252BE6EC2D0016FCD8 /* View */,
+				043097262BE6EC7F0016FCD8 /* ViewModel */,
+			);
+			path = NameCardRepo;
+			sourceTree = "<group>";
+		};
+		043097222BE6EBD60016FCD8 /* CardTemplateLibrary */ = {
+			isa = PBXGroup;
+			children = (
+				043097272BE6EC960016FCD8 /* View */,
+				043097282BE6ECA00016FCD8 /* ViewModel */,
+			);
+			path = CardTemplateLibrary;
+			sourceTree = "<group>";
+		};
+		043097232BE6EBE60016FCD8 /* UserProfile */ = {
+			isa = PBXGroup;
+			children = (
+				0430972C2BE6ECE00016FCD8 /* View */,
+				0430972B2BE6ECDB0016FCD8 /* ViewModel */,
+			);
+			path = UserProfile;
+			sourceTree = "<group>";
+		};
+		043097242BE6EBF10016FCD8 /* Community */ = {
+			isa = PBXGroup;
+			children = (
+				0430972A2BE6ECD80016FCD8 /* View */,
+				043097292BE6ECD20016FCD8 /* ViewModel */,
+			);
+			path = Community;
+			sourceTree = "<group>";
+		};
+		043097252BE6EC2D0016FCD8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				043097342BE6FE430016FCD8 /* NameCardListView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		043097262BE6EC7F0016FCD8 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		043097272BE6EC960016FCD8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				043097302BE6F0BD0016FCD8 /* CardView.swift */,
+				043097322BE6FBD60016FCD8 /* LibraryView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		043097282BE6ECA00016FCD8 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		043097292BE6ECD20016FCD8 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		0430972A2BE6ECD80016FCD8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0430972B2BE6ECDB0016FCD8 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		0430972C2BE6ECE00016FCD8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		043097362BE701430016FCD8 /* MockData */ = {
+			isa = PBXGroup;
+			children = (
+				043097372BE7018C0016FCD8 /* MockData.swift */,
+			);
+			path = MockData;
+			sourceTree = "<group>";
+		};
 		541D351F2BE3D79100AF38AF /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +226,7 @@
 		547999742BE3DE63007A7CCE /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				043097362BE701430016FCD8 /* MockData */,
 				5479997B2BE3DF7D007A7CCE /* FirebaseConstants.swift */,
 				547999752BE3DE70007A7CCE /* AlertContent.swift */,
 				547999772BE3DE9E007A7CCE /* StringExtension.swift */,
@@ -161,8 +273,12 @@
 			children = (
 				54B449982BDD407B00E35D49 /* Project_MeApp.swift */,
 				54B4499A2BDD407B00E35D49 /* ContentView.swift */,
-				541D351F2BE3D79100AF38AF /* Authentication */,
 				547999892BE41DA2007A7CCE /* MainMenu */,
+				541D351F2BE3D79100AF38AF /* Authentication */,
+				043097212BE6EB910016FCD8 /* NameCardRepo */,
+				043097222BE6EBD60016FCD8 /* CardTemplateLibrary */,
+				043097242BE6EBF10016FCD8 /* Community */,
+				043097232BE6EBE60016FCD8 /* UserProfile */,
 				547999702BE3DE05007A7CCE /* User */,
 				5479997D2BE3E019007A7CCE /* ViewComponents */,
 				547999742BE3DE63007A7CCE /* Utilities */,
@@ -266,6 +382,7 @@
 				541D352D2BE3D7E600AF38AF /* LoginViewModel.swift in Sources */,
 				541D352E2BE3D7E600AF38AF /* RegisterViewModel.swift in Sources */,
 				547999732BE3DE05007A7CCE /* UserServices.swift in Sources */,
+				043097352BE6FE430016FCD8 /* NameCardListView.swift in Sources */,
 				5479997C2BE3DF7D007A7CCE /* FirebaseConstants.swift in Sources */,
 				547999812BE3E15B007A7CCE /* CircularProfileImageView.swift in Sources */,
 				541D35322BE3D7E600AF38AF /* RegistrationView.swift in Sources */,
@@ -273,12 +390,15 @@
 				547999882BE41D7F007A7CCE /* MainMenuView.swift in Sources */,
 				547999712BE3DE05007A7CCE /* User.swift in Sources */,
 				547999722BE3DE05007A7CCE /* UserCell.swift in Sources */,
+				043097312BE6F0BD0016FCD8 /* CardView.swift in Sources */,
 				541D352C2BE3D7E600AF38AF /* AuthServices.swift in Sources */,
 				547999782BE3DE9E007A7CCE /* StringExtension.swift in Sources */,
 				547999762BE3DE70007A7CCE /* AlertContent.swift in Sources */,
 				54B4499B2BDD407B00E35D49 /* ContentView.swift in Sources */,
 				5479997F2BE3E04F007A7CCE /* dividerOr.swift in Sources */,
+				043097332BE6FBD60016FCD8 /* LibraryView.swift in Sources */,
 				54B449992BDD407B00E35D49 /* Project_MeApp.swift in Sources */,
+				043097382BE7018C0016FCD8 /* MockData.swift in Sources */,
 				547999862BE41D65007A7CCE /* MenuViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -413,7 +533,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Project_Me/Preview Content\"";
-				DEVELOPMENT_TEAM = NFKF62QWCH;
+				DEVELOPMENT_TEAM = RTM6S3LTHA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = ME;
@@ -448,7 +568,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Project_Me/Preview Content\"";
-				DEVELOPMENT_TEAM = NFKF62QWCH;
+				DEVELOPMENT_TEAM = RTM6S3LTHA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = ME;
