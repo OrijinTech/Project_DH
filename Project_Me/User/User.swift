@@ -17,6 +17,7 @@ struct User: Codable, Identifiable, Hashable {
     var firstName: String?
     var lastName: String?
     var email: String
+    var tel: String?
     var userName: String
     var profileImageUrl: String?
     var id: String { // Use this to work with instead of the uid
