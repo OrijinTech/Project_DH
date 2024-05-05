@@ -7,6 +7,8 @@
 
 import SwiftUI
 import AuthenticationServices
+import GoogleSignIn
+import GoogleSignInSwift
 
 struct SignInView: View {
     @StateObject var authViewModel = LoginViewModel()
@@ -106,7 +108,20 @@ struct SignInView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .padding(.horizontal, 50)
                 .padding(.top, 8)
-                .padding(.bottom, 100)
+                
+                GoogleSignInButton(viewModel: GoogleSignInButtonViewModel(scheme: .dark, style: .wide, state: .normal)) {
+                    Task {
+                        do {
+                            try await authViewModel.signInGoogle()
+                        } catch {
+                            print(error)
+                        }
+                    }
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+                .padding(.horizontal, 50)
+                .padding(.vertical, 10)
+                
     
                 
                 Divider()

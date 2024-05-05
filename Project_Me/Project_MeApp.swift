@@ -7,14 +7,13 @@
 
 import SwiftUI
 import Firebase
+import GoogleSignIn
 
 @main
 struct Project_MeApp: App {
-    
     init() {
         FirebaseApp.configure()
     }
-    
     
     var body: some Scene {
         WindowGroup {
@@ -23,3 +22,4 @@ struct Project_MeApp: App {
         }
     }
 }
+
