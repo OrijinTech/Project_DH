@@ -10,6 +10,8 @@ import FirebaseFirestoreSwift
 import FirebaseFirestore
 import Firebase
 
+// MARK: USER DATA MODEL
+// TODO: MAKE SURE TO EDIT THIS DATA MODEL ACCORDING OUR NEEDS
 struct User: Codable, Identifiable, Hashable {
     @DocumentID var uid: String? // Assign the Document Id on the firestore to the uid variable.
     
@@ -39,7 +41,7 @@ struct User: Codable, Identifiable, Hashable {
     
 }
 
-
+// Mock user
 extension User {
     static let MOCK_USER = User(email: "123@gmail.com", userName: "MockUserName")
     

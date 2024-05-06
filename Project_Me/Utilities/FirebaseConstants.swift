@@ -7,6 +7,10 @@
 
 import Foundation
 
+
+// MARK: This file documents all constants to access the fields on firebase firestore.
+// TODO: This needs to be adjusted according to this project.
+
 struct Collection {
     let user = "user"
     let chats = "chats"

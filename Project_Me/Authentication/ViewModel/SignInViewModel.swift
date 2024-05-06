@@ -9,7 +9,7 @@ import Foundation
 import GoogleSignIn
 import FirebaseAuth
 
-class LoginViewModel: ObservableObject {
+class SignInViewModel: ObservableObject {
     @Published var email = ""
     @Published var password = ""
     
@@ -60,6 +60,7 @@ class LoginViewModel: ObservableObject {
     
 }
 
+// MARK: THIS IS THE DATA MODEL FOR GOOGLE SIGN IN
 struct GoogleSignInModel {
     let idToken: String
     let accessToken: String

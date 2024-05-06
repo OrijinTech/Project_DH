@@ -8,6 +8,8 @@
 
 import SwiftUI
 
+// MARK: Documents all strings for showing alert messages.
+
 struct AlertItem: Identifiable{
     let id = UUID()
     let title: Text

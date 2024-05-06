@@ -22,14 +22,14 @@ class RegisterViewModel: ObservableObject {
 //    @Published var User
     
     
-    
+    // MARK: Creating a new user with Firebase Auth
     func createUser() async throws {
         guard isValidForm else { return }
         try await AuthServices.sharedAuth.createUser(withEmail: email, password: password, username: username)
     }
     
     
-    // Broadcasting the error for account form
+    // MARK: Set the error message for the user input forms.
     var isValidForm: Bool {
         // check if we have all values in the profile forms
         guard !username.isEmpty && !email.isEmpty && !password.isEmpty else {

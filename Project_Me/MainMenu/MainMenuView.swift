@@ -63,33 +63,6 @@ struct MainMenuView: View {
         // system background color automatically adjust the color
         .tint(.primary)
         
-//        TabView {
-//            MyDayView()
-//                .tabItem {
-//                    Image(systemName: "note.text")
-//                    Text("My Day")
-//                }
-//            MyCoachView()
-//                .tabItem {
-//                    Image(systemName: "face.smiling")
-//                    Text("My Coach")
-//                }
-//            MediaInputView()
-//                .tabItem {
-//                    Image(systemName: "plus")
-//                }
-//            CommunityView()
-//                .tabItem {
-//                    Image(systemName: "person.2.fill")
-//                    Text("Community")
-//                }
-//            ProfileView()
-//                .tabItem {
-//                    Image(systemName: "person")
-//                    Text("Me")
-//                }
-//        }
-//        .tint(.brand)
     }
 }
 

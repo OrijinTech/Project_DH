@@ -11,7 +11,7 @@ import GoogleSignIn
 import GoogleSignInSwift
 
 struct SignInView: View {
-    @StateObject var authViewModel = LoginViewModel()
+    @StateObject var authViewModel = SignInViewModel()
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -66,7 +66,7 @@ struct SignInView: View {
                 
                 
                 Button {
-                    
+                    // TODO: Add a function to prompt user for an email if the password has been forgotten
                 } label: {
                     Text("Forgot password?")
                         .font(.footnote)
@@ -77,7 +77,7 @@ struct SignInView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 
-
+                // MARK: SIGN IN WITH EMAIL AND PASSWORD
                 Button {
                     Task { try await authViewModel.login() }
                 }label: {
@@ -92,7 +92,7 @@ struct SignInView: View {
                 
                 dividerOr()
                 
-                
+                // MARK: SIGN IN WITH APPLE
                 SignInWithAppleButton(.signIn,
                              onRequest: { request in
                                  request.requestedScopes = [.fullName, .email]
@@ -109,6 +109,7 @@ struct SignInView: View {
                 .padding(.horizontal, 50)
                 .padding(.top, 8)
                 
+                // MARK: SIGN IN WITH GOOGLE
                 GoogleSignInButton(viewModel: GoogleSignInButtonViewModel(scheme: .dark, style: .wide, state: .normal)) {
                     Task {
                         do {
@@ -121,8 +122,6 @@ struct SignInView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .padding(.horizontal, 50)
                 .padding(.vertical, 10)
-                
-    
                 
                 Divider()
                 
@@ -137,9 +136,6 @@ struct SignInView: View {
                 }
                 .font(.footnote)
                 .padding(.vertical)
-                
-
-                
             }
             
         } // End of Navigation Stack

@@ -9,6 +9,7 @@ import Foundation
 import Firebase
 import FirebaseFirestoreSwift
 
+// MARK: FUNCTIONS WHICH TAKES CARE OF THE AUTHENTICATION NETWORKING TASKS.
 class AuthServices {
     @Published var userSession: FirebaseAuth.User?
     static let sharedAuth = AuthServices()

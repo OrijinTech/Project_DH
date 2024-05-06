@@ -25,6 +25,7 @@ struct RegistrationView: View {
                     .font(.title2)
                     .padding(.bottom, 80)
                 
+                // MARK: User Input Textfields
                 VStack{
                     HStack {
                         Image(systemName: "person")
@@ -67,7 +68,8 @@ struct RegistrationView: View {
                     .padding(.horizontal, 30)
                 }
                 
-                HStack { // ERROR MESSAGE
+                // MARK: ERROR MESSAGE
+                HStack {
                     authViewModel.alertItem?.message ?? Text(" ")
                     Spacer()
                 }
@@ -76,7 +78,7 @@ struct RegistrationView: View {
                 .padding(.leading, 30)
                 .padding(.bottom, 5)
                 
-                
+                //MARK: Privacy and Policy
                 VStack{
                     Toggle("I agree to the Privacy Policy", isOn: $authViewModel.privacy)
                         .toggleStyle(SwitchToggleStyle(tint: .brand))
@@ -89,13 +91,11 @@ struct RegistrationView: View {
                         .font(.custom("custom", size: 15))
                         .padding(.leading, 30)
                         .padding(.trailing, 40)
-                        .padding(.bottom, 10)
+                        .padding(.bottom, 100)
                 }
                 
-                
-                
-                
-                Button { // SIGN UP BUTTON
+                // MARK: SIGN UP BUTTON
+                Button {
                     Task{ try await authViewModel.createUser() }
                 }label: {
                     Text("Sign Up                                                      ")
@@ -106,28 +106,6 @@ struct RegistrationView: View {
                 .background(.brand)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .padding(.vertical)
-                
-                dividerOr()
-                
-                SignInWithAppleButton(.signIn,
-                             onRequest: { request in
-                                 request.requestedScopes = [.fullName, .email]
-                },
-                onCompletion: { result in
-                    switch result {
-                    case .success(_):
-                          print("Authorization successful.")
-                       case .failure(let error):
-                          print("Authorization failed: " + error.localizedDescription)
-                }
-                })
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .padding(.horizontal, 40)
-                .padding(.top, 8)
-                .padding(.bottom, 100)
-                
-                
-                
             }
             
         } // End of Navigation Stack
@@ -143,9 +121,7 @@ struct RegistrationView: View {
                     }
                 }
             }
-        }
-        
-        
+        } // End of toolbar
     }
 }
 

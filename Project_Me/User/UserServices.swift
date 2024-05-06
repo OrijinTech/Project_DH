@@ -10,10 +10,12 @@ import Firebase
 import FirebaseFirestoreSwift
 import FirebaseStorage
 
+// MARK: TAKES CARE OF ALL NETWORK TASKS OF USER SERVICES WITH FIREBASE
 class UserServices {
     @Published var currentUser: User?
     
-    static let sharedUser = UserServices()
+    static let sharedUser = UserServices() // Use this user service object across the application.
+    
     
     @MainActor
     func fetchCurrentUserData() async throws {
@@ -31,6 +33,7 @@ class UserServices {
         return users.filter({$0.id != currentUid}) // Do not include the current logged in user
     }
     
+    
     // a function which fetches any user in the application with an uid, not just the current user
     static func fetchUser(with uid: String) async throws -> User {
         let snapshot = try await Firestore.firestore().collection(Collection().user).document(uid).getDocument()
@@ -42,6 +45,7 @@ class UserServices {
         self.currentUser = nil
     }
     
+    
     @MainActor
     func updateUserProfileImage(with imageUrl: String) async throws {
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
@@ -50,6 +54,7 @@ class UserServices {
         ])
         self.currentUser?.profileImageUrl = imageUrl
     }
+    
     
     @MainActor
     func updateUserName(with userName: String) async throws {

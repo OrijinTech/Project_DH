@@ -12,6 +12,7 @@ import SwiftUI
 // ADDING TAP GESTURES TO WINDOWS
 // BELOW CODE IS REFERENCED FROM: https://stackoverflow.com/a/60010955/8697793
 
+// MARK: Currently used for hiding keyboard after user taps away
 extension UIApplication {
     func addTapGestureRecognizer() {
         guard let window = (connectedScenes.first as? UIWindowScene)?.windows.first else { return }

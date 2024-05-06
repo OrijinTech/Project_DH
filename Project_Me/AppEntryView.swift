@@ -7,21 +7,21 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct AppEntryView: View {
     @StateObject var viewModel = MenuViewModel()
     
     var body: some View {
         Group {
-            if viewModel.userSession != nil {
+            if viewModel.userSession != nil { // if the user session is none
                 MainMenuView()
             } else {
                 SignInView()
             }
         }// End of Navigation Stack
-        .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
+        .onAppear(perform: UIApplication.shared.addTapGestureRecognizer) // Tap gesture for textfield tap-away.
     }
 }
 
 #Preview {
-    ContentView()
+    AppEntryView()
 }

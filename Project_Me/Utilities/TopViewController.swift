@@ -13,6 +13,7 @@ final class TopViewController {
     static let sharedTopController = TopViewController()
     private init() {}
     
+    // MARK: Get the top view controller
     @MainActor
     func topViewController(controller: UIViewController? = nil) -> UIViewController? {
         let controller = controller ?? UIApplication.shared.keyWindow?.rootViewController
