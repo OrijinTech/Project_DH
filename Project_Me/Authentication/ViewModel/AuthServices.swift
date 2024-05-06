@@ -8,6 +8,8 @@
 import Foundation
 import Firebase
 import FirebaseFirestoreSwift
+import AuthenticationServices
+
 
 // MARK: FUNCTIONS WHICH TAKES CARE OF THE AUTHENTICATION NETWORKING TASKS.
 class AuthServices {
@@ -54,6 +56,13 @@ class AuthServices {
         let credential = GoogleAuthProvider.credential(withIDToken: tokens.idToken, accessToken: tokens.accessToken)
         try await login(credential: credential)
     }
+    
+    // MARK: Calling the login with credential
+    @MainActor
+    func loginWithApple(credential: OAuthCredential) async throws {
+        try await login(credential: credential)
+    }
+    
     
     
     // MARK: This is called when creating a new user through the Registration View Model

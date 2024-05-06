@@ -9,6 +9,7 @@ import SwiftUI
 import AuthenticationServices
 import GoogleSignIn
 import GoogleSignInSwift
+import CryptoKit
 
 struct SignInView: View {
     @StateObject var authViewModel = SignInViewModel()
@@ -93,18 +94,20 @@ struct SignInView: View {
                 dividerOr()
                 
                 // MARK: SIGN IN WITH APPLE
-                SignInWithAppleButton(.signIn,
-                             onRequest: { request in
-                                 request.requestedScopes = [.fullName, .email]
-                },
-                onCompletion: { result in
+                SignInWithAppleButton(.signIn) { request in
+                    let nonce = authViewModel.randomNonceString()
+                    authViewModel.nonce = nonce
+                    request.requestedScopes = [.email, .fullName]
+                    request.nonce = authViewModel.sha256(nonce)
+                } onCompletion: { result in
                     switch result {
-                    case .success(_):
-                          print("Authorization successful.")
-                       case .failure(let error):
-                          print("Authorization failed: " + error.localizedDescription)
+                    case .success(let authorization):
+                        Task { try await authViewModel.signInApple(authorization) }
+                    case .failure(let error):
+                        print("FAILED SIGNING IN WITH APPLE \(error)")
+                    }
                 }
-                })
+                .frame(height: 40)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .padding(.horizontal, 50)
                 .padding(.top, 8)
