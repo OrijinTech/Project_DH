@@ -18,6 +18,7 @@ struct ForgotPasswordView: View {
                 Text(LocalizedStringKey("Please enter your account's associated email address. A reset link will be sent to the address."))
                     .font(.subheadline)
                     .padding(.vertical, 60)
+                    .padding(.horizontal, 20)
                 
                 Spacer()
                 
