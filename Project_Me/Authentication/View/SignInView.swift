@@ -17,7 +17,7 @@ struct SignInView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
+            VStack {
                 Image(.logo)
                     .resizable().scaledToFill()
                     .frame(width: 120, height: 120)
@@ -145,7 +145,7 @@ struct SignInView: View {
                 .padding(.bottom, 40)
                 .shadow(radius: 3)
 
-                
+                Spacer()
                 
                 Divider()
                 

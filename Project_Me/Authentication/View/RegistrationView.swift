@@ -15,7 +15,7 @@ struct RegistrationView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
+            VStack {
                 Image(.logo)
                     .resizable().scaledToFill()
                     .frame(width: 120, height: 120)
@@ -92,21 +92,22 @@ struct RegistrationView: View {
                         .font(.custom("custom", size: 15))
                         .padding(.leading, 30)
                         .padding(.trailing, 40)
-                        .padding(.bottom, 100)
                 }
+                
+                Spacer()
                 
                 // MARK: SIGN UP BUTTON
                 Button {
                     Task{ try await authViewModel.createUser() }
                 }label: {
-                    Text("Sign Up                                                      ")
+                    Text("Sign Up")
                 }
                 .fontWeight(.semibold)
                 .foregroundStyle(.white)
                 .frame(width: 310, height: 45)
                 .background(.brand)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                .padding(.vertical)
+                .padding(.bottom, 30)
                 .shadow(radius: 3)
             }
             
