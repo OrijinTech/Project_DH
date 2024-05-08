@@ -24,6 +24,7 @@ struct RegistrationView: View {
                 Text("Let's get started!")
                     .font(.title2)
                     .padding(.bottom, 80)
+                    .shadow(radius: 3)
                 
                 // MARK: User Input Textfields
                 VStack{
@@ -106,6 +107,7 @@ struct RegistrationView: View {
                 .background(.brand)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .padding(.vertical)
+                .shadow(radius: 3)
             }
             
         } // End of Navigation Stack

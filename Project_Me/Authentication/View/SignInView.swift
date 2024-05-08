@@ -23,9 +23,10 @@ struct SignInView: View {
                     .frame(width: 120, height: 120)
                     .padding(.vertical, 20)
                 
-                Text("Let's get started!")
+                Text("Welcome Back!")
                     .font(.title2)
                     .padding(.bottom, 100)
+                    .shadow(radius: 3)
                 
                 VStack{
                     HStack {
@@ -91,6 +92,7 @@ struct SignInView: View {
                 .background(.brand)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .padding(.vertical)
+                .shadow(radius: 3)
                 
                 dividerOr()
                 
@@ -108,13 +110,13 @@ struct SignInView: View {
                         print("FAILED SIGNING IN WITH APPLE \(error)")
                     }
                 }
-                .frame(height: 40)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .padding(.horizontal, 50)
+                .frame(width: 293, height: 40)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
                 .padding(.top, 8)
+                .shadow(radius: 3)
                 
                 // MARK: SIGN IN WITH GOOGLE
-                GoogleSignInButton(viewModel: GoogleSignInButtonViewModel(scheme: .dark, style: .wide, state: .normal)) {
+                Button {
                     Task {
                         do {
                             try await authViewModel.signInGoogle()
@@ -122,10 +124,28 @@ struct SignInView: View {
                             print(error)
                         }
                     }
+                }label: {
+                    HStack {
+                        Image(.googleLogo)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 50)
+                        Text("Sign in with Google")
+                            .font(.custom("googlefont", fixedSize: 15.5))
+                            .foregroundStyle(Color(.systemGray))
+                            .padding(.trailing)
+                    }
+                    
                 }
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .padding(.horizontal, 50)
-                .padding(.vertical, 10)
+                .fontWeight(.semibold)
+                .foregroundStyle(.white)
+                .frame(width: 293, height: 40)
+                .background(.white)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .padding(.bottom, 40)
+                .shadow(radius: 3)
+
+                
                 
                 Divider()
                 
