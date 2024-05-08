@@ -100,7 +100,13 @@ class SignInViewModel: ObservableObject {
         
         return hashString
     }
-        
+    
+    
+    @MainActor
+    func resetPassword() async throws {
+        try await AuthServices.sharedAuth.resetPassword(with: self.email)
+    }
+    
     
     
     // MARK: check if we have all values in the profile forms

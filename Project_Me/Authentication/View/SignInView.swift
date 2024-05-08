@@ -66,8 +66,9 @@ struct SignInView: View {
                 .padding(.leading, 30)
                 
                 
-                Button {
+                NavigationLink {
                     // TODO: Add a function to prompt user for an email if the password has been forgotten
+                    ForgotPasswordView()
                 } label: {
                     Text("Forgot password?")
                         .font(.footnote)
@@ -128,7 +129,7 @@ struct SignInView: View {
                 
                 Divider()
                 
-                HStack{
+                HStack {
                     Text("Don't have an account?")
                     NavigationLink {
                         RegistrationView()
@@ -144,7 +145,6 @@ struct SignInView: View {
         } // End of Navigation Stack
         .navigationBarBackButtonHidden()
     }
-    
     
 }
 

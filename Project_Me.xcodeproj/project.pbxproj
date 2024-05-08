@@ -40,6 +40,8 @@
 		54B4499B2BDD407B00E35D49 /* AppEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B4499A2BDD407B00E35D49 /* AppEntryView.swift */; };
 		54B4499D2BDD407C00E35D49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54B4499C2BDD407C00E35D49 /* Assets.xcassets */; };
 		54B449A02BDD407C00E35D49 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54B4499F2BDD407C00E35D49 /* Preview Assets.xcassets */; };
+		54C06B132BEA85D1005D98A7 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C06B122BEA85D1005D98A7 /* ForgotPasswordView.swift */; };
+		54C06B152BEBA129005D98A7 /* TimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C06B142BEBA129005D98A7 /* TimeManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +73,9 @@
 		54B4499A2BDD407B00E35D49 /* AppEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEntryView.swift; sourceTree = "<group>"; };
 		54B4499C2BDD407C00E35D49 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		54B4499F2BDD407C00E35D49 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		54C06B112BE9665D005D98A7 /* Project_MeDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Project_MeDebug.entitlements; sourceTree = "<group>"; };
+		54C06B122BEA85D1005D98A7 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
+		54C06B142BEBA129005D98A7 /* TimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +223,7 @@
 			children = (
 				541D35272BE3D7E600AF38AF /* RegistrationView.swift */,
 				541D35282BE3D7E600AF38AF /* SignInView.swift */,
+				54C06B122BEA85D1005D98A7 /* ForgotPasswordView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -241,6 +247,7 @@
 				547999772BE3DE9E007A7CCE /* StringExtension.swift */,
 				541D91C42BE7D323000DED2B /* TapGestures.swift */,
 				541D91CE2BE800FA000DED2B /* TopViewController.swift */,
+				54C06B142BEBA129005D98A7 /* TimeManager.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -282,8 +289,9 @@
 		54B449972BDD407B00E35D49 /* Project_Me */ = {
 			isa = PBXGroup;
 			children = (
-				541D91CD2BE7E09B000DED2B /* Project-Me-Info.plist */,
+				54C06B112BE9665D005D98A7 /* Project_MeDebug.entitlements */,
 				54B449982BDD407B00E35D49 /* Project_MeApp.swift */,
+				541D91CD2BE7E09B000DED2B /* Project-Me-Info.plist */,
 				54B4499A2BDD407B00E35D49 /* AppEntryView.swift */,
 				547999892BE41DA2007A7CCE /* MainMenu */,
 				541D351F2BE3D79100AF38AF /* Authentication */,
@@ -404,6 +412,7 @@
 				541D35322BE3D7E600AF38AF /* RegistrationView.swift in Sources */,
 				541D35332BE3D7E600AF38AF /* SignInView.swift in Sources */,
 				547999882BE41D7F007A7CCE /* MainMenuView.swift in Sources */,
+				54C06B132BEA85D1005D98A7 /* ForgotPasswordView.swift in Sources */,
 				547999712BE3DE05007A7CCE /* User.swift in Sources */,
 				547999722BE3DE05007A7CCE /* UserCell.swift in Sources */,
 				043097312BE6F0BD0016FCD8 /* CardView.swift in Sources */,
@@ -416,6 +425,7 @@
 				043097332BE6FBD60016FCD8 /* LibraryView.swift in Sources */,
 				54B449992BDD407B00E35D49 /* Project_MeApp.swift in Sources */,
 				043097382BE7018C0016FCD8 /* MockData.swift in Sources */,
+				54C06B152BEBA129005D98A7 /* TimeManager.swift in Sources */,
 				547999862BE41D65007A7CCE /* MenuViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -547,6 +557,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Project_Me/Project_MeDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Project_Me/Preview Content\"";
@@ -583,6 +594,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Project_Me/Project_Me.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Project_Me/Preview Content\"";

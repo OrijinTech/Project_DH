@@ -90,6 +90,16 @@ class AuthServices {
     }
     
     
+    func resetPassword(with email: String) async throws {
+        do {
+            try await Auth.auth().sendPasswordReset(withEmail: email)
+            print("SENT AN EMAIL TO THE ADDRESS: \(email)" )
+        } catch {
+            print("ERROR: FAILED TO SEND RESET EMAIL")
+        }
+    }
+    
+    
     // MARK: Uploading the user data after edit.
     // TODO: Need a more general function for uploading more various user data
     @MainActor // Same as Dispatchqueue.main.async
