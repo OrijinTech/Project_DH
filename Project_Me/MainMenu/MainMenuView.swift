@@ -41,24 +41,15 @@ struct MainMenuView: View {
                 }
                 .tag(2)
             
-            // TODO: implement User Profile
-            Button {
-                AuthServices.sharedAuth.signOut()
-            }label: {
-                Text("Log Out                                                      ")
-            }
-            .fontWeight(.semibold)
-            .foregroundStyle(.white)
-            .frame(width: 300, height: 45)
-            .background(.brand)
-            .clipShape(RoundedRectangle(cornerRadius: 8))
-            .padding(.vertical)
-            .tabItem {
-                Image(
-                    systemName: "person.crop.circle.fill"
-                )
-            }
-            .tag(3)
+            ProfilePageView()
+                .tabItem {
+                    Image(
+                        systemName: "person.crop.circle.fill"
+                    )
+                }
+                .tag(3)
+            
+            
         }
         // system background color automatically adjust the color
         .tint(.primary)

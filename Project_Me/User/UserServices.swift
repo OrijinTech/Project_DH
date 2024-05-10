@@ -64,4 +64,28 @@ class UserServices {
     }
     
     
+    @MainActor
+    func updateAccountOptions(with infoToChange: String, enumInfo: AccountOptions) async throws {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        switch enumInfo {
+        case .username:
+            try await Firestore.firestore().collection(Collection().user).document(currentUid).updateData(["userName": infoToChange])
+            self.currentUser?.userName = infoToChange
+        case .lastName:
+            try await Firestore.firestore().collection(Collection().user).document(currentUid).updateData(["lastName": infoToChange])
+            self.currentUser?.lastName = infoToChange
+        case .firstName:
+            try await Firestore.firestore().collection(Collection().user).document(currentUid).updateData(["firstName": infoToChange])
+            self.currentUser?.firstName = infoToChange
+        case .email:
+            try await Firestore.firestore().collection(Collection().user).document(currentUid).updateData(["email": infoToChange])
+            self.currentUser?.email = infoToChange
+        case .password:
+            print("SHOULD CHANGE PASSWORD")
+        case .birthday:
+            print("SHOULD CHANGE BIRTHDAY")
+        }
+    }
+    
+    
 }
