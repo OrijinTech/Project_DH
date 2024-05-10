@@ -11,20 +11,20 @@ import SwiftUI
 enum ProfileOptions: Int, CaseIterable, Identifiable {
     var id: Int { return self.rawValue }
     
-    case dietPlans
+    case socialMedia
+    case businessInfo
     case friends
-    case healthRecords
     case settings
     
     
     var title: LocalizedStringKey {
         switch self {
-        case .dietPlans:
-            return "Diet Plans"
+        case .socialMedia:
+            return "Social Media"
+        case .businessInfo:
+            return "Business Info"
         case .friends:
-            return "Friends"
-        case .healthRecords:
-            return "Health Records"
+            return "My Friends"
         case .settings:
             return "Settings"
         }
@@ -76,37 +76,5 @@ enum AccountOptions: Int, CaseIterable, Identifiable {
             return "birthday"
         }
     }
-    
-    
 }
-
-
-
-enum PersonalInfoOptions: Int, CaseIterable, Identifiable {
-    var id: Int { return self.rawValue }
-    
-    case weight
-    case height
-    case gender
-    case waterReminder
-    case units
-    
-    var title: LocalizedStringKey {
-        switch self {
-        case .weight:
-            return "Set my weight"
-        case .height:
-            return "Set my height"
-        case .waterReminder:
-            return "Water Reminder"
-        case .units:
-            return "Set up Units"
-        case .gender:
-            return "Change gender"
-        }
-    }
-    
-    
-}
-
 

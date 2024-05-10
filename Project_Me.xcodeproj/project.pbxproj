@@ -88,6 +88,7 @@
 		54E926B52BEE47D6001ACDD8 /* ImageTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTools.swift; sourceTree = "<group>"; };
 		54E926B72BEE4835001ACDD8 /* ImageServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageServices.swift; sourceTree = "<group>"; };
 		54E926BC2BEE4C81001ACDD8 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EditProfileView.swift; path = Project_Me/Utilities/EditProfileView.swift; sourceTree = SOURCE_ROOT; };
+		54E926C52BEE5022001ACDD8 /* DevNote.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DevNote.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -307,6 +308,7 @@
 		54B449972BDD407B00E35D49 /* Project_Me */ = {
 			isa = PBXGroup;
 			children = (
+				54E926C52BEE5022001ACDD8 /* DevNote.md */,
 				54B449982BDD407B00E35D49 /* Project_MeApp.swift */,
 				54B4499A2BDD407B00E35D49 /* AppEntryView.swift */,
 				541D351F2BE3D79100AF38AF /* Authentication */,

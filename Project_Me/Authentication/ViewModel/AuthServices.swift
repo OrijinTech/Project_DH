@@ -55,12 +55,14 @@ class AuthServices {
     func loginWithGoogle(tokens: GoogleSignInModel) async throws {
         let credential = GoogleAuthProvider.credential(withIDToken: tokens.idToken, accessToken: tokens.accessToken)
         try await login(credential: credential)
+        // TODO: Make sure to upload user data to Firestore.
     }
     
     // MARK: Calling the login with credential
     @MainActor
     func loginWithApple(credential: OAuthCredential) async throws {
         try await login(credential: credential)
+        // TODO: Make sure to upload user data to Firestore.
     }
     
     

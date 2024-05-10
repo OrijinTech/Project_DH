@@ -119,11 +119,6 @@ struct EditProfileView: View {
                         }
                     }
                     
-                    Section(header: Text("Personal Info")){
-                        ForEach(PersonalInfoOptions.allCases){ option in
-                            Text(option.title)
-                        }
-                    }
                 }
                 .disabled(viewModel.showEditWindow)
             }
