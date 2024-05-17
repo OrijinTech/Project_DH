@@ -35,11 +35,8 @@ struct User: Codable, Identifiable, Hashable {
     // Personal Information
     var birthday: Date?
     var gender: String?
-    var weight: Float?
-    var height: Float?
-    var waterReminder: Bool?
-    var units: [String]?
-    
+    var businessCards: [String]? // TODO: Create the card data model
+     
 }
 
 // Mock user
