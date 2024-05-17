@@ -46,6 +46,7 @@ class AuthServices {
             try await UserServices.sharedUser.fetchCurrentUserData()
             print("LOGGED IN USER WITH CREDENTIAL: \(result.user.uid)" )
         } catch {
+            // TODO: Make sure this is also true for Apple Sign In
             let result = try await Auth.auth().signIn(with: credential)
             try await self.uploadUserData(email: result.user.email!, userName: "Cool Person \(result.user.uid.lowercased().prefix(6))", id: result.user.uid)
             print("ERROR: FAILED TO SIGN IN WITH CREDENTIAL \(error)")
@@ -58,14 +59,12 @@ class AuthServices {
     func loginWithGoogle(tokens: GoogleSignInModel) async throws {
         let credential = GoogleAuthProvider.credential(withIDToken: tokens.idToken, accessToken: tokens.accessToken)
         try await login(credential: credential)
-        // TODO: Make sure to upload user data to Firestore.
     }
     
     // MARK: Calling the login with credential
     @MainActor
     func loginWithApple(credential: OAuthCredential) async throws {
         try await login(credential: credential)
-        // TODO: Make sure to upload user data to Firestore.
     }
     
     
