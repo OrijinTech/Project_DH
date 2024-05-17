@@ -17,13 +17,15 @@ struct ImageUploader {
         guard let imageData = image.jpegData(compressionQuality: 0.2) else { return nil }
         let filename = NSUUID().uuidString
         let storageRef = Storage.storage().reference(withPath: "/profile_images/\(filename)")
+        print("SUCCESS: STORAGE REFERENCE RETRIEVED: \(storageRef)")
         
         do {
             let _ = try await storageRef.putDataAsync(imageData)
             let url = try await storageRef.downloadURL()
+            print("SUCCESS: UPLOADED USER PROFILE PHOTO WITH URL: \(url)")
             return url.absoluteString
         } catch {
-            print("ERROR: FAILED TO UPLOAD PROFILE PHOTO")
+            print("ERROR: FAILED TO UPLOAD PROFILE PHOTO! Source: uploadImage() with error \(error) ")
             return nil
         }
     }

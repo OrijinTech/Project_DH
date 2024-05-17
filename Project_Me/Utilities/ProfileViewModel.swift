@@ -50,7 +50,10 @@ class ProfileViewModel: ObservableObject {
     @MainActor
     private func updateProfileImage() async throws {
         guard let image = self.uiImage else { return }
-        guard let imageUrl = try? await ImageUploader.uploadImage(image) else { return }
+        guard let imageUrl = try? await ImageUploader.uploadImage(image) else {
+            print("ERROR: FAILED TO GET imageURL! Source: updateProfileImage() ")
+            return
+        }
         try await UserServices.sharedUser.updateUserProfileImage(with: imageUrl)
     }
     
