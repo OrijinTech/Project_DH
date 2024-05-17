@@ -19,10 +19,11 @@ class UserServices {
     
     @MainActor
     func fetchCurrentUserData() async throws {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let uid = Auth.auth().currentUser?.uid else { return } // TODO: ENDED HERE
         let snapshot = try await Firestore.firestore().collection(Collection().user).document(uid).getDocument()
         let user = try snapshot.data(as: User.self)
         self.currentUser = user
+        print("USER DATA FETCHED: \(String(describing: user.uid))")
     }
     
     
@@ -45,7 +46,7 @@ class UserServices {
         self.currentUser = nil
     }
     
-    
+    // TODO: Need a more general function for uploading more various user data
     @MainActor
     func updateUserProfileImage(with imageUrl: String) async throws {
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
@@ -55,7 +56,7 @@ class UserServices {
         self.currentUser?.profileImageUrl = imageUrl
     }
     
-    
+    // TODO: Need a more general function for uploading more various user data
     @MainActor
     func updateUserName(with userName: String) async throws {
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
@@ -63,7 +64,7 @@ class UserServices {
         self.currentUser?.userName = userName
     }
     
-    
+    // TODO: Need a more general function for uploading more various user data
     @MainActor
     func updateAccountOptions(with infoToChange: String, enumInfo: AccountOptions) async throws {
         guard let currentUid = Auth.auth().currentUser?.uid else { return }

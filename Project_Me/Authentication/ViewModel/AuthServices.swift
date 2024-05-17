@@ -41,11 +41,14 @@ class AuthServices {
     func login(credential: AuthCredential) async throws {
         do {
             let result = try await Auth.auth().signIn(with: credential)
+            print("LOGIN WITH CREDENTIAL: GOT RESULT --> \(result.user.uid)")
             self.userSession = result.user
             try await UserServices.sharedUser.fetchCurrentUserData()
             print("LOGGED IN USER WITH CREDENTIAL: \(result.user.uid)" )
         } catch {
-            print("ERROR: FAILED TO SIGN IN WITH CREDENTIAL")
+            let result = try await Auth.auth().signIn(with: credential)
+            try await self.uploadUserData(email: result.user.email!, userName: "Cool Person \(result.user.uid.lowercased().prefix(6))", id: result.user.uid)
+            print("ERROR: FAILED TO SIGN IN WITH CREDENTIAL \(error)")
         }
     }
     
@@ -102,8 +105,7 @@ class AuthServices {
     }
     
     
-    // MARK: Uploading the user data after edit.
-    // TODO: Need a more general function for uploading more various user data
+    // MARK: Uploading the user data after creating an account.
     @MainActor // Same as Dispatchqueue.main.async
     private func uploadUserData(email: String, userName: String?, id: String) async throws {
         let user = User(email: email, userName: userName!, profileImageUrl: nil)
