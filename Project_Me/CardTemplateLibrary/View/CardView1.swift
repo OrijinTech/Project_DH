@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CardView: View {
+struct CardView1: View {
     let user: User
     
     var body: some View {
@@ -64,5 +64,5 @@ struct CardView: View {
 }
 
 #Preview {
-    CardView(user: MockData.mockUsers[0])
+    CardView1(user: MockData.mockUsers[0])
 }
