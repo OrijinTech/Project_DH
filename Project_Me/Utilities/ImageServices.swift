@@ -25,7 +25,7 @@ struct ImageUploader {
             print("SUCCESS: UPLOADED USER PROFILE PHOTO WITH URL: \(url)")
             return url.absoluteString
         } catch {
-            print("ERROR: FAILED TO UPLOAD PROFILE PHOTO! Source: uploadImage() with error \(error) ")
+            print("ERROR: FAILED TO UPLOAD PROFILE PHOTO! \nSource: uploadImage() \n\(error.localizedDescription) ")
             return nil
         }
     }

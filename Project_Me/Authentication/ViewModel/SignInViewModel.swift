@@ -53,14 +53,14 @@ class SignInViewModel: ObservableObject {
     func signInApple(_ authorization: ASAuthorization) async throws {
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             guard let nonce else {
-                fatalError("Invalid state: A login callback was received, but no login request was sent.")
+                fatalError("ERROR: Invalid state: A login callback was received, but no login request was sent.")
             }
             guard let appleIDToken = appleIDCredential.identityToken else {
-                print("Unable to fetch identity token")
+                print("ERROR: Unable to fetch identity token \nSource: SignInViewModel/signInApple() ")
                 return
             }
             guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-                print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
+                print("ERROR: Unable to serialize token string from data: \n\(appleIDToken.debugDescription) \nSource: SignInViewModel/signInApple() ")
                 return
             }
             // Initialize a Firebase credential, including the user's full name.
@@ -78,7 +78,7 @@ class SignInViewModel: ObservableObject {
         var randomBytes = [UInt8](repeating: 0, count: length)
         let errorCode = SecRandomCopyBytes(kSecRandomDefault, randomBytes.count, &randomBytes)
         if errorCode != errSecSuccess {
-            fatalError("Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)")
+            fatalError("ERROR: Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode) \nSource: SignInViewModel/randomNonceString() ")
         }
 
         let charset: [Character] = Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")

@@ -29,9 +29,9 @@ class AuthServices {
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
             self.userSession = result.user
             try await UserServices.sharedUser.fetchCurrentUserData()
-            print("LOGGED IN USER WITH EMAIL AND PASSWORD \(result.user.uid)" )
+            print("LOGGED IN USER WITH EMAIL AND PASSWORD \n\(result.user.uid)" )
         } catch {
-            print("ERROR: FAILED TO SIGN IN WITH EMAIL AND PASSWORD")
+            print("ERROR: FAILED TO SIGN IN WITH EMAIL AND PASSWORD! \nSource: AuthServices/login() \n\(error)")
         }
     }
 
@@ -41,15 +41,15 @@ class AuthServices {
     func login(credential: AuthCredential) async throws {
         do {
             let result = try await Auth.auth().signIn(with: credential)
-            print("LOGIN WITH CREDENTIAL: GOT RESULT --> \(result.user.uid)")
+            print("LOGIN WITH CREDENTIAL: \nGOT RESULT: \(result.user.uid)")
             self.userSession = result.user
             try await UserServices.sharedUser.fetchCurrentUserData()
-            print("LOGGED IN USER WITH CREDENTIAL: \(result.user.uid)" )
+            print("LOGGED IN USER WITH CREDENTIAL: \n\(result.user.uid)" )
         } catch {
             // TODO: Make sure this is also true for Apple Sign In
             let result = try await Auth.auth().signIn(with: credential)
             try await self.uploadUserData(email: result.user.email!, userName: "Cool Person \(result.user.uid.lowercased().prefix(6))", id: result.user.uid)
-            print("ERROR: FAILED TO SIGN IN WITH CREDENTIAL \(error)")
+            print("ERROR: FAILED TO SIGN IN WITH CREDENTIAL! \nSource: AuthServices/login() \n\(error.localizedDescription)")
         }
     }
     
@@ -78,7 +78,7 @@ class AuthServices {
             try await self.uploadUserData(email: email, userName: username, id: result.user.uid)
             print("CREATED USER \(result.user.uid)" )
         } catch {
-            print("ERROR: FAILED TO CREATE USER: \(error.localizedDescription)") //automatically gives us the "error" object by swift
+            print("ERROR: FAILED TO CREATE USER \nSource: AuthServices/createUser() \n\(error.localizedDescription)") //automatically gives us the "error" object by swift
         }
     }
     
@@ -89,7 +89,7 @@ class AuthServices {
             self.userSession = nil
             UserServices.sharedUser.reset() // Set currentUser object to nil
         } catch {
-            print("ERROR: FAILED TO SIGN OUT") 
+            print("ERROR: FAILED TO SIGN OUT \nSource: AuthServices/signOut \n\(error.localizedDescription)")
         }
     }
     
@@ -99,7 +99,7 @@ class AuthServices {
             try await Auth.auth().sendPasswordReset(withEmail: email)
             print("SENT AN EMAIL TO THE ADDRESS: \(email)" )
         } catch {
-            print("ERROR: FAILED TO SEND RESET EMAIL")
+            print("ERROR: FAILED TO SEND RESET EMAIL \nSource: AuthServices/resetPassword() \n\(error.localizedDescription)")
         }
     }
     
