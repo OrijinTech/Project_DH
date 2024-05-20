@@ -23,7 +23,7 @@ class UserServices {
         let snapshot = try await Firestore.firestore().collection(Collection().user).document(uid).getDocument()
         let user = try snapshot.data(as: User.self)
         self.currentUser = user
-        print("USER DATA FETCHED: \(String(describing: user.uid))")
+        print("SUCCESS: USER DATA FETCHED \nSource: fetchCurrentUserData() \n User ID: \(String(describing: user.uid))")
     }
     
     

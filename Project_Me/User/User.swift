@@ -26,7 +26,7 @@ struct User: Codable, Identifiable, Hashable {
     var id: String { // Use this to work with instead of the uid
         return uid ?? NSUUID().uuidString
     }
-    
+     
     
     // Other Information
     var description: String?
