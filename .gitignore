@@ -46,7 +46,6 @@ playground.xcworkspace
 # hence it is not needed unless you have added a package configuration file to your project
 # .swiftpm
 
-Project_Me.xcodeproj/project.pbxproj
 .build/
 
 # CocoaPods
