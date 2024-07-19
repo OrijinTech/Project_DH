@@ -19,8 +19,8 @@
 		541D91C82BE7DC75000DED2B /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 541D91C72BE7DC75000DED2B /* GoogleSignIn */; };
 		541D91CA2BE7DC75000DED2B /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 541D91C92BE7DC75000DED2B /* GoogleSignInSwift */; };
 		541D91CF2BE800FA000DED2B /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D91CE2BE800FA000DED2B /* TopViewController.swift */; };
-		542FF4062C49A4DD00966B74 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 542FF4052C49A4DD00966B74 /* GoogleService-Info.plist */; };
 		543AC1222BF27A7E004CC8E1 /* FirstTimeSignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543AC1212BF27A7E004CC8E1 /* FirstTimeSignInView.swift */; };
+		5440E77B2C4A49B3007579EC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5440E77A2C4A49B3007579EC /* GoogleService-Info.plist */; };
 		547999662BE3DD80007A7CCE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 547999652BE3DD80007A7CCE /* FirebaseAuth */; };
 		547999682BE3DD80007A7CCE /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 547999672BE3DD80007A7CCE /* FirebaseFirestore */; };
 		5479996A2BE3DD80007A7CCE /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 547999692BE3DD80007A7CCE /* FirebaseFirestoreSwift */; };
@@ -69,8 +69,8 @@
 		541D91C42BE7D323000DED2B /* TapGestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapGestures.swift; sourceTree = "<group>"; };
 		541D91CD2BE7E09B000DED2B /* Project-Me-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Project-Me-Info.plist"; sourceTree = SOURCE_ROOT; };
 		541D91CE2BE800FA000DED2B /* TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
-		542FF4052C49A4DD00966B74 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		543AC1212BF27A7E004CC8E1 /* FirstTimeSignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTimeSignInView.swift; sourceTree = "<group>"; };
+		5440E77A2C4A49B3007579EC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5479996D2BE3DE05007A7CCE /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5479996E2BE3DE05007A7CCE /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		5479996F2BE3DE05007A7CCE /* UserServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserServices.swift; sourceTree = "<group>"; };
@@ -350,7 +350,7 @@
 		54B4499E2BDD407C00E35D49 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				542FF4052C49A4DD00966B74 /* GoogleService-Info.plist */,
+				5440E77A2C4A49B3007579EC /* GoogleService-Info.plist */,
 				54B4499F2BDD407C00E35D49 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
@@ -428,9 +428,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				542FF4062C49A4DD00966B74 /* GoogleService-Info.plist in Resources */,
 				54B449A02BDD407C00E35D49 /* Preview Assets.xcassets in Resources */,
 				54B4499D2BDD407C00E35D49 /* Assets.xcassets in Resources */,
+				5440E77B2C4A49B3007579EC /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,7 +617,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Project-Me-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = ME;
+				INFOPLIST_KEY_CFBundleDisplayName = DH;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
@@ -631,7 +631,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.synapcompany.projectme;
+				PRODUCT_BUNDLE_IDENTIFIER = com.synapcompany.projectdh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -656,7 +656,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Project-Me-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = ME;
+				INFOPLIST_KEY_CFBundleDisplayName = DH;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
@@ -670,7 +670,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.synapcompany.projectme;
+				PRODUCT_BUNDLE_IDENTIFIER = com.synapcompany.projectdh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

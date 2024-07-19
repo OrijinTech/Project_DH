@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>366914386954-hk8cso2njv5b4kvrjlm22rd2ojn0oof0.apps.googleusercontent.com</string>
+	<string>366914386954-v20ncm3f22qf4k9idfgl7nau6gr0vute.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.366914386954-hk8cso2njv5b4kvrjlm22rd2ojn0oof0</string>
+	<string>com.googleusercontent.apps.366914386954-v20ncm3f22qf4k9idfgl7nau6gr0vute</string>
 	<key>API_KEY</key>
 	<string>AIzaSyA_jBPcOAOtIFVx930Ug5XoOV0VNekT7wA</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.synapcompany.projectme</string>
+	<string>com.synapcompany.projectdh</string>
 	<key>PROJECT_ID</key>
 	<string>project-me-4035a</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:366914386954:ios:b15c2a21a419cddf8b33f3</string>
+	<string>1:366914386954:ios:0c57eece50448fd28b33f3</string>
 </dict>
 </plist>
