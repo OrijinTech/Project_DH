@@ -16,7 +16,7 @@ final class TopViewController {
     // MARK: Get the top view controller
     @MainActor
     func topViewController(controller: UIViewController? = nil) -> UIViewController? {
-        let controller = controller ?? UIApplication.shared.keyWindow?.rootViewController
+        let controller = controller ?? getKeyWindow()?.rootViewController
         if let navigationController = controller as? UINavigationController {
             return topViewController(controller: navigationController.visibleViewController)
         }
@@ -33,5 +33,13 @@ final class TopViewController {
         
         return controller
     }
+    
+    private func getKeyWindow() -> UIWindow? {
+           return UIApplication.shared
+               .connectedScenes
+               .compactMap { $0 as? UIWindowScene }
+               .flatMap { $0.windows }
+               .first { $0.isKeyWindow }
+       }
     
 }
