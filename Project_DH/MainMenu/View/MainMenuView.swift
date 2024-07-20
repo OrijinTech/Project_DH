@@ -15,14 +15,19 @@ struct MainMenuView: View {
     */
     var body: some View {
         TabView {
-            // TODO: implement NameCardRepo
-            NameCardListView()
+            DashboardView()
                 .tabItem {
-                    Image(
-                        systemName: "person.crop.rectangle.fill"
-                    )
+                    Image(systemName: "person.crop.rectangle.fill")
                 }
-                .tag(0)
+            
+            // TODO: implement NameCardRepo
+//            NameCardListView()
+//                .tabItem {
+//                    Image(
+//                        systemName: "person.crop.rectangle.fill"
+//                    )
+//                }
+//                .tag(0)
             
 //            LibraryView()
 //                .tabItem {
@@ -34,7 +39,6 @@ struct MainMenuView: View {
             ChatSelectionView()
                 .tabItem {
                     Image(systemName: "face.smiling.fill")
-//                    Text("My Diet Coach")
                 }
             
             // TODO: implement Community
