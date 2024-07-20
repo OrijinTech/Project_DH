@@ -24,13 +24,18 @@ struct MainMenuView: View {
                 }
                 .tag(0)
             
-            LibraryView()
+//            LibraryView()
+//                .tabItem {
+//                    Image(
+//                        systemName: "building.columns.fill"
+//                    )
+//                }
+//                .tag(1)
+            ChatSelectionView()
                 .tabItem {
-                    Image(
-                        systemName: "building.columns.fill"
-                    )
+                    Image(systemName: "face.smiling.fill")
+//                    Text("My Diet Coach")
                 }
-                .tag(1)
             
             // TODO: implement Community
             Text("Display Users Community!")

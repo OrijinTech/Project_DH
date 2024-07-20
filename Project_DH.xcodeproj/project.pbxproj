@@ -55,6 +55,11 @@
 		54D6310D2BF77DF500AD4A66 /* CardListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D6310C2BF77DF500AD4A66 /* CardListViewModel.swift */; };
 		54E926B62BEE47D6001ACDD8 /* ImageTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E926B52BEE47D6001ACDD8 /* ImageTools.swift */; };
 		54E926B82BEE4835001ACDD8 /* ImageServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E926B72BEE4835001ACDD8 /* ImageServices.swift */; };
+		54FB02802C4BD8D9004D8451 /* ChatSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FB027F2C4BD8D9004D8451 /* ChatSelectionView.swift */; };
+		54FB02822C4BD907004D8451 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FB02812C4BD907004D8451 /* ChatView.swift */; };
+		54FB02842C4BD974004D8451 /* ChatSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FB02832C4BD974004D8451 /* ChatSelectionViewModel.swift */; };
+		54FB02862C4BD9EA004D8451 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FB02852C4BD9EA004D8451 /* ChatViewModel.swift */; };
+		54FB028B2C4BDAD9004D8451 /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 54FB028A2C4BDAD9004D8451 /* OpenAI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -102,6 +107,10 @@
 		54D6310C2BF77DF500AD4A66 /* CardListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardListViewModel.swift; sourceTree = "<group>"; };
 		54E926B52BEE47D6001ACDD8 /* ImageTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTools.swift; sourceTree = "<group>"; };
 		54E926B72BEE4835001ACDD8 /* ImageServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageServices.swift; sourceTree = "<group>"; };
+		54FB027F2C4BD8D9004D8451 /* ChatSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSelectionView.swift; sourceTree = "<group>"; };
+		54FB02812C4BD907004D8451 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		54FB02832C4BD974004D8451 /* ChatSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSelectionViewModel.swift; sourceTree = "<group>"; };
+		54FB02852C4BD9EA004D8451 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +120,7 @@
 			files = (
 				547999662BE3DD80007A7CCE /* FirebaseAuth in Frameworks */,
 				5479996C2BE3DD80007A7CCE /* FirebaseStorage in Frameworks */,
+				54FB028B2C4BDAD9004D8451 /* OpenAI in Frameworks */,
 				541D91CA2BE7DC75000DED2B /* GoogleSignInSwift in Frameworks */,
 				547999682BE3DD80007A7CCE /* FirebaseFirestore in Frameworks */,
 				5479996A2BE3DD80007A7CCE /* FirebaseFirestoreSwift in Frameworks */,
@@ -253,8 +263,8 @@
 		547999892BE41DA2007A7CCE /* MainMenu */ = {
 			isa = PBXGroup;
 			children = (
-				547999852BE41D65007A7CCE /* MenuViewModel.swift */,
-				547999872BE41D7F007A7CCE /* MainMenuView.swift */,
+				54FB02872C4BDA6E004D8451 /* View */,
+				54FB02882C4BDA77004D8451 /* ViewModel */,
 			);
 			path = MainMenu;
 			sourceTree = "<group>";
@@ -312,6 +322,7 @@
 				043097212BE6EB910016FCD8 /* NameCardRepo */,
 				043097222BE6EBD60016FCD8 /* CardTemplateLibrary */,
 				547FE7692C4A558E00C80790 /* Profile */,
+				54FB027C2C4BD786004D8451 /* GPTModule */,
 				547999702BE3DE05007A7CCE /* User */,
 				5479997D2BE3E019007A7CCE /* ViewComponents */,
 				547999742BE3DE63007A7CCE /* Utilities */,
@@ -330,6 +341,49 @@
 				54B4499F2BDD407C00E35D49 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		54FB027C2C4BD786004D8451 /* GPTModule */ = {
+			isa = PBXGroup;
+			children = (
+				54FB027D2C4BD874004D8451 /* View */,
+				54FB027E2C4BD87B004D8451 /* ViewModel */,
+			);
+			path = GPTModule;
+			sourceTree = "<group>";
+		};
+		54FB027D2C4BD874004D8451 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				54FB027F2C4BD8D9004D8451 /* ChatSelectionView.swift */,
+				54FB02812C4BD907004D8451 /* ChatView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		54FB027E2C4BD87B004D8451 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				54FB02832C4BD974004D8451 /* ChatSelectionViewModel.swift */,
+				54FB02852C4BD9EA004D8451 /* ChatViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		54FB02872C4BDA6E004D8451 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				547999872BE41D7F007A7CCE /* MainMenuView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		54FB02882C4BDA77004D8451 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				547999852BE41D65007A7CCE /* MenuViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -356,6 +410,7 @@
 				547999832BE40D04007A7CCE /* Kingfisher */,
 				541D91C72BE7DC75000DED2B /* GoogleSignIn */,
 				541D91C92BE7DC75000DED2B /* GoogleSignInSwift */,
+				54FB028A2C4BDAD9004D8451 /* OpenAI */,
 			);
 			productName = Project_Me;
 			productReference = 54B449952BDD407B00E35D49 /* Project_DH.app */;
@@ -389,6 +444,7 @@
 				541D35362BE3DA2600AF38AF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				547999822BE40D04007A7CCE /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				541D91C62BE7DC75000DED2B /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				54FB02892C4BDAD9004D8451 /* XCRemoteSwiftPackageReference "OpenAI" */,
 			);
 			productRefGroup = 54B449962BDD407B00E35D49 /* Products */;
 			projectDirPath = "";
@@ -428,7 +484,9 @@
 				54D631062BF77D2400AD4A66 /* OwnedNameCard.swift in Sources */,
 				54D6310A2BF77DA000AD4A66 /* NameCardInfo.swift in Sources */,
 				5479997C2BE3DF7D007A7CCE /* FirebaseConstants.swift in Sources */,
+				54FB02842C4BD974004D8451 /* ChatSelectionViewModel.swift in Sources */,
 				547999812BE3E15B007A7CCE /* CircularProfileImageView.swift in Sources */,
+				54FB02822C4BD907004D8451 /* ChatView.swift in Sources */,
 				541D35322BE3D7E600AF38AF /* RegistrationView.swift in Sources */,
 				547FE76E2C4A55BF00C80790 /* ProfilePageView.swift in Sources */,
 				541D35332BE3D7E600AF38AF /* SignInView.swift in Sources */,
@@ -437,6 +495,7 @@
 				54D631042BF77D2400AD4A66 /* DetailForm.swift in Sources */,
 				547999712BE3DE05007A7CCE /* User.swift in Sources */,
 				543AC1222BF27A7E004CC8E1 /* FirstTimeSignInView.swift in Sources */,
+				54FB02862C4BD9EA004D8451 /* ChatViewModel.swift in Sources */,
 				54D6310B2BF77DA000AD4A66 /* CardType.swift in Sources */,
 				547999722BE3DE05007A7CCE /* UserCell.swift in Sources */,
 				541D352C2BE3D7E600AF38AF /* AuthServices.swift in Sources */,
@@ -454,6 +513,7 @@
 				54E926B62BEE47D6001ACDD8 /* ImageTools.swift in Sources */,
 				043097382BE7018C0016FCD8 /* MockData.swift in Sources */,
 				54C06B152BEBA129005D98A7 /* TimeManager.swift in Sources */,
+				54FB02802C4BD8D9004D8451 /* ChatSelectionView.swift in Sources */,
 				547999862BE41D65007A7CCE /* MenuViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -708,6 +768,14 @@
 				minimumVersion = 7.11.0;
 			};
 		};
+		54FB02892C4BDAD9004D8451 /* XCRemoteSwiftPackageReference "OpenAI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MacPaw/OpenAI.git";
+			requirement = {
+				kind = exactVersion;
+				version = 0.2.6;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -745,6 +813,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 547999822BE40D04007A7CCE /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		54FB028A2C4BDAD9004D8451 /* OpenAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54FB02892C4BDAD9004D8451 /* XCRemoteSwiftPackageReference "OpenAI" */;
+			productName = OpenAI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
