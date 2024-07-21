@@ -14,51 +14,33 @@ struct MainMenuView: View {
     }
     */
     var body: some View {
+        
         TabView {
             DashboardView()
                 .tabItem {
                     Image(systemName: "person.crop.rectangle.fill")
                 }
+                .tag(0)
             
-            // TODO: implement NameCardRepo
-//            NameCardListView()
-//                .tabItem {
-//                    Image(
-//                        systemName: "person.crop.rectangle.fill"
-//                    )
-//                }
-//                .tag(0)
-            
-//            LibraryView()
-//                .tabItem {
-//                    Image(
-//                        systemName: "building.columns.fill"
-//                    )
-//                }
-//                .tag(1)
             ChatSelectionView()
                 .tabItem {
                     Image(systemName: "face.smiling.fill")
                 }
+                .tag(1)
             
             // TODO: implement Community
             Text("Display Users Community!")
                 .tabItem {
-                    Image(
-                        systemName: "bubble"
-                    )
+                    Image(systemName: "bubble")
                 }
                 .tag(2)
             
             ProfilePageView()
                 .tabItem {
-                    Image(
-                        systemName: "person.crop.circle.fill"
-                    )
+                    Image(systemName: "person.crop.circle.fill")
+                    
                 }
                 .tag(3)
-            
-            
         }
         // system background color automatically adjust the color
         .tint(.primary)
