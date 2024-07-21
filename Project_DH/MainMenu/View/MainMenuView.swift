@@ -28,6 +28,11 @@ struct MainMenuView: View {
                 }
                 .tag(1)
             
+            MediaInputView()
+                .tabItem {
+                    Image(systemName: "plus.app.fill")
+                }
+            
             // TODO: implement Community
             Text("Display Users Community!")
                 .tabItem {

@@ -13,6 +13,7 @@
 		04F208662C4CDDBB007E78D2 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F208652C4CDDBB007E78D2 /* CalendarView.swift */; };
 		540CB1632C4BE7050033F69F /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540CB1622C4BE7050033F69F /* DashboardView.swift */; };
 		540CB1652C4BE71F0033F69F /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540CB1642C4BE71F0033F69F /* DashboardViewModel.swift */; };
+		540CB16A2C4D05190033F69F /* MediaInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540CB1692C4D05190033F69F /* MediaInputView.swift */; };
 		541D352C2BE3D7E600AF38AF /* AuthServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D35202BE3D7E600AF38AF /* AuthServices.swift */; };
 		541D352D2BE3D7E600AF38AF /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D35212BE3D7E600AF38AF /* SignInViewModel.swift */; };
 		541D352E2BE3D7E600AF38AF /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D35222BE3D7E600AF38AF /* RegisterViewModel.swift */; };
@@ -72,6 +73,7 @@
 		04F208652C4CDDBB007E78D2 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		540CB1622C4BE7050033F69F /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		540CB1642C4BE71F0033F69F /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
+		540CB1692C4D05190033F69F /* MediaInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaInputView.swift; sourceTree = "<group>"; };
 		541D35202BE3D7E600AF38AF /* AuthServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthServices.swift; sourceTree = "<group>"; };
 		541D35212BE3D7E600AF38AF /* SignInViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		541D35222BE3D7E600AF38AF /* RegisterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
@@ -227,6 +229,39 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		540CB1662C4D04EB0033F69F /* MediaInput */ = {
+			isa = PBXGroup;
+			children = (
+				540CB1672C4D04F90033F69F /* View */,
+				540CB1682C4D04FD0033F69F /* ViewModel */,
+			);
+			path = MediaInput;
+			sourceTree = "<group>";
+		};
+		540CB1672C4D04F90033F69F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				540CB1692C4D05190033F69F /* MediaInputView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		540CB1682C4D04FD0033F69F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		540CB16B2C4D05490033F69F /* CameraModule */ = {
+			isa = PBXGroup;
+			children = (
+				54E926B52BEE47D6001ACDD8 /* ImageTools.swift */,
+				54E926B72BEE4835001ACDD8 /* ImageServices.swift */,
+			);
+			path = CameraModule;
+			sourceTree = "<group>";
+		};
 		541D351F2BE3D79100AF38AF /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
@@ -270,6 +305,7 @@
 		547999742BE3DE63007A7CCE /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				540CB16B2C4D05490033F69F /* CameraModule */,
 				043097362BE701430016FCD8 /* MockData */,
 				5479997B2BE3DF7D007A7CCE /* FirebaseConstants.swift */,
 				547999752BE3DE70007A7CCE /* AlertContent.swift */,
@@ -277,8 +313,6 @@
 				541D91C42BE7D323000DED2B /* TapGestures.swift */,
 				541D91CE2BE800FA000DED2B /* TopViewController.swift */,
 				54C06B142BEBA129005D98A7 /* TimeManager.swift */,
-				54E926B52BEE47D6001ACDD8 /* ImageTools.swift */,
-				54E926B72BEE4835001ACDD8 /* ImageServices.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -354,6 +388,7 @@
 				540CB15F2C4BE6E20033F69F /* Dashboard */,
 				043097212BE6EB910016FCD8 /* NameCardRepo */,
 				043097222BE6EBD60016FCD8 /* CardTemplateLibrary */,
+				540CB1662C4D04EB0033F69F /* MediaInput */,
 				547FE7692C4A558E00C80790 /* Profile */,
 				54FB027C2C4BD786004D8451 /* GPTModule */,
 				547999702BE3DE05007A7CCE /* User */,
@@ -524,6 +559,7 @@
 				541D35322BE3D7E600AF38AF /* RegistrationView.swift in Sources */,
 				540CB1652C4BE71F0033F69F /* DashboardViewModel.swift in Sources */,
 				547FE76E2C4A55BF00C80790 /* ProfilePageView.swift in Sources */,
+				540CB16A2C4D05190033F69F /* MediaInputView.swift in Sources */,
 				541D35332BE3D7E600AF38AF /* SignInView.swift in Sources */,
 				547999882BE41D7F007A7CCE /* MainMenuView.swift in Sources */,
 				54C06B132BEA85D1005D98A7 /* ForgotPasswordView.swift in Sources */,
