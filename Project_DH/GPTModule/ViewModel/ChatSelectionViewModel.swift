@@ -103,9 +103,11 @@ struct AppChat: Codable, Identifiable {
 }
 
 
+// Returns the SwiftUI Color depending on the model selected
 enum ChatModel: String, Codable, CaseIterable, Hashable {
     case gpt3_5_turbo = "GPT 3.5 Turbo"
     case gpt4 = "GPT 4"
+    case gpt4_o = "GPT 4o"
     
     var tintColor: Color {
         switch self {
@@ -113,15 +115,21 @@ enum ChatModel: String, Codable, CaseIterable, Hashable {
             return .green
         case .gpt4:
             return .purple
+        case .gpt4_o:
+            return .blue
         }
     }
     
+    
+    // Returns the model which will be used as a parameter value for OpenAI api call
     var model: Model {
         switch self {
         case .gpt3_5_turbo:
             return .gpt3_5Turbo
         case .gpt4:
             return .gpt4
+        case .gpt4_o:
+            return .gpt4_vision_preview
         }
     }
 }

@@ -9,6 +9,7 @@ import Foundation
 import OpenAI
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import SwiftUI
 
 class ChatViewModel: ObservableObject {
     @Published var chat: AppChat?
@@ -16,6 +17,7 @@ class ChatViewModel: ObservableObject {
     @Published var messageText: String = ""
     @Published var selectedModel: ChatModel = .gpt3_5_turbo
     @Published var scrollToBottom = false
+    @Published var imageCalorie: UIImage?
     
     let chatId: String
     let db = Firestore.firestore()
@@ -78,8 +80,6 @@ class ChatViewModel: ObservableObject {
         }
         
         try await generateResponse(for: newMessage)
-        
-
     }
     
     
@@ -101,6 +101,34 @@ class ChatViewModel: ObservableObject {
         let queryMessages = messages.map { appMessage in
             Chat(role: appMessage.role, content: appMessage.text)
         }
+        // input text for the OpenAI model
+        let query = ChatQuery(model: chat?.model?.model ?? .gpt3_5Turbo, messages: queryMessages)
+        for try await result in openAI.chatsStream(query: query) {
+            guard let newText = result.choices.first?.delta.content else { continue }
+            await MainActor.run {
+                if let lastMessage = messages.last, lastMessage.role != .user {
+                    messages[messages.count-1].text += newText
+                } else {
+                    let newMessage = AppMessage(id: result.id, text: newText, role: .assistant)
+                    messages.append(newMessage)
+                }
+            }
+        }
+        if let lastMessage = messages.last {
+            _ = try storeMessage(message: lastMessage)
+        }
+    }
+    
+    
+    // OpenAI API call for generating output based on image/text input
+    // TODO: Camera-GPT-Input Implementation, refer to notion task
+    func generateCalories(for message: AppMessage, with image: UIImage) async throws{
+        
+        let openAI = OpenAI(apiToken: "API KEY HERE")
+        let queryMessages = messages.map { appMessage in
+            Chat(role: appMessage.role, content: appMessage.text)
+        }
+        // input text for the OpenAI model
         let query = ChatQuery(model: chat?.model?.model ?? .gpt3_5Turbo, messages: queryMessages)
         for try await result in openAI.chatsStream(query: query) {
             guard let newText = result.choices.first?.delta.content else { continue }
@@ -127,7 +155,5 @@ struct AppMessage: Identifiable, Codable, Hashable {
     var text: String
     let role: Chat.Role
     var createdAt: FirestoreDate = FirestoreDate()
-    
-    
 }
 
