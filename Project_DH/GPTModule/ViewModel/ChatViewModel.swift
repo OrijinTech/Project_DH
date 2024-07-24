@@ -26,6 +26,16 @@ class ChatViewModel: ObservableObject {
         self.chatId = chatId
     }
     
+    // Get OpenAI API Key from config.plist (in gitignore)
+    func loadConfig() -> [String: Any]? {
+        if let path = Bundle.main.path(forResource: "config", ofType: "plist"),
+           let xml = FileManager.default.contents(atPath: path),
+           let config = try? PropertyListSerialization.propertyList(from: xml, options: .mutableContainersAndLeaves, format: nil) as? [String: Any] {
+            return config
+        }
+        return nil
+    }
+    
     
     func fetchData() {
         db.collection(Collection().chats).document(chatId).getDocument(as: AppChat.self) { result in
@@ -97,7 +107,11 @@ class ChatViewModel: ObservableObject {
     
     
     func generateResponse(for message: AppMessage) async throws{
-        let openAI = OpenAI(apiToken: "API KEY")
+        guard let config = loadConfig(),
+              let apiKey = config["OpenAI_API_KEY"] as? String else {
+            throw NSError(domain: "AppErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "API Key not set"])
+        }
+        let openAI = OpenAI(apiToken: apiKey)
         let queryMessages = messages.map { appMessage in
             ChatQuery.ChatCompletionMessageParam(role: appMessage.role, content: appMessage.text)!
         }
@@ -123,8 +137,12 @@ class ChatViewModel: ObservableObject {
     // OpenAI API call for generating output based on image/text input
     // TODO: Camera-GPT-Input Implementation, refer to notion task
     func generateCalories(for message: AppMessage, with image: UIImage) async throws{
-        
-        let openAI = OpenAI(apiToken: "API KEY HERE")
+        // Get API Key
+        guard let config = loadConfig(),
+              let apiKey = config["OpenAI_API_KEY"] as? String else {
+            throw NSError(domain: "AppErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "API Key not set"])
+        }
+        let openAI = OpenAI(apiToken: apiKey)
         // This gets the context of past messages by the user and GPT
         // FUTURE IMPROVEMENTS: Maybe limit the number of past messages to use as context query
         let queryMessages = messages.map { appMessage in
