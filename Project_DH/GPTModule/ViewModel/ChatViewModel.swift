@@ -71,7 +71,7 @@ class ChatViewModel: ObservableObject {
         if messages.isEmpty {
             setupNewChat()
         } else {
-            
+            // do nothing at this point
         }
         
         await MainActor.run { [newMessage] in
@@ -97,12 +97,12 @@ class ChatViewModel: ObservableObject {
     
     
     func generateResponse(for message: AppMessage) async throws{
-        let openAI = OpenAI(apiToken: "API KEY HERE")
+        let openAI = OpenAI(apiToken: "API KEY")
         let queryMessages = messages.map { appMessage in
-            Chat(role: appMessage.role, content: appMessage.text)
+            ChatQuery.ChatCompletionMessageParam(role: appMessage.role, content: appMessage.text)!
         }
         // input text for the OpenAI model
-        let query = ChatQuery(model: chat?.model?.model ?? .gpt3_5Turbo, messages: queryMessages)
+        let query = ChatQuery(messages: queryMessages, model: chat?.model?.model ?? .gpt3_5Turbo)
         for try await result in openAI.chatsStream(query: query) {
             guard let newText = result.choices.first?.delta.content else { continue }
             await MainActor.run {
@@ -125,11 +125,14 @@ class ChatViewModel: ObservableObject {
     func generateCalories(for message: AppMessage, with image: UIImage) async throws{
         
         let openAI = OpenAI(apiToken: "API KEY HERE")
+        // This gets the context of past messages by the user and GPT
+        // FUTURE IMPROVEMENTS: Maybe limit the number of past messages to use as context query
         let queryMessages = messages.map { appMessage in
-            Chat(role: appMessage.role, content: appMessage.text)
+            ChatQuery.ChatCompletionMessageParam(role: appMessage.role, content: appMessage.text)!
         }
+        
         // input text for the OpenAI model
-        let query = ChatQuery(model: chat?.model?.model ?? .gpt3_5Turbo, messages: queryMessages)
+        let query = ChatQuery(messages: queryMessages, model: chat?.model?.model ?? .gpt3_5Turbo)
         for try await result in openAI.chatsStream(query: query) {
             guard let newText = result.choices.first?.delta.content else { continue }
             await MainActor.run {
@@ -150,10 +153,11 @@ class ChatViewModel: ObservableObject {
 }
 
 
+// This is the struct of an message for GPT query
 struct AppMessage: Identifiable, Codable, Hashable {
     @DocumentID var id: String?
     var text: String
-    let role: Chat.Role
+    let role: ChatQuery.ChatCompletionMessageParam.Role
     var createdAt: FirestoreDate = FirestoreDate()
 }
 
