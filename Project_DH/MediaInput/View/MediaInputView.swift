@@ -9,6 +9,7 @@
 import SwiftUI
 import PhotosUI
 struct MediaInputView: View {
+    @StateObject var viewModel = MediaInputViewModel()
     @State private var image: UIImage?
     @State private var isConfirmationDialogPresented: Bool = false
     @State private var isImagePickerPresented: Bool = false
@@ -25,6 +26,9 @@ struct MediaInputView: View {
                 ZStack{
                     if let image = image{
                         CircularImageView(image: image)
+                            .onAppear {
+                                getCalories(for: image)
+                            }
                     }else{
                         PlaceholderView()
                     }
@@ -51,12 +55,31 @@ struct MediaInputView: View {
                         FoodPhotoPicker(selectedImage: $image, pickedPhoto: $pickedPhoto)
                     }
                 }
+                .padding(.bottom)
+                
+                HStack{
+                    Text("Calories Detected: \(viewModel.calories ?? "0")")
+                }
+                
             }
             .navigationTitle("ADD A MEAL")
             .navigationBarTitleDisplayMode(.inline)
             
         } // End of Navigation Stack
+    }// End of body
+    
+    
+    func getCalories(for image: UIImage) {
+        Task {
+            do {
+                try await viewModel.generateCalories(for: image)
+            } catch {
+                print(error)
+            }
+        }
     }
+    
+    
 }
 
 #Preview {

@@ -17,7 +17,7 @@ class ChatViewModel: ObservableObject {
     @Published var messageText: String = ""
     @Published var selectedModel: ChatModel = .gpt3_5_turbo
     @Published var scrollToBottom = false
-    @Published var imageCalorie: UIImage?
+    @Published var calories: String?
     
     let chatId: String
     let db = Firestore.firestore()
@@ -112,6 +112,8 @@ class ChatViewModel: ObservableObject {
             throw NSError(domain: "AppErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "API Key not set"])
         }
         let openAI = OpenAI(apiToken: apiKey)
+        // This gets the context of past messages by the user and GPT
+        // FUTURE IMPROVEMENTS: Maybe limit the number of past messages to use as context query
         let queryMessages = messages.map { appMessage in
             ChatQuery.ChatCompletionMessageParam(role: appMessage.role, content: appMessage.text)!
         }
@@ -136,34 +138,33 @@ class ChatViewModel: ObservableObject {
     
     // OpenAI API call for generating output based on image/text input
     // TODO: Camera-GPT-Input Implementation, refer to notion task
-    func generateCalories(for message: AppMessage, with image: UIImage) async throws{
+    func generateCalories(for image: UIImage) async throws{
         // Get API Key
         guard let config = loadConfig(),
               let apiKey = config["OpenAI_API_KEY"] as? String else {
             throw NSError(domain: "AppErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "API Key not set"])
         }
         let openAI = OpenAI(apiToken: apiKey)
-        // This gets the context of past messages by the user and GPT
-        // FUTURE IMPROVEMENTS: Maybe limit the number of past messages to use as context query
-        let queryMessages = messages.map { appMessage in
-            ChatQuery.ChatCompletionMessageParam(role: appMessage.role, content: appMessage.text)!
-        }
         
-        // input text for the OpenAI model
-        let query = ChatQuery(messages: queryMessages, model: chat?.model?.model ?? .gpt3_5Turbo)
+        
+        var img_messages: [ChatQuery.ChatCompletionMessageParam] = [
+            .user(.init(content: .string("Please calculate the calories of the provided image. Please only give me the calorie format in the number of calories without textual explanation."))),
+            .user(.init(content: .string("Give me the calorie format in the number of calories without textual explanation.")))
+        ]
+        
+        
+        if let imageData = image.jpegData(compressionQuality: 1.0) {
+                    let imgParam = ChatQuery.ChatCompletionMessageParam.ChatCompletionUserMessageParam(content: .vision([.chatCompletionContentPartImageParam(.init(imageUrl: .init(url: imageData, detail: .high)))]))
+                    img_messages.append(.user(imgParam))
+                }
+        
+        let query = ChatQuery(messages: img_messages, model: .gpt4_o)
+        
         for try await result in openAI.chatsStream(query: query) {
             guard let newText = result.choices.first?.delta.content else { continue }
             await MainActor.run {
-                if let lastMessage = messages.last, lastMessage.role != .user {
-                    messages[messages.count-1].text += newText
-                } else {
-                    let newMessage = AppMessage(id: result.id, text: newText, role: .assistant)
-                    messages.append(newMessage)
-                }
+                self.calories = newText
             }
-        }
-        if let lastMessage = messages.last {
-            _ = try storeMessage(message: lastMessage)
         }
     }
     
