@@ -11,6 +11,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import OpenAI
 
+
 class ChatSelectionViewModel: ObservableObject {
     @Published var chats: [AppChat] = []
     @Published var loadingState: ChatListState = .none
@@ -100,6 +101,12 @@ struct AppChat: Codable, Identifiable {
         return "just now"
         
     }
+}
+
+
+struct ChatID: Identifiable {
+    let id: String
+    var ident: String { id }
 }
 
 

@@ -28,8 +28,8 @@ struct MediaInputView: View {
                         .textInputAutocapitalization(.never)
                         .keyboardType(.emailAddress)
                         .font(.title2)
-                        .padding(12)
                         .multilineTextAlignment(.center)
+                        .padding(.top, 12)
                 }
                 Spacer()
                 
@@ -39,7 +39,7 @@ struct MediaInputView: View {
                             .onAppear() {
                                 getMealInfo(for: image)
                             }
-                    }else{
+                    } else {
                         PlaceholderView()
                     }
                     
@@ -69,7 +69,10 @@ struct MediaInputView: View {
                 
                 HStack{
                     Text("Calories Detected: \(viewModel.calories ?? "0")")
+                        .font(.title3)
                 }
+                .padding(.top, 20)
+                .padding(.bottom, 50)
                 
                 Spacer()
             }

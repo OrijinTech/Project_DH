@@ -7,9 +7,12 @@
 
 import SwiftUI
 
+
 struct ChatSelectionView: View {
     @StateObject var viewModel = ChatSelectionViewModel()
     @StateObject var profileViewModel = ProfileViewModel()
+    
+    @State private var selectedChatId: ChatID? = nil
     
     var body: some View {
         ZStack {
@@ -23,7 +26,9 @@ struct ChatSelectionView: View {
                     case .resultsFound:
                         List {
                             ForEach(viewModel.chats) { chat in
-                                NavigationLink(value: chat.id) {
+                                Button(action: {
+                                    selectedChatId = ChatID(id: chat.id ?? "")
+                                }) {
                                     VStack(alignment: .leading) {
                                         HStack {
                                             Text(chat.topic ?? "New Chat")
@@ -79,14 +84,18 @@ struct ChatSelectionView: View {
                         }
                     }
                 })
-                .navigationDestination(for: String.self, destination: { chatId in
-                    ChatView(viewModel: .init(chatId: chatId))
-                })
+                .sheet(item: $selectedChatId) { chatId in
+                    ChatView(viewModel: .init(chatId: chatId.id))
+                }
                 .onAppear{
                     if viewModel.loadingState == .none {
                         viewModel.fetchData(user: profileViewModel.currentUser?.uid)
                     }
                 }
+//                .navigationDestination(for: String.self, destination: { chatId in
+//                    ChatView(viewModel: .init(chatId: chatId))
+//                })
+
             }// End of Navigation Stack
             
             if viewModel.showEditWindow {

@@ -15,7 +15,14 @@ struct ChatView: View {
     
     var body: some View {
         VStack {
+            Text(viewModel.chat?.topic ?? "New Chat")
+                .font(.title3)
+                .bold()
+                .padding(.top, 15)
+            
             chatSelectionView
+                .padding(.bottom, 10)
+            
             ScrollViewReader { scrollView in
                 List(viewModel.messages) { message in
                     messageView(for: message)
@@ -39,7 +46,6 @@ struct ChatView: View {
             messageInputView
             
         }
-        .navigationTitle(viewModel.chat?.topic ?? "New Chat")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
         .toolbar {
@@ -77,6 +83,7 @@ struct ChatView: View {
         Group {
             if let model = viewModel.chat?.model?.rawValue {
                 Text(model)
+                    .font(.subheadline)
             } else {
                 Picker(selection: $viewModel.selectedModel) {
                     ForEach(ChatModel.allCases, id: \.self) { model in

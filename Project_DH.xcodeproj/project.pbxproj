@@ -395,7 +395,7 @@
 				043097222BE6EBD60016FCD8 /* CardTemplateLibrary */,
 				540CB1662C4D04EB0033F69F /* MediaInput */,
 				547FE7692C4A558E00C80790 /* Profile */,
-				54FB027C2C4BD786004D8451 /* GPTModule */,
+				54FB027C2C4BD786004D8451 /* AI_Nutrition */,
 				547999702BE3DE05007A7CCE /* User */,
 				5479997D2BE3E019007A7CCE /* ViewComponents */,
 				547999742BE3DE63007A7CCE /* Utilities */,
@@ -417,13 +417,13 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		54FB027C2C4BD786004D8451 /* GPTModule */ = {
+		54FB027C2C4BD786004D8451 /* AI_Nutrition */ = {
 			isa = PBXGroup;
 			children = (
 				54FB027D2C4BD874004D8451 /* View */,
 				54FB027E2C4BD87B004D8451 /* ViewModel */,
 			);
-			path = GPTModule;
+			path = AI_Nutrition;
 			sourceTree = "<group>";
 		};
 		54FB027D2C4BD874004D8451 /* View */ = {
