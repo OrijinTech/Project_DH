@@ -13,6 +13,7 @@ import SwiftUI
 
 class MediaInputViewModel: ObservableObject {
     @Published var calories: String?
+    @Published var mealName = ""
     
     // Get OpenAI API Key from config.plist (in gitignore)
     func loadConfig() -> [String: Any]? {
@@ -34,6 +35,8 @@ class MediaInputViewModel: ObservableObject {
     // OpenAI API call for generating output based on image/text input
     // TODO: Camera-GPT-Input Implementation, refer to notion task
     func generateCalories(for image: UIImage) async throws{
+        print("NOTE: Predicting Calories..")
+        
         // Get API Key
         guard let config = loadConfig(),
               let apiKey = config["OpenAI_API_KEY"] as? String else {
@@ -41,25 +44,55 @@ class MediaInputViewModel: ObservableObject {
         }
         let openAI = OpenAI(apiToken: apiKey)
         
-        
-        var img_messages: [ChatQuery.ChatCompletionMessageParam] = [
-            .user(.init(content: .string("Please calculate the calories of the provided image. Please only give me the calorie format in the number of calories without textual explanation."))),
-            .user(.init(content: .string("Give me the calorie format in the number of calories without textual explanation.")))
+        // Improve the prompt to match our needs.
+        var promptList: [ChatQuery.ChatCompletionMessageParam] = [
+            .user(.init(content: .string("You are a nutrition expert. Please calculate the calories of the provided image."))),
+            .user(.init(content: .string("Please only provide the calorie number, do not give any textual explanation.")))
         ]
-        
         
         if let imageData = image.jpegData(compressionQuality: 1.0) {
                     let imgParam = ChatQuery.ChatCompletionMessageParam.ChatCompletionUserMessageParam(content: .vision([.chatCompletionContentPartImageParam(.init(imageUrl: .init(url: imageData, detail: .high)))]))
-                    img_messages.append(.user(imgParam))
+                    promptList.append(.user(imgParam))
                 }
         
-        let query = ChatQuery(messages: img_messages, model: .gpt4_o)
+        let query = ChatQuery(messages: promptList, model: .gpt4_o)
         
-        for try await result in openAI.chatsStream(query: query) {
-            guard let newText = result.choices.first?.delta.content else { continue }
-            await MainActor.run {
-                self.calories = newText
-            }
+        let result = try await openAI.chats(query: query)
+        let calorie_string = result.choices.first?.message.content?.string ?? "Unknown"
+        let cal_num = extractNumber(from: calorie_string)
+        
+        await MainActor.run {
+            self.calories = cal_num
+        }
+    }
+    
+    
+    func generateMealName(for image: UIImage) async throws{
+        print("NOTE: Generating the meal name.")
+        
+        // Get API Key
+        guard let config = loadConfig(),
+              let apiKey = config["OpenAI_API_KEY"] as? String else {
+            throw NSError(domain: "AppErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "API Key not set"])
+        }
+        let openAI = OpenAI(apiToken: apiKey)
+        
+        // Improve the prompt to match our needs.
+        var promptList: [ChatQuery.ChatCompletionMessageParam] = [
+            .user(.init(content: .string("You are a nutrition expert. Please predict the name of the food."))),
+            .user(.init(content: .string("Please only provide the name of the food"))),
+        ]
+        
+        if let imageData = image.jpegData(compressionQuality: 1.0) {
+                    let imgParam = ChatQuery.ChatCompletionMessageParam.ChatCompletionUserMessageParam(content: .vision([.chatCompletionContentPartImageParam(.init(imageUrl: .init(url: imageData, detail: .high)))]))
+                    promptList.append(.user(imgParam))
+                }
+        
+        let query = ChatQuery(messages: promptList, model: .gpt4_o)
+        let result = try await openAI.chats(query: query)
+        let foodName = result.choices.first?.message.content?.string
+        await MainActor.run {
+            self.mealName = foodName ?? "Unknown Food Name"
         }
     }
     

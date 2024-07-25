@@ -20,7 +20,7 @@ struct SignInView: View {
             VStack {
                 Image(.logo)
                     .resizable().scaledToFill()
-                    .frame(width: 120, height: 120)
+                    .frame(width: 160, height: 160)
                     .padding(.vertical, 20)
                 
                 Text("Welcome Back!")

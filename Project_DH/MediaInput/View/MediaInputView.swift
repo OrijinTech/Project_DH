@@ -23,11 +23,21 @@ struct MediaInputView: View {
     var body: some View {
         NavigationStack {
             VStack {
+                VStack{
+                    TextField("Meal", text: $viewModel.mealName)
+                        .textInputAutocapitalization(.never)
+                        .keyboardType(.emailAddress)
+                        .font(.title2)
+                        .padding(12)
+                        .multilineTextAlignment(.center)
+                }
+                Spacer()
+                
                 ZStack{
                     if let image = image{
                         CircularImageView(image: image)
-                            .onAppear {
-                                getCalories(for: image)
+                            .onAppear() {
+                                getMealInfo(for: image)
                             }
                     }else{
                         PlaceholderView()
@@ -61,6 +71,7 @@ struct MediaInputView: View {
                     Text("Calories Detected: \(viewModel.calories ?? "0")")
                 }
                 
+                Spacer()
             }
             .navigationTitle("ADD A MEAL")
             .navigationBarTitleDisplayMode(.inline)
@@ -69,10 +80,12 @@ struct MediaInputView: View {
     }// End of body
     
     
-    func getCalories(for image: UIImage) {
+    func getMealInfo(for image: UIImage) {
         Task {
             do {
+                print("NOTE: Prediction Started, please wait.")
                 try await viewModel.generateCalories(for: image)
+                try await viewModel.generateMealName(for: image)
             } catch {
                 print(error)
             }

@@ -47,3 +47,23 @@ extension String {
 }
 
 
+func extractNumber(from text: String) -> String? {
+    // Define the regex pattern to match the first number
+    let pattern = "\\d+"
+    
+    // Create the regular expression object
+    let regex = try? NSRegularExpression(pattern: pattern)
+    
+    // Search for the first match in the input text
+    if let match = regex?.firstMatch(in: text, range: NSRange(text.startIndex..., in: text)) {
+        // Extract the matched range
+        if let range = Range(match.range, in: text) {
+            // Convert the matched substring to an integer
+            let numberString = String(text[range])
+            return numberString
+        }
+    }
+    
+    // Return nil if no match is found
+    return nil
+}
