@@ -19,7 +19,7 @@ struct CardView1: View {
                     .foregroundColor(.blue)
                 
                 VStack(alignment: .leading) {
-                    Text(user.userName)
+                    Text(user.userName ?? user.email)
                         .font(.title)
                         .fontWeight(.bold)
                     

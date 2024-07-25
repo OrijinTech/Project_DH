@@ -59,6 +59,7 @@ class MediaInputViewModel: ObservableObject {
         
         let result = try await openAI.chats(query: query)
         let calorie_string = result.choices.first?.message.content?.string ?? "Unknown"
+        // String
         let cal_num = extractNumber(from: calorie_string)
         
         await MainActor.run {
@@ -91,6 +92,7 @@ class MediaInputViewModel: ObservableObject {
         let query = ChatQuery(messages: promptList, model: .gpt4_o)
         let result = try await openAI.chats(query: query)
         let foodName = result.choices.first?.message.content?.string
+        
         await MainActor.run {
             self.mealName = foodName ?? "Unknown Food Name"
         }

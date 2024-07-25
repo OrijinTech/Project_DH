@@ -21,7 +21,7 @@ struct CardView2: View {
                         .foregroundColor(.blue)
                     
                     VStack(alignment: .leading, spacing: 5) {
-                        Text(user.userName)
+                        Text(user.userName ?? user.email)
                             .font(.title)
                             .fontWeight(.bold)
                         

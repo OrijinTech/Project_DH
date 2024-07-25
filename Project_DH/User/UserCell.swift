@@ -15,7 +15,7 @@ struct UserCell: View {
             CircularProfileImageView(user: user, width: 40, height: 40, showCircle: false)
                 
             VStack(alignment: .leading, spacing: 2) {
-                Text(user.userName)
+                Text(user.userName ?? user.email)
                     .fontWeight(.semibold)
                 Text("One-line description.")
             }
