@@ -15,6 +15,7 @@ import FirebaseStorage
 class MediaInputViewModel: ObservableObject {
     @Published var calories: String?
     @Published var mealName = ""
+    @Published var showMessageWindow = false
     
     private let db = Firestore.firestore()
     
@@ -117,6 +118,9 @@ class MediaInputViewModel: ObservableObject {
 
         let foodData = food.toDictionary()
         try await self.db.collection("foodItems").addDocument(data: foodData)
+        self.showMessageWindow = true
+        self.calories = "0"
+        self.mealName = ""
         
     }
     

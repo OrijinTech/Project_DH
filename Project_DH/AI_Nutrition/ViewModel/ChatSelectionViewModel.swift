@@ -15,7 +15,7 @@ import OpenAI
 class ChatSelectionViewModel: ObservableObject {
     @Published var chats: [AppChat] = []
     @Published var loadingState: ChatListState = .none
-    @Published var showEditWindow = false
+    @Published var showEditWindow = true
     
     
     // Current Chat Info
