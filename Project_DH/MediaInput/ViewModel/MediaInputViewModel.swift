@@ -10,10 +10,14 @@ import OpenAI
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import SwiftUI
+import FirebaseStorage
 
 class MediaInputViewModel: ObservableObject {
     @Published var calories: String?
     @Published var mealName = ""
+    
+    private let db = Firestore.firestore()
+    
     
     // Get OpenAI API Key from config.plist (in gitignore)
     func loadConfig() -> [String: Any]? {
@@ -96,6 +100,24 @@ class MediaInputViewModel: ObservableObject {
         await MainActor.run {
             self.mealName = foodName ?? "Unknown Food Name"
         }
+    }
+    
+    
+    // Saving the food Item to Firebase
+    @MainActor
+    func saveFoodItem(image: UIImage, completion: @escaping (Error?) -> Void) async throws{
+        guard let imageUrl = try? await FoodItemImageUploader.uploadImage(image) else {
+            print("ERROR: FAILED TO GET imageURL! Source: saveFoodItem() ")
+            return
+        }
+        
+        let cal = self.calories!
+        let calorie_int = Int(cal)!
+        let food = FoodItem(calorieNumber: calorie_int, foodName: self.mealName, imageURL: imageUrl)
+
+        let foodData = food.toDictionary()
+        try await self.db.collection("foodItems").addDocument(data: foodData)
+        
     }
     
     

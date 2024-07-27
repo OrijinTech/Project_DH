@@ -15,6 +15,7 @@ struct MediaInputView: View {
     @State private var isImagePickerPresented: Bool = false
     @State private var sourceType: SourceType = .camera
     @State private var pickedPhoto: Bool = false
+    @State private var isProcessingMealInfo = false
     
     enum SourceType {
         case camera
@@ -74,6 +75,27 @@ struct MediaInputView: View {
                 .padding(.top, 20)
                 .padding(.bottom, 50)
                 
+                Button {
+                    Task { try await viewModel.saveFoodItem(image: image!) { error in
+                            if let error = error {
+                                print("ERROR: \(error.localizedDescription)")
+                            } else {
+                                print("SUCCESS: Food Saved!")
+                            }
+                        }
+                    }
+                } label: {
+                    Text("Save Meal                                                     ")
+                }                
+                .fontWeight(.semibold)
+                .foregroundStyle(.white)
+                .frame(width: 180, height: 45)
+                .background(.brand)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .padding(.vertical)
+                .shadow(radius: 3)
+                .disabled(image == nil || isProcessingMealInfo)
+                
                 Spacer()
             }
             .navigationTitle("ADD A MEAL")
@@ -84,6 +106,7 @@ struct MediaInputView: View {
     
     
     func getMealInfo(for image: UIImage) {
+        isProcessingMealInfo = true
         Task {
             do {
                 print("NOTE: Prediction Started, please wait.")
@@ -92,6 +115,7 @@ struct MediaInputView: View {
             } catch {
                 print(error)
             }
+            isProcessingMealInfo = false
         }
     }
     
@@ -111,7 +135,6 @@ struct CircularImageView: View {
             .resizable().scaledToFill()
             .frame(width: 200, height: 200)
             .clipShape(Circle())
-        
     }
 }
 

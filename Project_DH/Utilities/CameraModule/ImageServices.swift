@@ -51,5 +51,29 @@ struct PhotoUploader {
         }
     }
     
+}
+
+
+
+
+struct FoodItemImageUploader {
+    
+    static func uploadImage(_ image: UIImage) async throws -> String? {
+        guard let imageData = image.jpegData(compressionQuality: 0.75) else { return nil }
+        
+        let filename = NSUUID().uuidString
+        let storageRef = Storage.storage().reference(withPath: "/foodItem/\(filename)")
+        print("SUCCESS: STORAGE REFERENCE RETRIEVED: \(storageRef)")
+        
+        do {
+            let _ = try await storageRef.putDataAsync(imageData)
+            let url = try await storageRef.downloadURL()
+            print("SUCCESS: UPLOADED FOOD ITEM PHOTO WITH URL: \(url)")
+            return url.absoluteString
+        } catch {
+            print("ERROR: FAILED TO FOOD ITEM PHOTO. \nSource: uploadImage() \n\(error.localizedDescription) ")
+            return nil
+        }
+    }
     
 }
