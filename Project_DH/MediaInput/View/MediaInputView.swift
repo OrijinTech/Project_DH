@@ -10,6 +10,7 @@ import SwiftUI
 import PhotosUI
 struct MediaInputView: View {
     @StateObject var viewModel = MediaInputViewModel()
+    @StateObject var profileViewModel = ProfileViewModel()
     @State private var image: UIImage?
     @State private var isConfirmationDialogPresented: Bool = false
     @State private var isImagePickerPresented: Bool = false
@@ -79,20 +80,21 @@ struct MediaInputView: View {
                     // Save Meal Button
                     Button {
                         Task {
-                            do {
-                                // Save the food item
-                                try await viewModel.saveFoodItem(image: image!) { error in
-                                    if let error = error {
-                                        print("ERROR: \(error.localizedDescription)")
-                                    } else {
-                                        print("SUCCESS: Food Saved!")
+                            if let userId = profileViewModel.currentUser?.uid {
+                                do {
+                                    // Save the food item
+                                    try await viewModel.saveFoodItem(image: image!, userId: userId) { error in
+                                        if let error = error {
+                                            print("ERROR: \(error.localizedDescription)")
+                                        } else {
+                                            print("SUCCESS: Food Saved!")
+                                        }
                                     }
+                                } catch {
+                                    print("ERROR: \(error.localizedDescription)")
                                 }
-                                // Clear the image after saving
-                                clearInputs()
-                            } catch {
-                                print("ERROR: \(error.localizedDescription)")
                             }
+                            self.image = nil
                         }
                     } label: {
                         Text("Save Meal                                                     ")

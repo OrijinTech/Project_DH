@@ -8,11 +8,11 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-@MainActor
 class MealServices: ObservableObject {
     @Published var meals = [Meal]()
     private var db = Firestore.firestore()
     
+    @MainActor
     func fetchMeals(for userId: String?) async throws {
         guard let userId = userId else { return }
         let querySnapshot = try await db.collection("meal").whereField("userId", isEqualTo: userId).getDocuments()

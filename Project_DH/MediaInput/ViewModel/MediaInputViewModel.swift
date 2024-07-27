@@ -106,22 +106,96 @@ class MediaInputViewModel: ObservableObject {
     
     // Saving the food Item to Firebase
     @MainActor
-    func saveFoodItem(image: UIImage, completion: @escaping (Error?) -> Void) async throws{
+    func saveFoodItem(image: UIImage, userId: String, completion: @escaping (Error?) -> Void) async throws {
         guard let imageUrl = try? await FoodItemImageUploader.uploadImage(image) else {
             print("ERROR: FAILED TO GET imageURL! Source: saveFoodItem() ")
             return
         }
         
-        let cal = self.calories!
-        let calorie_int = Int(cal)!
-        let food = FoodItem(calorieNumber: calorie_int, foodName: self.mealName, imageURL: imageUrl)
-
-        let foodData = food.toDictionary()
-        try await self.db.collection("foodItems").addDocument(data: foodData)
+        let mealType = determineMealType()
+        checkForExistingMeal(userId: userId, mealType: mealType) { existingMeal in
+            if let meal = existingMeal {
+                self.createFoodItem(mealId: meal.id!, imageUrl: imageUrl, completion: completion)
+            } else {
+                self.createNewMeal(userId: userId, mealType: mealType) { newMealId in
+                    if let mealId = newMealId {
+                        self.createFoodItem(mealId: mealId, imageUrl: imageUrl, completion: completion)
+                    } else {
+                        completion(NSError(domain: "AppErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to create meal"]))
+                    }
+                }
+            }
+        }
         self.showMessageWindow = true
-        self.calories = "0"
-        self.mealName = ""
+    }
+    
+    // Determine the meal type based on the current time
+    func determineMealType() -> String {
+        let hour = Calendar.current.component(.hour, from: Date())
+        switch hour {
+        case 6..<10:
+            return "Breakfast"
+        case 10..<14:
+            return "Lunch"
+        case 17..<21:
+            return "Dinner"
+        default:
+            return "Snack"
+        }
+    }
+    
+    // Check if a meal exists for the current user and meal type
+    func checkForExistingMeal(userId: String, mealType: String, completion: @escaping (Meal?) -> Void) {
+        db.collection("meal")
+            .whereField("userId", isEqualTo: userId)
+            .whereField("mealType", isEqualTo: mealType)
+            .getDocuments { (querySnapshot, error) in
+                if let error = error {
+                    print("Error getting documents: \(error)")
+                    completion(nil)
+                } else if let documents = querySnapshot?.documents, !documents.isEmpty {
+                    if let meal = try? documents.first?.data(as: Meal.self) {
+                        completion(meal)
+                    } else {
+                        completion(nil)
+                    }
+                } else {
+                    completion(nil)
+                }
+            }
+    }
+    
+    // Create a new meal document
+    func createNewMeal(userId: String, mealType: String, completion: @escaping (String?) -> Void) {
+        let meal = Meal(date: Date(), mealType: mealType, userId: userId)
+        do {
+            let newDocRef = try db.collection("meal").addDocument(from: meal)
+            completion(newDocRef.documentID)
+        } catch {
+            print("Error creating meal: \(error)")
+            completion(nil)
+        }
+    }
+    
+    // Helper function to create a FoodItem document
+    func createFoodItem(mealId: String, imageUrl: String, completion: @escaping (Error?) -> Void) {
+        print("The caloriesNumber is \(self.calories)")
         
+        guard let calories = Int(self.calories ?? "0") else {
+            completion(NSError(domain: "AppErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid calorie number"]))
+            return
+        }
+        print("The mealName is \(self.mealName)")
+        
+        let foodItem = FoodItem(mealId: mealId, calorieNumber: Int(calories), foodName: self.mealName, imageURL: imageUrl)
+        do {
+            let _ = try db.collection("foodItems").addDocument(from: foodItem)
+            self.calories = "0"
+            self.mealName = ""
+            completion(nil)
+        } catch {
+            completion(error)
+        }
     }
     
     

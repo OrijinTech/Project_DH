@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import FirebaseFirestoreSwift
 
-struct Meal: Decodable, Identifiable {
+struct Meal: Decodable, Identifiable, Encodable {
     @DocumentID var id: String?
     var date: Date
     var mealType: String

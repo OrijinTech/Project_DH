@@ -12,12 +12,13 @@ import FirebaseFirestoreSwift
 
 class FoodItem: Codable, Identifiable {
     @DocumentID var id: String?
-    var mealID: String?
+    var mealId: String
     var calorieNumber: Int
     var foodName: String
     var imageURL: String
 
-    init(calorieNumber: Int, foodName: String, imageURL: String) {
+    init(mealId: String, calorieNumber: Int, foodName: String, imageURL: String) {
+        self.mealId = mealId
         self.calorieNumber = calorieNumber
         self.foodName = foodName
         self.imageURL = imageURL
@@ -27,8 +28,9 @@ class FoodItem: Codable, Identifiable {
         
         let calorieString = String(self.calorieNumber)
         
-        print(calorieString, foodName, imageURL)
+        print("The food info is : \(mealId), \(calorieString), \(foodName), \(imageURL)")
         return [
+            "mealId": mealId,
             "calorieNumber": calorieString,
             "foodName": foodName,
             "imageURL": imageURL
