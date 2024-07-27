@@ -10,6 +10,8 @@
 		043097332BE6FBD60016FCD8 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043097322BE6FBD60016FCD8 /* LibraryView.swift */; };
 		043097352BE6FE430016FCD8 /* NameCardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043097342BE6FE430016FCD8 /* NameCardListView.swift */; };
 		043097382BE7018C0016FCD8 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043097372BE7018C0016FCD8 /* MockData.swift */; };
+		04EB98A52C54B759001621A6 /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EB98A42C54B759001621A6 /* Meal.swift */; };
+		04EB98A72C54BA08001621A6 /* MealServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EB98A62C54BA08001621A6 /* MealServices.swift */; };
 		04F208662C4CDDBB007E78D2 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F208652C4CDDBB007E78D2 /* CalendarView.swift */; };
 		540CB1632C4BE7050033F69F /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540CB1622C4BE7050033F69F /* DashboardView.swift */; };
 		540CB1652C4BE71F0033F69F /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540CB1642C4BE71F0033F69F /* DashboardViewModel.swift */; };
@@ -72,6 +74,8 @@
 		043097322BE6FBD60016FCD8 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
 		043097342BE6FE430016FCD8 /* NameCardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameCardListView.swift; sourceTree = "<group>"; };
 		043097372BE7018C0016FCD8 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		04EB98A42C54B759001621A6 /* Meal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
+		04EB98A62C54BA08001621A6 /* MealServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealServices.swift; sourceTree = "<group>"; };
 		04F208652C4CDDBB007E78D2 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		540CB1622C4BE7050033F69F /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		540CB1642C4BE71F0033F69F /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
@@ -229,6 +233,8 @@
 			isa = PBXGroup;
 			children = (
 				540CB1642C4BE71F0033F69F /* DashboardViewModel.swift */,
+				04EB98A42C54B759001621A6 /* Meal.swift */,
+				04EB98A62C54BA08001621A6 /* MealServices.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -558,9 +564,11 @@
 				043097352BE6FE430016FCD8 /* NameCardListView.swift in Sources */,
 				54D631072BF77D2400AD4A66 /* CardView2.swift in Sources */,
 				54D631062BF77D2400AD4A66 /* OwnedNameCard.swift in Sources */,
+				04EB98A52C54B759001621A6 /* Meal.swift in Sources */,
 				54D6310A2BF77DA000AD4A66 /* NameCardInfo.swift in Sources */,
 				5479997C2BE3DF7D007A7CCE /* FirebaseConstants.swift in Sources */,
 				54FB02842C4BD974004D8451 /* ChatSelectionViewModel.swift in Sources */,
+				04EB98A72C54BA08001621A6 /* MealServices.swift in Sources */,
 				547999812BE3E15B007A7CCE /* CircularProfileImageView.swift in Sources */,
 				54FB02822C4BD907004D8451 /* ChatView.swift in Sources */,
 				541D35322BE3D7E600AF38AF /* RegistrationView.swift in Sources */,

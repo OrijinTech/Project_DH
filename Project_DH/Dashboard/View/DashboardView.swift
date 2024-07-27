@@ -13,10 +13,30 @@ struct DashboardView: View {
     @State private var originalDate: Date = Date()
     @State private var showingPopover = false
     @State private var isGreetingVisible: Bool = true
+    @State private var isLoading = true
+    
+    @StateObject var mealServices = MealServices()
     
     var body: some View {
         NavigationStack {
             VStack {
+                if isLoading {
+                    ProgressView("Loading...") // Loading indicator
+                        .padding()
+                } else if mealServices.meals.isEmpty {
+                    Text("No meals yet!")
+                        .font(.headline)
+                        .padding()
+                } else {
+                    List(mealServices.meals) { meal in
+                        VStack(alignment: .leading) {
+                            Text("Hello!")
+                            Text("Meal Type: \(meal.mealType)")
+                            Text("Date: \(meal.date, formatter: dateFormatter)")
+                        }
+                    }
+                }
+                /*
                 ScrollView {
                     Section {
                         ForEach(CardOptions.allCases){ card in
@@ -47,6 +67,7 @@ struct DashboardView: View {
                         }
                     }
                 }
+                 */
             }
             .navigationTitle(isGreetingVisible ? "\(getGreeting()), \(viewModel.currentUser?.userName ?? "The Healthy One!")" : "\(formattedDate(selectedDate))")
             .navigationBarTitleDisplayMode(.inline)
@@ -56,11 +77,39 @@ struct DashboardView: View {
                 }
             })
             .onAppear {
+                fetchMeals()
                 startTimer()
             }
+            
         } // End of Navigation Stack
     }
     
+    
+    // Function to fetch meals
+    private func fetchMeals() {
+        isLoading = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            if let userId = viewModel.currentUser?.uid {
+                Task {
+                    do {
+                        try await mealServices.fetchMeals(for: userId)
+                        isLoading = false
+                    } catch {
+                        print("Failed to fetch meals: \(error.localizedDescription)")
+                        isLoading = false
+                    }
+                }
+            }
+        }
+    }
+    
+    // Date Formatter
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        return formatter
+    }()
     
     /*
      Description: A function used to format date, output would be (Month Day, Year)
