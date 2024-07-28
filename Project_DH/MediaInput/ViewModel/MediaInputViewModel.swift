@@ -179,8 +179,6 @@ class MediaInputViewModel: ObservableObject {
     
     // Helper function to create a FoodItem document
     func createFoodItem(mealId: String, imageUrl: String, completion: @escaping (Error?) -> Void) {
-        print("The caloriesNumber is \(self.calories)")
-        
         guard let calories = Int(self.calories ?? "0") else {
             completion(NSError(domain: "AppErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid calorie number"]))
             return

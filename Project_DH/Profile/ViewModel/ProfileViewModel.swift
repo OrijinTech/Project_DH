@@ -14,7 +14,6 @@ import SwiftUI
 // Publish the user data from the UserService to here. We can then pass the user info into the profile view from this view model
 class ProfileViewModel: ObservableObject {
     @Published var currentUser: User?
-    
     @Published var profileImage: Image?
     @Published var userName = ""
     @Published var uiImage: UIImage?

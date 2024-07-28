@@ -1,34 +1,33 @@
 //
-//  MyDayView.swift
+//  DashboardView.swift
 //  Project_DH
 //
 //  Created by Yongxiang Jin on 7/20/24.
 //
 
+
 import SwiftUI
 
 struct DashboardView: View {
-    @StateObject var viewModel = ProfileViewModel()
+    @StateObject var viewModel = DashboardViewModel()
+    
     @State private var selectedDate: Date = Date()
     @State private var originalDate: Date = Date()
     @State private var showingPopover = false
     @State private var isGreetingVisible: Bool = true
-    @State private var isLoading = true
-    
-    @StateObject var mealServices = MealServices()
     
     var body: some View {
         NavigationStack {
             VStack {
-                if isLoading {
-                    ProgressView("Loading...") // Loading indicator
+                if viewModel.isLoading {
+                    ProgressView("Loading...")
                         .padding()
-                } else if mealServices.meals.isEmpty {
+                } else if viewModel.meals.isEmpty {
                     Text("No meals yet!")
                         .font(.headline)
                         .padding()
                 } else {
-                    List(mealServices.meals) { meal in
+                    List(viewModel.meals) { meal in
                         VStack(alignment: .leading) {
                             Text("Hello!")
                             Text("Meal Type: \(meal.mealType)")
@@ -36,40 +35,8 @@ struct DashboardView: View {
                         }
                     }
                 }
-                /*
-                ScrollView {
-                    Section {
-                        ForEach(CardOptions.allCases){ card in
-                            VStack {
-                                HStack {
-                                    Text(card.title)
-                                        .bold()
-                                        .foregroundStyle(.brand)
-                                        .padding(.leading, 15)
-                                    Spacer()
-                                }
-
-                                Divider()
-                                Button {
-                                    //
-                                } label: {
-                                    Text(LocalizedStringKey("+ add"))
-                                        .padding(.vertical)
-                                        .foregroundStyle(.brand)
-                                }
-                            }
-                            .frame(height: card.cardHeight)
-                            .background(Color(.systemGray6))
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 10)
-                            .shadow(radius: 5)
-                        }
-                    }
-                }
-                 */
-            }
-            .navigationTitle(isGreetingVisible ? "\(getGreeting()), \(viewModel.currentUser?.userName ?? "The Healthy One!")" : "\(formattedDate(selectedDate))")
+            } // End of VStack
+            .navigationTitle(isGreetingVisible ? "\(getGreeting()), \(viewModel.profileViewModel.currentUser?.userName ?? "The Healthy One!")" : "\(formattedDate(selectedDate))")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -77,30 +44,9 @@ struct DashboardView: View {
                 }
             })
             .onAppear {
-                fetchMeals()
                 startTimer()
             }
-            
         } // End of Navigation Stack
-    }
-    
-    
-    // Function to fetch meals
-    private func fetchMeals() {
-        isLoading = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            if let userId = viewModel.currentUser?.uid {
-                Task {
-                    do {
-                        try await mealServices.fetchMeals(for: userId)
-                        isLoading = false
-                    } catch {
-                        print("Failed to fetch meals: \(error.localizedDescription)")
-                        isLoading = false
-                    }
-                }
-            }
-        }
     }
     
     // Date Formatter
@@ -117,10 +63,7 @@ struct DashboardView: View {
      Output: String
     */
     func formattedDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
-        return formatter.string(from: date)
+        return dateFormatter.string(from: date)
     }
 
     /*
@@ -138,7 +81,7 @@ struct DashboardView: View {
 }
 
 /*
- Description: A function used to print greetings accroding to system time
+ Description: A function used to print greetings according to system time
  Input: Void
  Output: String
 */
@@ -156,7 +99,6 @@ func getGreeting() -> String {
         return "Hello"
     }
 }
-
 
 #Preview("English") {
     DashboardView()

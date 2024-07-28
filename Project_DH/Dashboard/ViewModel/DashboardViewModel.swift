@@ -8,41 +8,43 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
-enum CardOptions: Int, CaseIterable, Identifiable {
-    var id: Int { return self.rawValue }
+class DashboardViewModel: ObservableObject {
+    @Published var meals = [Meal]()
+    @Published var isLoading = true
+    @Published var profileViewModel = ProfileViewModel()
     
-    case breakfast
-    case lunch
-    case dinner
-    case snack
-    case water
+    private var cancellable: AnyCancellable? // To manage the subscription
+    private var mealServices = MealServices()
     
-    var title: LocalizedStringKey {
-        switch self {
-        case .breakfast:
-            return "Breakfast"
-        case .lunch:
-            return "Lunch"
-        case .dinner:
-            return "Dinner"
-        case .snack:
-            return "Snack"
-        case .water:
-            return "Water"
-        }
+    init() {
+        startObservingUser()
     }
     
-    var cardHeight: CGFloat? {
-        switch self {
-        case .breakfast, .lunch, .dinner, .snack:
-            return 120
-        case .water:
-            return 160
-        }
+    private func startObservingUser() {
+        cancellable = profileViewModel.$currentUser
+            .compactMap { $0?.uid } // Only proceed if currentUser.uid is non-nil
+            .sink { [weak self] uid in
+                self?.fetchMeals(for: uid)
+            }
     }
     
-    
-    
+    private func fetchMeals(for userId: String) {
+        isLoading = true
+        Task {
+            do {
+                try await mealServices.fetchMeals(for: userId)
+                DispatchQueue.main.async {
+                    self.meals = self.mealServices.meals
+                    self.isLoading = false
+                }
+            } catch {
+                print("Failed to fetch meals: \(error.localizedDescription)")
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                }
+            }
+        }
+    }
 }
-
