@@ -54,6 +54,7 @@
 		54B449A02BDD407C00E35D49 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54B4499F2BDD407C00E35D49 /* Preview Assets.xcassets */; };
 		54B80ECA2C5185600065B1B7 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 54B80EC92C5185600065B1B7 /* config.plist */; };
 		54B80ECC2C5191350065B1B7 /* MediaInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B80ECB2C5191350065B1B7 /* MediaInputViewModel.swift */; };
+		54BF6FE32C594095006151F6 /* MemoryManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BF6FE22C594095006151F6 /* MemoryManagement.swift */; };
 		54C06B132BEA85D1005D98A7 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C06B122BEA85D1005D98A7 /* ForgotPasswordView.swift */; };
 		54C06B152BEBA129005D98A7 /* TimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C06B142BEBA129005D98A7 /* TimeManager.swift */; };
 		54D631042BF77D2400AD4A66 /* DetailForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D630FF2BF77D2400AD4A66 /* DetailForm.swift */; };
@@ -115,6 +116,7 @@
 		54B4499F2BDD407C00E35D49 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		54B80EC92C5185600065B1B7 /* config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		54B80ECB2C5191350065B1B7 /* MediaInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaInputViewModel.swift; sourceTree = "<group>"; };
+		54BF6FE22C594095006151F6 /* MemoryManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryManagement.swift; sourceTree = "<group>"; };
 		54C06B112BE9665D005D98A7 /* Project_DHDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Project_DHDebug.entitlements; sourceTree = "<group>"; };
 		54C06B122BEA85D1005D98A7 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		54C06B142BEBA129005D98A7 /* TimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeManager.swift; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 				541D91CE2BE800FA000DED2B /* TopViewController.swift */,
 				54C06B142BEBA129005D98A7 /* TimeManager.swift */,
 				54A59C412C550FF200617B83 /* PopUpMessageView.swift */,
+				54BF6FE22C594095006151F6 /* MemoryManagement.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -607,6 +610,7 @@
 				54D6310D2BF77DF500AD4A66 /* CardListViewModel.swift in Sources */,
 				54A59C3E2C54E52F00617B83 /* FoodItem.swift in Sources */,
 				54E926B62BEE47D6001ACDD8 /* ImageTools.swift in Sources */,
+				54BF6FE32C594095006151F6 /* MemoryManagement.swift in Sources */,
 				043097382BE7018C0016FCD8 /* MockData.swift in Sources */,
 				54C06B152BEBA129005D98A7 /* TimeManager.swift in Sources */,
 				54FB02802C4BD8D9004D8451 /* ChatSelectionView.swift in Sources */,
@@ -762,7 +766,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.synapcompany.projectdh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -802,7 +806,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.synapcompany.projectdh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

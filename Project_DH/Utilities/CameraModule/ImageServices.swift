@@ -23,6 +23,7 @@ struct ImageUploader {
             let _ = try await storageRef.putDataAsync(imageData)
             let url = try await storageRef.downloadURL()
             print("SUCCESS: UPLOADED USER PROFILE PHOTO WITH URL: \(url)")
+            clearCache()
             return url.absoluteString
         } catch {
             print("ERROR: FAILED TO UPLOAD PROFILE PHOTO! \nSource: uploadImage() \n\(error.localizedDescription) ")
@@ -44,6 +45,7 @@ struct PhotoUploader {
         do {
             let _ = try await storageRef.putDataAsync(imageData)
             let url = try await storageRef.downloadURL()
+            clearCache()
             return url.absoluteString
         } catch {
             print("ERROR: FAILED TO UPLOAD PROFILE PHOTO")
@@ -59,7 +61,7 @@ struct PhotoUploader {
 struct FoodItemImageUploader {
     
     static func uploadImage(_ image: UIImage) async throws -> String? {
-        guard let imageData = image.jpegData(compressionQuality: 0.75) else { return nil }
+        guard let imageData = image.jpegData(compressionQuality: 0.5) else { return nil }
         
         let filename = NSUUID().uuidString
         let storageRef = Storage.storage().reference(withPath: "/foodItem/\(filename)")
@@ -69,6 +71,7 @@ struct FoodItemImageUploader {
             let _ = try await storageRef.putDataAsync(imageData)
             let url = try await storageRef.downloadURL()
             print("SUCCESS: UPLOADED FOOD ITEM PHOTO WITH URL: \(url)")
+            clearCache() // clears the cache after sending the image.
             return url.absoluteString
         } catch {
             print("ERROR: FAILED TO FOOD ITEM PHOTO. \nSource: uploadImage() \n\(error.localizedDescription) ")

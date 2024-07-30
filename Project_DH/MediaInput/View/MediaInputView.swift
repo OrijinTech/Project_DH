@@ -17,6 +17,8 @@ struct MediaInputView: View {
     @State private var sourceType: SourceType = .camera
     @State private var pickedPhoto: Bool = false
     @State private var isProcessingMealInfo = false
+    @State private var savePressed = false
+    
     
     
     enum SourceType {
@@ -26,99 +28,110 @@ struct MediaInputView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                VStack {
-                    VStack{
-                        TextField("Meal", text: $viewModel.mealName)
-                            .textInputAutocapitalization(.never)
-                            .keyboardType(.emailAddress)
-                            .font(.title2)
-                            .multilineTextAlignment(.center)
-                            .padding(.top, 12)
-                    }
-                    Spacer()
-                    
-                    ZStack{
-                        if let image = image{
-                            CircularImageView(image: image)
-                                .onAppear() {
-                                    getMealInfo(for: image)
-                                }
-                        } else {
-                            PlaceholderView()
+                // TODO: Maybe make the loading screen nicer.
+                // While processing meal info, show loading screen
+                if isProcessingMealInfo {
+                    ProgressView("Processing your food :-)")
+                        .padding()
+                } else {
+                    VStack {
+                        VStack{
+                            TextField("Meal", text: $viewModel.mealName)
+                                .textInputAutocapitalization(.never)
+                                .keyboardType(.emailAddress)
+                                .font(.title2)
+                                .multilineTextAlignment(.center)
+                                .padding(.top, 12)
                         }
+                        Spacer()
                         
-                    }
-                    .onTapGesture{
-                        isConfirmationDialogPresented = true
-                    }
-                    .confirmationDialog("Choose an option", isPresented: $isConfirmationDialogPresented) {
-                        Button("Camera"){
-                            sourceType = .camera
-                            isImagePickerPresented = true
-                        }
-                        Button("Photo Library"){
-                            sourceType = .photoLibrary
-                            isImagePickerPresented = true
-                        }
-                    }
-                    .fullScreenCover(isPresented: $isImagePickerPresented) {
-                        if sourceType == .camera{
-                            FoodImagePicker(isPresented: $isImagePickerPresented, image: $image, sourceType: .camera)
-                        }else{
-                            FoodPhotoPicker(selectedImage: $image, pickedPhoto: $pickedPhoto)
-                        }
-                    }
-                    .padding(.bottom)
-                    
-                    HStack{
-                        Text("Calories Detected: \(viewModel.calories ?? "0")")
-                            .font(.title3)
-                    }
-                    .padding(.top, 20)
-                    .padding(.bottom, 50)
-                    
-                    // Save Meal Button
-                    Button {
-                        Task {
-                            if let userId = profileViewModel.currentUser?.uid {
-                                do {
-                                    // Save the food item
-                                    try await viewModel.saveFoodItem(image: image!, userId: userId) { error in
-                                        if let error = error {
-                                            print("ERROR: \(error.localizedDescription)")
-                                        } else {
-                                            print("SUCCESS: Food Saved!")
-                                        }
+                        ZStack{
+                            CircularImageView(image: image ?? UIImage(resource: .plus))
+                                .onChange(of: image) {
+                                    if image != UIImage(resource: .plus){
+                                        getMealInfo(for: image!)
                                     }
-                                } catch {
-                                    print("ERROR: \(error.localizedDescription)")
                                 }
-                            }
-                            self.image = nil
                         }
-                    } label: {
-                        Text("Save Meal                                                     ")
+                        .onTapGesture{
+                            isConfirmationDialogPresented = true
+                        }
+                        .confirmationDialog("Choose an option", isPresented: $isConfirmationDialogPresented) {
+                            Button("Camera"){
+                                sourceType = .camera
+                                isImagePickerPresented = true
+                            }
+                            Button("Photo Library"){
+                                sourceType = .photoLibrary
+                                isImagePickerPresented = true
+                            }
+                        }
+                        .fullScreenCover(isPresented: $isImagePickerPresented) {
+                            if sourceType == .camera{
+                                FoodImagePicker(isPresented: $isImagePickerPresented, image: $image, sourceType: .camera)
+                            }else{
+                                FoodPhotoPicker(selectedImage: $image, pickedPhoto: $pickedPhoto)
+                            }
+                        }
+                        .padding(.bottom)
+                        
+                        HStack{
+                            Text("Calories Detected: \(viewModel.calories ?? "0")")
+                                .font(.title3)
+                        }
+                        .padding(.top, 20)
+                        .padding(.bottom, 50)
+                        
+                        // Save Meal Button
+                        Button {
+                            savePressed = true
+                            Task {
+                                defer {
+                                    savePressed = false
+                                }
+                                
+                                if let userId = profileViewModel.currentUser?.uid {
+                                    do {
+                                        // Save the food item
+                                        try await viewModel.saveFoodItem(image: image!, userId: userId) { error in
+                                            if let error = error {
+                                                print("ERROR: \(error.localizedDescription)")
+                                            } else {
+                                                print("SUCCESS: Food Saved!")
+                                            }
+                                        }
+                                    } catch {
+                                        print("ERROR: \(error.localizedDescription)")
+                                    }
+                                }
+                                self.image = UIImage(resource: .plus)
+                                viewModel.imageChanged = false
+                            }
+                        } label: {
+                            Text("Save Meal                                                     ")
+                        }
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.white)
+                        .frame(width: 180, height: 45)
+                        .background(.brand)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .padding(.vertical)
+                        .shadow(radius: 3)
+                        .disabled(!viewModel.imageChanged || isProcessingMealInfo || savePressed)
+                        
+                        Spacer()
                     }
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.white)
-                    .frame(width: 180, height: 45)
-                    .background(.brand)
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                    .padding(.vertical)
-                    .shadow(radius: 3)
-                    .disabled(image == nil || isProcessingMealInfo)
+                    .disabled(viewModel.showMessageWindow)
+                    .blur(radius: viewModel.showMessageWindow ? 5 : 0)
+                    .navigationTitle("ADD A MEAL")
+                    .navigationBarTitleDisplayMode(.inline)
                     
-                    Spacer()
-                }
-                .disabled(viewModel.showMessageWindow)
-                .blur(radius: viewModel.showMessageWindow ? 5 : 0)
-                .navigationTitle("ADD A MEAL")
-                .navigationBarTitleDisplayMode(.inline)
-                
-                if viewModel.showMessageWindow {
-                    PopUpMessageView(messageTitle: "Success!", message: "Your food item is saved.", isPresented: $viewModel.showMessageWindow)
-                        .animation(.easeInOut, value: viewModel.showMessageWindow)
-                }
+                    if viewModel.showMessageWindow {
+                        PopUpMessageView(messageTitle: "Success!", message: "Your food item is saved.", isPresented: $viewModel.showMessageWindow)
+                            .animation(.easeInOut, value: viewModel.showMessageWindow)
+                    }
+                    
+                } // end of else statement
                 
             } // End of ZStack
             
@@ -138,6 +151,7 @@ struct MediaInputView: View {
                 print(error)
             }
             isProcessingMealInfo = false
+            viewModel.imageChanged = true
         }
     }
     
@@ -164,22 +178,6 @@ struct CircularImageView: View {
             .resizable().scaledToFill()
             .frame(width: 200, height: 200)
             .clipShape(Circle())
-    }
-}
-
-
-struct PlaceholderView: View {
-    var body: some View {
-        ZStack {
-            Circle()
-                .stroke(lineWidth: 5)
-                .foregroundColor(.gray)
-                .frame(width: 200, height: 200)
-            Image(systemName: "plus")
-                .scaledToFit()
-                .font(.system(size: 50))
-                .foregroundColor(.gray)
-        }
     }
 }
 

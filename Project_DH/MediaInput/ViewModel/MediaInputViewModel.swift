@@ -16,6 +16,8 @@ class MediaInputViewModel: ObservableObject {
     @Published var calories: String?
     @Published var mealName = ""
     @Published var showMessageWindow = false
+    @Published var isLoading = false
+    @Published var imageChanged = false
     
     private let db = Firestore.firestore()
     
@@ -55,7 +57,9 @@ class MediaInputViewModel: ObservableObject {
             .user(.init(content: .string("Please only provide the calorie number, do not give any textual explanation.")))
         ]
         
-        if let imageData = image.jpegData(compressionQuality: 1.0) {
+        let processedImage = resizeImage(image: image, targetSize: CGSize(width: 224, height: 224))
+        
+        if let imageData = processedImage.jpegData(compressionQuality: 0.5) {
                     let imgParam = ChatQuery.ChatCompletionMessageParam.ChatCompletionUserMessageParam(content: .vision([.chatCompletionContentPartImageParam(.init(imageUrl: .init(url: imageData, detail: .high)))]))
                     promptList.append(.user(imgParam))
                 }
@@ -89,7 +93,9 @@ class MediaInputViewModel: ObservableObject {
             .user(.init(content: .string("Please only provide the name of the food"))),
         ]
         
-        if let imageData = image.jpegData(compressionQuality: 1.0) {
+        let processedImage = resizeImage(image: image, targetSize: CGSize(width: 224, height: 224))
+        
+        if let imageData = processedImage.jpegData(compressionQuality: 1.0) {
                     let imgParam = ChatQuery.ChatCompletionMessageParam.ChatCompletionUserMessageParam(content: .vision([.chatCompletionContentPartImageParam(.init(imageUrl: .init(url: imageData, detail: .high)))]))
                     promptList.append(.user(imgParam))
                 }
