@@ -13,9 +13,18 @@ class MealServices: ObservableObject {
     private var db = Firestore.firestore()
     
     @MainActor
-    func fetchMeals(for userId: String?) async throws {
+    func fetchMeals(for userId: String?, on date: Date) async throws {
         guard let userId = userId else { return }
-        let querySnapshot = try await db.collection("meal").whereField("userId", isEqualTo: userId).getDocuments()
+        
+        let calendar = Calendar.current
+        let startOfDay = calendar.startOfDay(for: date)
+        let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)!
+        
+        let querySnapshot = try await db.collection("meal")
+            .whereField("userId", isEqualTo: userId)
+            .whereField("date", isGreaterThanOrEqualTo: Timestamp(date: startOfDay))
+            .whereField("date", isLessThan: Timestamp(date: endOfDay))
+            .getDocuments()
         self.meals = querySnapshot.documents.compactMap { document in
             try? document.data(as: Meal.self)
         }

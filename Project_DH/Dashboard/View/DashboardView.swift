@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct DashboardView: View {
-    @StateObject var viewModel = DashboardViewModel()
+    @ObservedObject var viewModel = DashboardViewModel()
     
     @State private var selectedDate: Date = Date()
     @State private var originalDate: Date = Date()
@@ -40,11 +40,17 @@ struct DashboardView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: {
                 ToolbarItem(placement: .topBarTrailing) {
-                    CalendarView(selectedDate: $selectedDate, originalDate: $originalDate, showingPopover: $showingPopover)
+                    CalendarView(selectedDate: $selectedDate, originalDate: $originalDate, showingPopover: $showingPopover, viewModel: viewModel)
                 }
             })
             .onAppear {
                 startTimer()
+                // If we want user to see current day meals when they switching back from other view, uncomment below
+                /*
+                if let uid = viewModel.profileViewModel.currentUser?.uid {
+                    viewModel.fetchMeals(for: uid)
+                }
+                 */
             }
         } // End of Navigation Stack
     }

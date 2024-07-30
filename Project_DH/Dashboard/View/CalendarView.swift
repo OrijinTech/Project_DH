@@ -11,6 +11,7 @@ struct CalendarView: View {
     @Binding var selectedDate: Date
     @Binding var originalDate: Date
     @Binding var showingPopover: Bool
+    @ObservedObject var viewModel = DashboardViewModel()
     
     var body: some View {
         Button(action: {
@@ -45,8 +46,11 @@ struct CalendarView: View {
                     .cornerRadius(8)
                     
                     Spacer().frame(width: 20)
-                    
+
                     Button("Done") {
+                        if let uid = viewModel.profileViewModel.currentUser?.uid {
+                            viewModel.fetchMeals(for: uid, on: selectedDate)
+                        }
                         showingPopover = false
                     }
                     .frame(width: 70)
