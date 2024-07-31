@@ -45,12 +45,9 @@ struct DashboardView: View {
             })
             .onAppear {
                 startTimer()
-                // If we want user to see current day meals when they switching back from other view, uncomment below
-                /*
                 if let uid = viewModel.profileViewModel.currentUser?.uid {
                     viewModel.fetchMeals(for: uid)
                 }
-                 */
             }
         } // End of Navigation Stack
     }

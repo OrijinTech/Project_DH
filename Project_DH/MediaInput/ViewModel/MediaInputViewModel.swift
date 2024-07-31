@@ -122,6 +122,7 @@ class MediaInputViewModel: ObservableObject {
         checkForExistingMeal(userId: userId, mealType: mealType) { existingMeal in
             if let meal = existingMeal {
                 self.createFoodItem(mealId: meal.id!, imageUrl: imageUrl, completion: completion)
+                print("I am creating a new food item!")
             } else {
                 self.createNewMeal(userId: userId, mealType: mealType) { newMealId in
                     if let mealId = newMealId {
@@ -130,6 +131,7 @@ class MediaInputViewModel: ObservableObject {
                         completion(NSError(domain: "AppErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to create meal"]))
                     }
                 }
+                print("I am creating a new meal and food item!")
             }
         }
         self.showMessageWindow = true
@@ -174,6 +176,8 @@ class MediaInputViewModel: ObservableObject {
     // Create a new meal document
     func createNewMeal(userId: String, mealType: String, completion: @escaping (String?) -> Void) {
         let meal = Meal(date: Date(), mealType: mealType, userId: userId)
+        print("Meal date is \(meal.date)")
+        print("Meal type is \(meal.mealType)")
         do {
             let newDocRef = try db.collection("meal").addDocument(from: meal)
             completion(newDocRef.documentID)
