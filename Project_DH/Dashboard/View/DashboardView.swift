@@ -27,12 +27,22 @@ struct DashboardView: View {
                         .font(.headline)
                         .padding()
                 } else {
-                    List(viewModel.meals) { meal in
-                        VStack(alignment: .leading) {
-                            Text("Hello!")
-                            Text("Meal Type: \(meal.mealType)")
-                            Text("Date: \(meal.date, formatter: dateFormatter)")
+                    ScrollView {
+                        VStack {
+                            if !viewModel.breakfastItems.isEmpty {
+                                MealSectionView(title: "Breakfast", foodItems: viewModel.breakfastItems)
+                            }
+                            if !viewModel.lunchItems.isEmpty {
+                                MealSectionView(title: "Lunch", foodItems: viewModel.lunchItems)
+                            }
+                            if !viewModel.dinnerItems.isEmpty {
+                                MealSectionView(title: "Dinner", foodItems: viewModel.dinnerItems)
+                            }
+                            if !viewModel.snackItems.isEmpty {
+                                MealSectionView(title: "Snack", foodItems: viewModel.snackItems)
+                            }
                         }
+                        .padding(.horizontal)
                     }
                 }
             } // End of VStack
@@ -48,6 +58,7 @@ struct DashboardView: View {
                 if let uid = viewModel.profileViewModel.currentUser?.uid {
                     viewModel.fetchMeals(for: uid)
                 }
+                selectedDate = Date()
             }
         } // End of Navigation Stack
     }

@@ -119,6 +119,7 @@ class MediaInputViewModel: ObservableObject {
         }
         
         let mealType = determineMealType()
+        print("mealType is \(mealType)")
         checkForExistingMeal(userId: userId, mealType: mealType) { existingMeal in
             if let meal = existingMeal {
                 self.createFoodItem(mealId: meal.id!, imageUrl: imageUrl, completion: completion)
@@ -140,6 +141,7 @@ class MediaInputViewModel: ObservableObject {
     // Determine the meal type based on the current time
     func determineMealType() -> String {
         let hour = Calendar.current.component(.hour, from: Date())
+        print("It is hour \(hour)")
         switch hour {
         case 6..<10:
             return "Breakfast"
@@ -154,9 +156,16 @@ class MediaInputViewModel: ObservableObject {
     
     // Check if a meal exists for the current user and meal type
     func checkForExistingMeal(userId: String, mealType: String, completion: @escaping (Meal?) -> Void) {
+        let calendar = Calendar.current
+        let currentDate = Date()
+        let startOfDay = calendar.startOfDay(for: currentDate)
+        let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)!
+        
         db.collection("meal")
             .whereField("userId", isEqualTo: userId)
             .whereField("mealType", isEqualTo: mealType)
+            .whereField("date", isGreaterThanOrEqualTo: startOfDay)
+            .whereField("date", isLessThan: endOfDay)
             .getDocuments { (querySnapshot, error) in
                 if let error = error {
                     print("Error getting documents: \(error)")

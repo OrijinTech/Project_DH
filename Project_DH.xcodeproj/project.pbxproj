@@ -10,6 +10,7 @@
 		043097332BE6FBD60016FCD8 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043097322BE6FBD60016FCD8 /* LibraryView.swift */; };
 		043097352BE6FE430016FCD8 /* NameCardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043097342BE6FE430016FCD8 /* NameCardListView.swift */; };
 		043097382BE7018C0016FCD8 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043097372BE7018C0016FCD8 /* MockData.swift */; };
+		047512BD2C5B2B40005F223A /* MealSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047512BC2C5B2B40005F223A /* MealSectionView.swift */; };
 		04EB98A52C54B759001621A6 /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EB98A42C54B759001621A6 /* Meal.swift */; };
 		04EB98A72C54BA08001621A6 /* MealServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EB98A62C54BA08001621A6 /* MealServices.swift */; };
 		04F208662C4CDDBB007E78D2 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F208652C4CDDBB007E78D2 /* CalendarView.swift */; };
@@ -77,6 +78,7 @@
 		043097322BE6FBD60016FCD8 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
 		043097342BE6FE430016FCD8 /* NameCardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameCardListView.swift; sourceTree = "<group>"; };
 		043097372BE7018C0016FCD8 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		047512BC2C5B2B40005F223A /* MealSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealSectionView.swift; sourceTree = "<group>"; };
 		04EB98A42C54B759001621A6 /* Meal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
 		04EB98A62C54BA08001621A6 /* MealServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealServices.swift; sourceTree = "<group>"; };
 		04F208652C4CDDBB007E78D2 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				540CB1622C4BE7050033F69F /* DashboardView.swift */,
+				047512BC2C5B2B40005F223A /* MealSectionView.swift */,
 				04F208652C4CDDBB007E78D2 /* CalendarView.swift */,
 			);
 			path = View;
@@ -603,6 +606,7 @@
 				547FE76F2C4A55BF00C80790 /* ProfileViewModel.swift in Sources */,
 				547999762BE3DE70007A7CCE /* AlertContent.swift in Sources */,
 				54B4499B2BDD407B00E35D49 /* AppEntryView.swift in Sources */,
+				047512BD2C5B2B40005F223A /* MealSectionView.swift in Sources */,
 				5479997F2BE3E04F007A7CCE /* dividerOr.swift in Sources */,
 				043097332BE6FBD60016FCD8 /* LibraryView.swift in Sources */,
 				54B449992BDD407B00E35D49 /* Project_DHApp.swift in Sources */,
