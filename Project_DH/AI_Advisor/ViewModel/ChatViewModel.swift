@@ -15,7 +15,7 @@ class ChatViewModel: ObservableObject {
     @Published var chat: AppChat?
     @Published var messages: [AppMessage] = []
     @Published var messageText: String = ""
-    @Published var selectedModel: ChatModel = .gpt3_5_turbo
+    @Published var selectedModel: ChatModel = .gpt4 // default model
     @Published var scrollToBottom = false
     @Published var calories: String?
     
@@ -118,7 +118,7 @@ class ChatViewModel: ObservableObject {
             ChatQuery.ChatCompletionMessageParam(role: appMessage.role, content: appMessage.text)!
         }
         // input text for the OpenAI model
-        let query = ChatQuery(messages: queryMessages, model: chat?.model?.model ?? .gpt3_5Turbo)
+        let query = ChatQuery(messages: queryMessages, model: chat?.model?.model ?? .gpt4)
         for try await result in openAI.chatsStream(query: query) {
             guard let newText = result.choices.first?.delta.content else { continue }
             await MainActor.run {

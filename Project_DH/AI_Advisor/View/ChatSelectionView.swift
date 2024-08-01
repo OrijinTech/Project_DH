@@ -29,24 +29,34 @@ struct ChatSelectionView: View {
                                 Button(action: {
                                     selectedChatId = ChatID(id: chat.id ?? "")
                                 }) {
-                                    VStack(alignment: .leading) {
-                                        HStack {
+                                    HStack {
+                                        Image(systemName: "person.crop.square")
+                                            .resizable()
+                                            .frame(width: 40, height: 40)
+                                            .opacity(0.5)
+                                            .clipShape(Rectangle())
+                                        
+                                        VStack(alignment: .leading) {
                                             Text(chat.topic ?? "New Chat")
                                                 .font(.headline)
                                             
-                                            Spacer()
-                                            Text(chat.model?.rawValue ?? "")
-                                                .font(.caption2)
-                                                .fontWeight(.semibold)
-                                                .foregroundStyle(chat.model?.tintColor ?? .white)
-                                                .padding(6)
-                                                .background((chat.model?.tintColor ?? .white).opacity(0.1))
-                                                .clipShape(Capsule(style: .continuous))
+                                            Text(chat.lastMessageTimeAgo)
+                                                .font(.caption)
+                                                .foregroundStyle(.gray)
                                         }
-                                        Text(chat.lastMessageTimeAgo)
-                                            .font(.caption)
-                                            .foregroundStyle(.gray)
+                                        
+                                        // Text for displaying the model name
+//                                            Spacer()
+//                                            Text(chat.model?.rawValue ?? "")
+//                                                .font(.caption2)
+//                                                .fontWeight(.semibold)
+//                                                .foregroundStyle(chat.model?.tintColor ?? .white)
+//                                                .padding(6)
+//                                                .background((chat.model?.tintColor ?? .white).opacity(0.1))
+//                                                .clipShape(Capsule(style: .continuous))
+                                        
                                     }
+                                    .padding(.vertical, 7)
                                 }
                                 .onLongPressGesture {
                                     viewModel.curTitle = chat.topic ?? "New Chat"

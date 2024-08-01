@@ -19,9 +19,11 @@ struct ChatView: View {
                 .font(.title3)
                 .bold()
                 .padding(.top, 15)
+                .padding(.bottom, 20)
             
-            chatSelectionView
-                .padding(.bottom, 10)
+            // Model Selection
+//            modelSelectionView
+//                .padding(.bottom, 10)
             
             ScrollViewReader { scrollView in
                 List(viewModel.messages) { message in
@@ -79,7 +81,7 @@ struct ChatView: View {
     }
     
     
-    var chatSelectionView: some View {
+    var modelSelectionView: some View {
         Group {
             if let model = viewModel.chat?.model?.rawValue {
                 Text(model)
