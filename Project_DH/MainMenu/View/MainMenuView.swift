@@ -28,7 +28,7 @@ struct MainMenuView: View {
                 }
                 .tag(1)
             
-            MediaInputView()
+            MealInputView()
                 .tabItem {
                     Image(systemName: "plus.app.fill")
                 }

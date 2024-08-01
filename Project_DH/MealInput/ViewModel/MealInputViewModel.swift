@@ -12,7 +12,7 @@ import FirebaseFirestoreSwift
 import SwiftUI
 import FirebaseStorage
 
-class MediaInputViewModel: ObservableObject {
+class MealInputViewModel: ObservableObject {
     @Published var calories: String?
     @Published var mealName = ""
     @Published var showMessageWindow = false

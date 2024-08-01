@@ -8,8 +8,8 @@
 
 import SwiftUI
 import PhotosUI
-struct MediaInputView: View {
-    @StateObject var viewModel = MediaInputViewModel()
+struct MealInputView: View {
+    @StateObject var viewModel = MealInputViewModel()
     @StateObject var profileViewModel = ProfileViewModel()
     @State private var image: UIImage?
     @State private var isConfirmationDialogPresented: Bool = false
@@ -166,7 +166,7 @@ struct MediaInputView: View {
 }
 
 #Preview {
-    MediaInputView()
+    MealInputView()
 }
 
 
