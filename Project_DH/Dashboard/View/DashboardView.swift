@@ -52,7 +52,7 @@ struct DashboardView: View {
                         loadedFirstTime = true
                         viewModel.isRefreshing = true
                         if let uid = viewModel.profileViewModel.currentUser?.uid {
-                            viewModel.fetchMeals(for: uid)
+                            viewModel.fetchMeals(for: uid, on: selectedDate)
                         }
                     }
                 }
