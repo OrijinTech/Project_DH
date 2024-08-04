@@ -20,6 +20,7 @@ class DashboardViewModel: ObservableObject {
     @Published var snackItems = [FoodItem]()
     
     @Published var isLoading = true
+    @Published var isRefreshing = false
     @Published var profileViewModel = ProfileViewModel()
     @Published var selectedDate = Date()
     
@@ -49,6 +50,7 @@ class DashboardViewModel: ObservableObject {
                     self.meals = self.mealServices.meals
                     self.categorizeFoodItems()
                     self.isLoading = false
+                    self.isRefreshing = false
                 }
             } catch {
                 DispatchQueue.main.async {
@@ -74,7 +76,7 @@ class DashboardViewModel: ObservableObject {
     
     private func fetchFoodItems(mealId: String, mealType: String) {
         db.collection("foodItems").whereField("mealId", isEqualTo: mealId).getDocuments { querySnapshot, error in
-            if let error = error {
+            if let _ = error {
                 DispatchQueue.main.async {
                     print("ERROR: Failed to fetch food items. \nSource: DashboardViewModel/fetchFoodItems()")
                 }

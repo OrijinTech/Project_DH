@@ -243,8 +243,8 @@
 			children = (
 				540CB1642C4BE71F0033F69F /* DashboardViewModel.swift */,
 				04EB98A42C54B759001621A6 /* Meal.swift */,
-				04EB98A62C54BA08001621A6 /* MealServices.swift */,
 				54A59C3D2C54E52F00617B83 /* FoodItem.swift */,
+				04EB98A62C54BA08001621A6 /* MealServices.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";

@@ -15,13 +15,17 @@ struct DashboardView: View {
     @State private var originalDate: Date = Date()
     @State private var showingPopover = false
     @State private var isGreetingVisible: Bool = true
+    @State private var loadedFirstTime = false
     
     var body: some View {
         NavigationStack {
             VStack {
-                if viewModel.isLoading {
+                if viewModel.isLoading && loadedFirstTime == false {
                     ProgressView("Loading...")
                         .padding()
+                        .onAppear {
+                            loadedFirstTime = true
+                        }
                 } else if viewModel.meals.isEmpty {
                     Text("No meals yet!")
                         .font(.headline)
@@ -44,7 +48,16 @@ struct DashboardView: View {
                         }
                         .padding(.horizontal)
                     }
+                    .refreshable { // Pull down to refresh
+                        loadedFirstTime = true
+                        viewModel.isRefreshing = true
+                        if let uid = viewModel.profileViewModel.currentUser?.uid {
+                            viewModel.fetchMeals(for: uid)
+                        }
+                    }
                 }
+                
+                
             } // End of VStack
             .navigationTitle(isGreetingVisible ? "\(getGreeting()), \(viewModel.profileViewModel.currentUser?.userName ?? "The Healthy One!")" : "\(formattedDate(selectedDate))")
             .navigationBarTitleDisplayMode(.inline)
@@ -63,6 +76,7 @@ struct DashboardView: View {
         } // End of Navigation Stack
     }
     
+    
     // Date Formatter
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -70,6 +84,7 @@ struct DashboardView: View {
         formatter.timeStyle = .none
         return formatter
     }()
+    
     
     /*
      Description: A function used to format date, output would be (Month Day, Year)
@@ -80,6 +95,7 @@ struct DashboardView: View {
         return dateFormatter.string(from: date)
     }
 
+    
     /*
      Description: A function used to set timer for animation
      Input: Void
@@ -93,6 +109,7 @@ struct DashboardView: View {
         }
     }
 }
+
 
 /*
  Description: A function used to print greetings according to system time
