@@ -10,6 +10,7 @@ import SwiftUI
 struct MealSectionView: View {
     var title: String
     var foodItems: [FoodItem]
+    @Binding var calorieNum: Int
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -23,6 +24,10 @@ struct MealSectionView: View {
                     VStack(alignment: .leading) {
                         Text(foodItem.foodName)
                         Text("Calories: \(foodItem.calorieNumber)")
+                            .onAppear {
+                                print("ADDING CALORIES")
+                                calorieNum += foodItem.calorieNumber
+                            }
                     }
                     
                     Spacer()
@@ -52,6 +57,13 @@ struct MealSectionView: View {
     }
 }
 
+
 #Preview {
-    MealSectionView(title: "Sample Meal", foodItems: [FoodItem(mealId: "1", calorieNumber: 200, foodName: "Apple", imageURL: "https://via.placeholder.com/150")])
+    struct Preview: View {
+        @State var calNum = 10
+        var body: some View {
+            MealSectionView(title: "Sample Meal", foodItems: [FoodItem(mealId: "1", calorieNumber: 200, foodName: "Apple", imageURL: "https://via.placeholder.com/150")], calorieNum: $calNum)
+        }
+    }
+    return Preview()
 }

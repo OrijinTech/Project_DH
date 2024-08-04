@@ -17,6 +17,7 @@ struct DashboardView: View {
     @State private var isGreetingVisible: Bool = true
     @State private var loadedFirstTime = false
     
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -32,18 +33,27 @@ struct DashboardView: View {
                         .padding()
                 } else {
                     ScrollView {
+                        // Show sum of calories
+                        VStack(alignment: .leading) {
+                            HStack() {
+                                Text(LocalizedStringKey("Calories for today: \(viewModel.sumCalories)"))
+                                    .font(.title)
+                            }
+                        }
+                        .padding(.vertical, 40)
+                        
                         VStack {
                             if !viewModel.breakfastItems.isEmpty {
-                                MealSectionView(title: "Breakfast", foodItems: viewModel.breakfastItems)
+                                MealSectionView(title: "Breakfast", foodItems: viewModel.breakfastItems, calorieNum: $viewModel.sumCalories)
                             }
                             if !viewModel.lunchItems.isEmpty {
-                                MealSectionView(title: "Lunch", foodItems: viewModel.lunchItems)
+                                MealSectionView(title: "Lunch", foodItems: viewModel.lunchItems, calorieNum: $viewModel.sumCalories)
                             }
                             if !viewModel.dinnerItems.isEmpty {
-                                MealSectionView(title: "Dinner", foodItems: viewModel.dinnerItems)
+                                MealSectionView(title: "Dinner", foodItems: viewModel.dinnerItems, calorieNum: $viewModel.sumCalories)
                             }
                             if !viewModel.snackItems.isEmpty {
-                                MealSectionView(title: "Snack", foodItems: viewModel.snackItems)
+                                MealSectionView(title: "Snack", foodItems: viewModel.snackItems, calorieNum: $viewModel.sumCalories)
                             }
                         }
                         .padding(.horizontal)
@@ -51,6 +61,7 @@ struct DashboardView: View {
                     .refreshable { // Pull down to refresh
                         loadedFirstTime = true
                         viewModel.isRefreshing = true
+                        viewModel.sumCalories = 0
                         if let uid = viewModel.profileViewModel.currentUser?.uid {
                             viewModel.fetchMeals(for: uid, on: selectedDate)
                         }
@@ -67,7 +78,9 @@ struct DashboardView: View {
                 }
             })
             .onAppear {
+                print("FETCHING")
                 startTimer()
+                viewModel.sumCalories = 0
                 if let uid = viewModel.profileViewModel.currentUser?.uid {
                     viewModel.fetchMeals(for: uid)
                 }

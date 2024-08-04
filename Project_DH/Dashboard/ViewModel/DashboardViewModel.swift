@@ -18,6 +18,7 @@ class DashboardViewModel: ObservableObject {
     @Published var lunchItems = [FoodItem]()
     @Published var dinnerItems = [FoodItem]()
     @Published var snackItems = [FoodItem]()
+    @Published var sumCalories = 0
     
     @Published var isLoading = true
     @Published var isRefreshing = false
@@ -48,7 +49,8 @@ class DashboardViewModel: ObservableObject {
                 try await mealServices.fetchMeals(for: userId, on: dateToFetch)
                 DispatchQueue.main.async {
                     self.meals = self.mealServices.meals
-                    self.categorizeFoodItems()
+                    self.categorizeFoodItems() // Also fetching food items here
+                    self.sumCalories = 0
                     self.isLoading = false
                     self.isRefreshing = false
                 }
@@ -97,16 +99,16 @@ class DashboardViewModel: ObservableObject {
                 switch mealType.lowercased() {
                 case "breakfast":
                     self.breakfastItems = foodItems
-                    print("NOTE: Fetching breakfast items: \(self.breakfastItems)")
+                    print("NOTE: Fetched breakfast items: \(self.breakfastItems)")
                 case "lunch":
                     self.lunchItems = foodItems
-                    print("NOTE: Fetching lunch items:\(self.lunchItems)")
+                    print("NOTE: Fetched lunch items:\(self.lunchItems)")
                 case "dinner":
                     self.dinnerItems = foodItems
-                    print("NOTE: Fetching dinner items: \(self.dinnerItems)")
+                    print("NOTE: Fetched dinner items: \(self.dinnerItems)")
                 case "snack":
                     self.snackItems = foodItems
-                    print("NOTE: Fetching snack items: \(self.snackItems)")
+                    print("NOTE: Fetched snack items: \(self.snackItems)")
                 default:
                     print("NOTE: Unknown meal type")
                 }
