@@ -95,13 +95,13 @@ struct MealInputView: View {
                                         // Save the food item
                                         try await viewModel.saveFoodItem(image: image!, userId: userId) { error in
                                             if let error = error {
-                                                print("ERROR: \(error.localizedDescription)")
+                                                print("ERROR: Save meal button \n\(error.localizedDescription)")
                                             } else {
                                                 print("SUCCESS: Food Saved!")
                                             }
                                         }
                                     } catch {
-                                        print("ERROR: \(error.localizedDescription)")
+                                        print("ERROR: Save meal button \n\(error.localizedDescription)")
                                     }
                                 }
                                 self.image = UIImage(resource: .plus)
@@ -131,6 +131,11 @@ struct MealInputView: View {
                             .animation(.easeInOut, value: viewModel.showMessageWindow)
                     }
                     
+                    if viewModel.showInputError {
+                        PopUpMessageView(messageTitle: "Apologies", message: "Your image does not contain any food, please try again.", isPresented: $viewModel.showInputError)
+                            .animation(.easeInOut, value: viewModel.showInputError)
+                    }
+                    
                 } // end of else statement
                 
             } // End of ZStack
@@ -145,19 +150,28 @@ struct MealInputView: View {
         Task {
             do {
                 print("NOTE: Prediction Started, please wait.")
-                try await viewModel.generateCalories(for: image)
-                try await viewModel.generateMealName(for: image)
+                if try await viewModel.validFoodItem(for: image) { // check if the image contains food
+                    try await viewModel.generateCalories(for: image)
+                    try await viewModel.generateMealName(for: image)
+                    viewModel.imageChanged = true
+                }
+                else {
+                    // clear input
+                    clearInputs()
+                    viewModel.showInputError = true
+                    viewModel.imageChanged = false
+                }
+                
             } catch {
                 print(error)
             }
             isProcessingMealInfo = false
-            viewModel.imageChanged = true
         }
     }
     
     
     func clearInputs() {
-        self.image = nil
+        self.image = UIImage(resource: .plus)
         viewModel.calories = "0"
         viewModel.mealName = ""
     }

@@ -48,7 +48,7 @@ struct PhotoUploader {
             clearCache()
             return url.absoluteString
         } catch {
-            print("ERROR: FAILED TO UPLOAD PROFILE PHOTO")
+            print("ERROR: FAILED TO UPLOAD PROFILE PHOTO \nSource: ImageServices/PhotoUploader/uploadImage()")
             return nil
         }
     }

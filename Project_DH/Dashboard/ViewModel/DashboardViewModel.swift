@@ -76,13 +76,13 @@ class DashboardViewModel: ObservableObject {
         db.collection("foodItems").whereField("mealId", isEqualTo: mealId).getDocuments { querySnapshot, error in
             if let error = error {
                 DispatchQueue.main.async {
-                    print("Failed to fetch food items: \(error.localizedDescription)")
+                    print("ERROR: Failed to fetch food items. \nSource: DashboardViewModel/fetchFoodItems()")
                 }
                 return
             }
             guard let documents = querySnapshot?.documents else {
                 DispatchQueue.main.async {
-                    print("No food items found")
+                    print("ERROR: No food items found. \nSource: DashboardViewModel/fetchFoodItems()")
                 }
                 return
             }
@@ -95,18 +95,18 @@ class DashboardViewModel: ObservableObject {
                 switch mealType.lowercased() {
                 case "breakfast":
                     self.breakfastItems = foodItems
-                    print("I get one breakfast \(self.breakfastItems)")
+                    print("NOTE: Fetching breakfast items: \(self.breakfastItems)")
                 case "lunch":
                     self.lunchItems = foodItems
-                    print("I get one lunch \(self.lunchItems)")
+                    print("NOTE: Fetching lunch items:\(self.lunchItems)")
                 case "dinner":
                     self.dinnerItems = foodItems
-                    print("I get one dinner \(self.dinnerItems)")
+                    print("NOTE: Fetching dinner items: \(self.dinnerItems)")
                 case "snack":
                     self.snackItems = foodItems
-                    print("I get one snack \(self.snackItems)")
+                    print("NOTE: Fetching snack items: \(self.snackItems)")
                 default:
-                    print("Unknown meal type")
+                    print("NOTE: Unknown meal type")
                 }
             }
         }

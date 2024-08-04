@@ -136,39 +136,6 @@ class ChatViewModel: ObservableObject {
     }
     
     
-    // OpenAI API call for generating output based on image/text input
-    // TODO: Camera-GPT-Input Implementation, refer to notion task
-    func generateCalories(for image: UIImage) async throws{
-        // Get API Key
-        guard let config = loadConfig(),
-              let apiKey = config["OpenAI_API_KEY"] as? String else {
-            throw NSError(domain: "AppErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "API Key not set"])
-        }
-        let openAI = OpenAI(apiToken: apiKey)
-        
-        
-        var img_messages: [ChatQuery.ChatCompletionMessageParam] = [
-            .user(.init(content: .string("Please calculate the calories of the provided image. Please only give me the calorie format in the number of calories without textual explanation."))),
-            .user(.init(content: .string("Give me the calorie format in the number of calories without textual explanation.")))
-        ]
-        
-        
-        if let imageData = image.jpegData(compressionQuality: 1.0) {
-                    let imgParam = ChatQuery.ChatCompletionMessageParam.ChatCompletionUserMessageParam(content: .vision([.chatCompletionContentPartImageParam(.init(imageUrl: .init(url: imageData, detail: .high)))]))
-                    img_messages.append(.user(imgParam))
-                }
-        
-        let query = ChatQuery(messages: img_messages, model: .gpt4_o)
-        
-        for try await result in openAI.chatsStream(query: query) {
-            guard let newText = result.choices.first?.delta.content else { continue }
-            await MainActor.run {
-                self.calories = newText
-            }
-        }
-    }
-    
-    
 }
 
 
