@@ -10,9 +10,13 @@ import Firebase
 import FirebaseStorage
 
 
-
+/// This struct is for uploading general images.
 struct ImageUploader {
     
+    /// Handles the logic for uploading images onto the Firebase.
+    /// - Parameters:
+    ///     - image: The image to upload.
+    /// - Returns: Returns the optional url of the string which was saved to Firebase.
     static func uploadImage(_ image: UIImage) async throws -> String? {
         guard let imageData = image.jpegData(compressionQuality: 0.2) else { return nil }
         let filename = NSUUID().uuidString
@@ -30,7 +34,6 @@ struct ImageUploader {
             return nil
         }
     }
-    
     
 }
 
@@ -56,10 +59,13 @@ struct PhotoUploader {
 }
 
 
-
-
+/// This struct is for uploading food item images.
 struct FoodItemImageUploader {
     
+    /// Handles the logic for uploading images onto the Firebase.
+    /// - Parameters:
+    ///     - image: The image to upload.
+    /// - Returns: Returns the optional url of the string which was saved to Firebase.
     static func uploadImage(_ image: UIImage) async throws -> String? {
         guard let imageData = image.jpegData(compressionQuality: 0.5) else { return nil }
         

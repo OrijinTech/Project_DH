@@ -7,10 +7,12 @@
 
 import SwiftUI
 
+
 struct MealSectionView: View {
     var title: String
     var foodItems: [FoodItem]
     @Binding var calorieNum: Int
+    
     
     var body: some View {
         VStack(alignment: .leading) {

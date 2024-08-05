@@ -8,7 +8,9 @@
 import SwiftUI
 import PhotosUI
 
+
 struct EditProfileView: View {
+    
     @EnvironmentObject var viewModel: ProfileViewModel
     @Binding var showingProfileInfo: Bool
     
@@ -19,7 +21,6 @@ struct EditProfileView: View {
     @State private var pickedPhoto: Bool = false
     
     var currentEditTab = ""
-    
     
     enum SourceType {
         case camera
@@ -132,8 +133,7 @@ struct EditProfileView: View {
         
     }
     
-    
-    
+    /// The view to show a popup for editing user info.
     var EditInfoView: some View {
         VStack {
             VStack {
@@ -170,12 +170,8 @@ struct EditProfileView: View {
     
 }
 
-#Preview {
-    EditProfileView(showingProfileInfo: .constant(true))
-        .environmentObject(ProfileViewModel())
-}
 
-
+/// The view to show the profile picture.
 struct ProfileImageView: View {
     var image: Image
    
@@ -192,6 +188,15 @@ struct ProfileImageView: View {
         }
    }
 }
+
+
+#Preview {
+    EditProfileView(showingProfileInfo: .constant(true))
+        .environmentObject(ProfileViewModel())
+}
+
+
+
 
 
 

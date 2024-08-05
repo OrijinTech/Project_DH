@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// The view which shows the divider line with an "or" in between.
 struct dividerOr: View {
     var body: some View {
         HStack {

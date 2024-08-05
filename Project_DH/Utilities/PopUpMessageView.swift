@@ -7,7 +7,9 @@
 
 import SwiftUI
 
+
 struct PopUpMessageView: View {
+    
     var messageTitle: String
     var message: String
     @Binding var isPresented: Bool
@@ -42,6 +44,7 @@ struct PopUpMessageView: View {
 
 
 struct PopUpMessageView_Previews: PreviewProvider {
+    
     @State static var isPresented = true
     
     static var previews: some View {
@@ -52,4 +55,5 @@ struct PopUpMessageView_Previews: PreviewProvider {
         )
         .previewLayout(.sizeThatFits) // Adjust the preview size to fit the view
     }
+    
 }

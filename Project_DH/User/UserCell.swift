@@ -7,7 +7,9 @@
 
 import SwiftUI
 
+
 struct UserCell: View {
+    
     let user: User
     
     var body: some View {
@@ -35,6 +37,7 @@ struct UserCell: View {
         .padding(.horizontal, 15)
     }
 }
+
 
 #Preview {
     UserCell(user: User.MOCK_USER)

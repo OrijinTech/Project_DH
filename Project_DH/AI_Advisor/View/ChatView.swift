@@ -15,7 +15,7 @@ struct ChatView: View {
     
     var body: some View {
         VStack {
-            Text(viewModel.chat?.topic ?? "New Chat")
+            Text(viewModel.chat?.topic ?? "AI Advisor")
                 .font(.title3)
                 .bold()
                 .padding(.top, 15)
@@ -38,7 +38,7 @@ struct ChatView: View {
                 }
                 .background(Color(uiColor: .systemGroupedBackground))
                 .listStyle(.plain)
-                .onChange(of: viewModel.scrollToBottom) { error, scroll in // When scrollToBottom changes to true, scroll to bottom
+                .onChange(of: viewModel.scrollToBottom) { error, scroll in // When scrollToBottom variable changes to true, scroll to bottom
                     if scroll {
                         scrollToBottom(scrollView: scrollView)
                     }
@@ -71,16 +71,7 @@ struct ChatView: View {
     }// End of body view
     
     
-    func scrollToBottom(scrollView: ScrollViewProxy) {
-        guard !viewModel.messages.isEmpty, let lastMessage = viewModel.messages.last else {
-            return
-        }
-        withAnimation {
-            scrollView.scrollTo(lastMessage.id, anchor: .bottom)
-        }
-    }
-    
-    
+    /// This view shows the AI model selection bar on the top.
     var modelSelectionView: some View {
         Group {
             if let model = viewModel.chat?.model?.rawValue {
@@ -101,24 +92,7 @@ struct ChatView: View {
     }
     
     
-    func messageView(for message: AppMessage) -> some View {
-        HStack {
-            if (message.role == .user) {
-                Spacer()
-            }
-            Text(message.text)
-                .padding(.horizontal)
-                .padding(.vertical, 12)
-                .foregroundStyle(message.role == .user ? .white : .black)
-                .background(message.role == .user ? .brand : .white)
-                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-            if (message.role == .assistant) {
-                Spacer()
-            }
-        }
-    }
-    
-    
+    /// This view shows the user input elements, including the message enter, and message sending button.
     var messageInputView: some View {
         HStack {
             TextField("Send a message...", text: $viewModel.messageText)
@@ -143,6 +117,45 @@ struct ChatView: View {
     }
     
     
+    /// This function shows the view for displaying the messages inside the chat.
+    /// - Parameters:
+    ///     - for: the massage to display
+    /// - Returns: the view to show
+    func messageView(for message: AppMessage) -> some View {
+        HStack {
+            if (message.role == .user) {
+                Spacer()
+            }
+            Text(message.text)
+                .padding(.horizontal)
+                .padding(.vertical, 12)
+                .foregroundStyle(message.role == .user ? .white : .black)
+                .background(message.role == .user ? .brand : .white)
+                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+            if (message.role == .assistant) {
+                Spacer()
+            }
+        }
+    }
+    
+    
+    /// This function allows the selected chat to automatically scroll to the bottom once opened.
+    /// - Parameters:
+    ///     - scrollView: The ScrollViewProxy
+    /// - Returns: none
+    func scrollToBottom(scrollView: ScrollViewProxy) {
+        guard !viewModel.messages.isEmpty, let lastMessage = viewModel.messages.last else {
+            return
+        }
+        withAnimation {
+            scrollView.scrollTo(lastMessage.id, anchor: .bottom)
+        }
+    }
+    
+    
+    /// This function handles the user action for sending the message.
+    /// - Parameters: none
+    /// - Returns: none
     func sendMessage() {
         Task {
             do {
@@ -153,8 +166,8 @@ struct ChatView: View {
         }
     }
     
-    
 }
+
 
 #Preview {
     ChatView(viewModel: .init(chatId: ""))

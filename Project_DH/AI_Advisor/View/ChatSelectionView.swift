@@ -9,6 +9,7 @@ import SwiftUI
 
 
 struct ChatSelectionView: View {
+    
     @StateObject var viewModel = ChatSelectionViewModel()
     @StateObject var profileViewModel = ProfileViewModel()
     
@@ -37,7 +38,7 @@ struct ChatSelectionView: View {
                                             .clipShape(Rectangle())
                                         
                                         VStack(alignment: .leading) {
-                                            Text(chat.topic ?? "New Chat")
+                                            Text(chat.topic ?? "AI Advisor")
                                                 .font(.headline)
                                             
                                             Text(chat.lastMessageTimeAgo)
@@ -117,6 +118,7 @@ struct ChatSelectionView: View {
     } // End of body
     
     
+    /// The view which shows a popup to edit the title of the AI Advisor chat.
     var editTitleView: some View {
         VStack {
             VStack {
@@ -149,6 +151,7 @@ struct ChatSelectionView: View {
     
     
 }
+
 
 #Preview {
     ChatSelectionView()

@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+
 struct DashboardView: View {
     @ObservedObject var viewModel = DashboardViewModel()
     
@@ -90,7 +91,10 @@ struct DashboardView: View {
     }
     
     
-    // Date Formatter
+    /// Produce a DateFormatter object, with adjusted date and time style.
+    /// - Parameters:
+    ///     - none
+    /// - Returns: A DateFormatter object.
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
@@ -99,21 +103,19 @@ struct DashboardView: View {
     }()
     
     
-    /*
-     Description: A function used to format date, output would be (Month Day, Year)
-     Input: date
-     Output: String
-    */
+    /// A function used to format date.
+    /// - Parameters:
+    ///     - _date: The date object.
+    /// - Returns: String of the formatted date.
     func formattedDate(_ date: Date) -> String {
         return dateFormatter.string(from: date)
     }
 
     
-    /*
-     Description: A function used to set timer for animation
-     Input: Void
-     Output: Void
-    */
+    /// The function starts a timer which an 5 second interval.
+    /// - Parameters:
+    ///     - _date: The date object.
+    /// - Returns: String of the formatted date.
     func startTimer() {
         Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { timer in
             withAnimation(.easeInOut(duration: 1.0)) {
@@ -124,11 +126,9 @@ struct DashboardView: View {
 }
 
 
-/*
- Description: A function used to print greetings according to system time
- Input: Void
- Output: String
-*/
+/// A function used to print greetings according to system time
+/// - Parameters: none
+/// - Returns: String of the greeting.
 func getGreeting() -> String {
     let hour = Calendar.current.component(.hour, from: Date())
     
@@ -144,9 +144,11 @@ func getGreeting() -> String {
     }
 }
 
+
 #Preview("English") {
     DashboardView()
 }
+
 
 #Preview("Chinese") {
     DashboardView()

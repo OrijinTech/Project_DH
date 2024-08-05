@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+
+/// The major view for showing the forgot password page.
+/// - Parameters:
+///     - none
+/// - Returns: none
 struct ForgotPasswordView: View {
     @StateObject var authViewModel = SignInViewModel()
     @State private var refreshTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()

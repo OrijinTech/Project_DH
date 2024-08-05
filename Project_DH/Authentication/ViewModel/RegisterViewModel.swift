@@ -8,6 +8,7 @@
 import Foundation
 
 
+/// The viewmodel for Register View.
 class RegisterViewModel: ObservableObject {
     @Published var email = ""
     @Published var password = ""
@@ -23,13 +24,18 @@ class RegisterViewModel: ObservableObject {
     
     
     // MARK: Creating a new user with Firebase Auth
+    /// This function triggers for user creation which was requested on the front end. Calls the corresponding function within the AuthServices.
+    /// - Parameters: none
+    /// - Returns: none
     func createUser() async throws {
         guard isValidForm else { return }
         try await AuthServices.sharedAuth.createUser(withEmail: email, password: password, username: username)
     }
     
     
-    // MARK: Set the error message for the user input forms.
+    /// Checks whether the sign up form is correctly filled.
+    /// - Parameters: none
+    /// - Returns: Boolean value which checks for registration form.
     var isValidForm: Bool {
         // check if we have all values in the profile forms
         guard !username.isEmpty && !email.isEmpty && !password.isEmpty else {

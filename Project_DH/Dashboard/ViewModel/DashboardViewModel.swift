@@ -11,6 +11,7 @@ import Combine
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
+
 class DashboardViewModel: ObservableObject {
     @Published var meals = [Meal]()
     
@@ -33,6 +34,9 @@ class DashboardViewModel: ObservableObject {
         startObservingUser()
     }
     
+    /// Observe changes to current user and perform an action when the user ID (uid) changes
+    /// - Parameters: none
+    /// - Returns: none
     private func startObservingUser() {
         cancellable = profileViewModel.$currentUser
             .compactMap { $0?.uid } // Only proceed if currentUser.uid is non-nil
@@ -41,6 +45,12 @@ class DashboardViewModel: ObservableObject {
             }
     }
     
+    
+    /// This function fetches all meals for a given user id for a designated day.
+    /// - Parameters:
+    ///     - for: user's id
+    ///     - on: the date on which meals are fetched
+    /// - Returns: none
     func fetchMeals(for userId: String, on date: Date? = nil) {
         let dateToFetch = date ?? Date()
         isLoading = true
@@ -63,6 +73,11 @@ class DashboardViewModel: ObservableObject {
         }
     }
     
+    
+    /// This function classifies each fetched food item by calling the fetchFoodItems function.
+    /// - Parameters: none
+    /// - Returns: none
+    /// - Note: This function will clear all food items inside breakfastItems, lunchItems, dinnerItems, and snackItems list.
     private func categorizeFoodItems() {
         DispatchQueue.main.async {
             self.breakfastItems = []
@@ -70,12 +85,18 @@ class DashboardViewModel: ObservableObject {
             self.dinnerItems = []
             self.snackItems = []
         }
-        
+        // For each meal (breakfast, lunch...), get all corresponding food items.
         for meal in meals {
             fetchFoodItems(mealId: meal.id ?? "", mealType: meal.mealType)
         }
     }
     
+    
+    /// This function fetches all food items based on their id and meal types.
+    /// - Parameters:
+    ///     - mealId: the meal id
+    ///     - mealType: the type of the meal (breakfast, lunch, dinner, snack)
+    /// - Returns: none
     private func fetchFoodItems(mealId: String, mealType: String) {
         db.collection("foodItems").whereField("mealId", isEqualTo: mealId).getDocuments { querySnapshot, error in
             if let _ = error {

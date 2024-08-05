@@ -7,6 +7,8 @@
 
 import Foundation
 
+
+/// This struct is for mock users.
 struct MockData {
     
     static let mockUsers: [User] = [

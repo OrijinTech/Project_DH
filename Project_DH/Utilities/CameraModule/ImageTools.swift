@@ -14,18 +14,18 @@ import PhotosUI
 // ===================================================================================================================================================================
 //                                                                             USER IMAGE PICKERS
 // ===================================================================================================================================================================
-// ImagePicker struct is a SwiftUI wrapper around UIImagePickerController
+/// ImagePicker struct is a SwiftUI wrapper around UIImagePickerController
 struct ImagePicker: UIViewControllerRepresentable {
     @Binding var isPresented: Bool  // Binding to control the presentation of the image picker
     @Binding var image: UIImage?    // Binding to hold the selected image
     var sourceType: UIImagePickerController.SourceType// Specifies the source type for the image picker (camera or photo library)
     
-    // This method creates a Coordinator instance which handles the delegation of UIImagePickerController
+    /// This method creates a Coordinator instance which handles the delegation of UIImagePickerController
     func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)
     }
     
-    // This method creates a UIImagePickerController instance and sets its delegate and source type
+    /// This method creates a UIImagePickerController instance and sets its delegate and source type
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.delegate = context.coordinator  // Set the delegate to handle image picker events
@@ -33,10 +33,10 @@ struct ImagePicker: UIViewControllerRepresentable {
         return picker
     }
     
-    // This method is used to update the UIImagePickerController when SwiftUI view updates, but not used in this example
+    /// This method is used to update the UIImagePickerController when SwiftUI view updates, but not used in this example
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) { }
     
-    // Coordinator class to handle the delegate methods of UIImagePickerController
+    /// Coordinator class to handle the delegate methods of UIImagePickerController
     class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
         var parent:ImagePicker  // Reference to the parent ImagePicker struct
         init(parent: ImagePicker) {
@@ -44,7 +44,7 @@ struct ImagePicker: UIViewControllerRepresentable {
         }
         
         
-        // This delegate method is called when an image is selected
+        /// This delegate method is called when an image is selected
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let uiImage = info[.originalImage] as? UIImage {// Retrieve the selected image
                 parent.image = uiImage
@@ -52,14 +52,14 @@ struct ImagePicker: UIViewControllerRepresentable {
             parent.isPresented = false// Dismiss the image picker
         }
         
-        // This delegate method is called when the image picker is cancelled
+        /// This delegate method is called when the image picker is cancelled
         func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
             parent.isPresented = false // Dismiss the image picker
         }
     }
 }
 
-// PhotoPicker struct is a SwiftUI wrapper around PHPickerViewController, which is a modern replacement for UIImagePickerController for picking photos from the library
+/// PhotoPicker struct is a SwiftUI wrapper around PHPickerViewController, which is a modern replacement for UIImagePickerController for picking photos from the library
 struct PhotoPicker: UIViewControllerRepresentable {
     @Binding var selectedImage: UIImage?  // Binding to hold the selected image
     @EnvironmentObject var viewModel: ProfileViewModel
@@ -72,7 +72,7 @@ struct PhotoPicker: UIViewControllerRepresentable {
             self.parent = parent
         }
         
-        // This delegate method is called when an image is selected
+        /// This delegate method is called when an image is selected
         func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
             if let result = results.first{
                 result .itemProvider.loadObject(ofClass: UIImage.self) { object, error in
@@ -93,13 +93,13 @@ struct PhotoPicker: UIViewControllerRepresentable {
     
     
     
-    // This method creates a Coordinator instance which handles the delegation of PHPickerViewController
+    /// This method creates a Coordinator instance which handles the delegation of PHPickerViewController
     func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)
         
     }
     
-    // This method creates a PHPickerViewController instance with specified configurations
+    /// This method creates a PHPickerViewController instance with specified configurations
     func makeUIViewController(context: Context) -> PHPickerViewController {
         var configuration = PHPickerConfiguration()
         
@@ -111,7 +111,7 @@ struct PhotoPicker: UIViewControllerRepresentable {
         
     }
     
-    // This method is used to update the PHPickerViewController when SwiftUI view updates, but not used in this example
+    /// This method is used to update the PHPickerViewController when SwiftUI view updates, but not used in this example
     func updateUIViewController(_ uiViewController: PHPickerViewController, context: Context) { }
 }
 
@@ -122,18 +122,18 @@ struct PhotoPicker: UIViewControllerRepresentable {
 // ======================================================================================================================================================================
 
 
-// ImagePicker struct is a SwiftUI wrapper around UIImagePickerController
+/// ImagePicker struct is a SwiftUI wrapper around UIImagePickerController
 struct FoodImagePicker: UIViewControllerRepresentable {
     @Binding var isPresented: Bool  // Binding to control the presentation of the image picker
     @Binding var image: UIImage?    // Binding to hold the selected image
     var sourceType: UIImagePickerController.SourceType// Specifies the source type for the image picker (camera or photo library)
     
-    // This method creates a Coordinator instance which handles the delegation of UIImagePickerController
+    /// This method creates a Coordinator instance which handles the delegation of UIImagePickerController
     func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)
     }
     
-    // This method creates a UIImagePickerController instance and sets its delegate and source type
+    /// This method creates a UIImagePickerController instance and sets its delegate and source type
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.delegate = context.coordinator  // Set the delegate to handle image picker events
@@ -141,10 +141,10 @@ struct FoodImagePicker: UIViewControllerRepresentable {
         return picker
     }
     
-    // This method is used to update the UIImagePickerController when SwiftUI view updates, but not used in this example
+    /// This method is used to update the UIImagePickerController when SwiftUI view updates, but not used in this example
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) { }
     
-    // Coordinator class to handle the delegate methods of UIImagePickerController
+    /// Coordinator class to handle the delegate methods of UIImagePickerController
     class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
         var parent:FoodImagePicker  // Reference to the parent ImagePicker struct
         init(parent: FoodImagePicker) {
@@ -152,7 +152,7 @@ struct FoodImagePicker: UIViewControllerRepresentable {
         }
         
         
-        // This delegate method is called when an image is selected
+        /// This delegate method is called when an image is selected
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let uiImage = info[.originalImage] as? UIImage {// Retrieve the selected image
                 parent.image = uiImage
@@ -160,7 +160,7 @@ struct FoodImagePicker: UIViewControllerRepresentable {
             parent.isPresented = false// Dismiss the image picker
         }
         
-        // This delegate method is called when the image picker is cancelled
+        /// This delegate method is called when the image picker is cancelled
         func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
             parent.isPresented = false // Dismiss the image picker
         }
@@ -168,7 +168,7 @@ struct FoodImagePicker: UIViewControllerRepresentable {
 }
 
 
-// PhotoPicker struct is a SwiftUI wrapper around PHPickerViewController, which is a modern replacement for UIImagePickerController for picking photos from the library
+/// PhotoPicker struct is a SwiftUI wrapper around PHPickerViewController, which is a modern replacement for UIImagePickerController for picking photos from the library
 struct FoodPhotoPicker: UIViewControllerRepresentable {
     @Binding var selectedImage: UIImage?  // Binding to hold the selected image
     @Binding var pickedPhoto: Bool
@@ -180,7 +180,7 @@ struct FoodPhotoPicker: UIViewControllerRepresentable {
             self.parent = parent
         }
         
-        // This delegate method is called when an image is selected
+        /// This delegate method is called when an image is selected
         func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
             if let result = results.first{
                 result .itemProvider.loadObject(ofClass: UIImage.self) { object, error in
@@ -199,13 +199,13 @@ struct FoodPhotoPicker: UIViewControllerRepresentable {
     
     
     
-    // This method creates a Coordinator instance which handles the delegation of PHPickerViewController
+    /// This method creates a Coordinator instance which handles the delegation of PHPickerViewController
     func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)
         
     }
     
-    // This method creates a PHPickerViewController instance with specified configurations
+    /// This method creates a PHPickerViewController instance with specified configurations
     func makeUIViewController(context: Context) -> PHPickerViewController {
         var configuration = PHPickerConfiguration()
         
@@ -217,7 +217,7 @@ struct FoodPhotoPicker: UIViewControllerRepresentable {
         
     }
     
-    // This method is used to update the PHPickerViewController when SwiftUI view updates, but not used in this example
+    /// This method is used to update the PHPickerViewController when SwiftUI view updates, but not used in this example
     func updateUIViewController(_ uiViewController: PHPickerViewController, context: Context) { }
 }
 
@@ -228,7 +228,11 @@ struct FoodPhotoPicker: UIViewControllerRepresentable {
 // ======================================================================================================================================================================
 
 
-
+/// This function resizes the image with a given size.
+/// - Parameters:
+///     - image: The image to resize.
+///     - targetSize: The size which you want to resize.
+/// - Returns: The resultant image.
 func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
     let size = image.size
     let widthRatio  = targetSize.width  / size.width

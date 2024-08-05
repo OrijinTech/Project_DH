@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+
 enum ProfileOptions: Int, CaseIterable, Identifiable {
     var id: Int { return self.rawValue }
     
@@ -16,7 +17,7 @@ enum ProfileOptions: Int, CaseIterable, Identifiable {
     case friends
     case settings
     
-    
+    /// The title of the options for the profile page menu.
     var title: LocalizedStringKey {
         switch self {
         case .socialMedia:
@@ -43,6 +44,7 @@ enum AccountOptions: Int, CaseIterable, Identifiable {
     case password
     case birthday
     
+    /// Title of each options in user info edit page.
     var title: LocalizedStringKey {
         switch self {
         case .username:
@@ -60,6 +62,7 @@ enum AccountOptions: Int, CaseIterable, Identifiable {
         }
     }
     
+    /// Placeholder to show for each user info field.
     var placeholder: LocalizedStringKey {
         switch self {
         case .username:

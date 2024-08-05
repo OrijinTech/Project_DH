@@ -12,7 +12,7 @@ import AuthenticationServices
 import FirebaseAuth
 
 
-// MARK: FUNCTIONS WHICH TAKES CARE OF THE AUTHENTICATION NETWORKING TASKS.
+/// This class handles the actions for the currently selected user, or new users which are about to sign up. Functions take care of the authentication networking tasks.
 class AuthServices {
     @Published var userSession: FirebaseAuth.User?
     static let sharedAuth = AuthServices()
@@ -22,8 +22,12 @@ class AuthServices {
         Task { try await UserServices.sharedUser.fetchCurrentUserData() } // Get user data
     }
     
-    
-    // MARK: Sign in using email and password
+
+    /// Sign in using email and password. Async function.
+    /// - Parameters:
+    ///     - withEmail: The email address of the user.
+    ///     - password: The password corresponding to this account.
+    /// - Returns: none
     @MainActor
     func login(withEmail email: String, password: String) async throws {
         do {
@@ -37,7 +41,10 @@ class AuthServices {
     }
 
     
-    // MARK: Sign in using credential (for Google and Apple Sign in)
+    /// Sign in using credential which is used for Google and Apple Sign in.
+    /// - Parameters:
+    ///     - credential: credential which is used as input for the Firebase Authentication signIn function.
+    /// - Returns: none
     @MainActor
     func login(credential: AuthCredential) async throws {
         do {
@@ -55,7 +62,10 @@ class AuthServices {
     }
     
     
-    // MARK: Calling the login with credential (another sign in method)
+    /// The function which handles the Google Sign in method. This function will call the login() function with credential as input.
+    /// - Parameters:
+    ///     - tokens: id and access tokens
+    /// - Returns: none
     @MainActor
     func loginWithGoogle(tokens: GoogleSignInModel) async throws {
         let credential = GoogleAuthProvider.credential(withIDToken: tokens.idToken, accessToken: tokens.accessToken)
@@ -63,14 +73,19 @@ class AuthServices {
     }
     
     // MARK: Calling the login with credential
+    // TODO: Sign in with apple.
     @MainActor
-    func loginWithApple(credential: OAuthCredential) async throws {
+    func loginWithApple(credential: AuthCredential) async throws {
         try await login(credential: credential)
     }
     
     
-    
-    // MARK: This is called when creating a new user through the Registration View Model
+    /// This function is called when creating a new user through the RegistrationViewModel
+    /// - Parameters:
+    ///     - withEmail: the email address of the user
+    ///     - password: the corresponding password for the user
+    ///     - username: the username picked by the user
+    /// - Returns: none
     @MainActor
     func createUser(withEmail email: String, password: String, username: String) async throws {
         do{
@@ -84,6 +99,9 @@ class AuthServices {
     }
     
     
+    /// This function signs out of current user session. The current user object should be nil after this function call.
+    /// - Parameters: none
+    /// - Returns: none
     func signOut() {
         do {
             try Auth.auth().signOut()
@@ -94,7 +112,10 @@ class AuthServices {
         }
     }
     
-    
+    /// This function sends an email to the user's registered email and prompts them with a link to reset the password.
+    /// - Parameters:
+    ///     - withEmail: The destination email address.
+    /// - Returns: none
     func resetPassword(with email: String) async throws {
         do {
             try await Auth.auth().sendPasswordReset(withEmail: email)
@@ -105,7 +126,12 @@ class AuthServices {
     }
     
     
-    // MARK: Uploading the user data after creating an account.
+    /// This function will upload the user's credentials to Firebase Firestore.
+    /// - Parameters:
+    ///     - email: the email address of the user
+    ///     - username: the username picked by the user
+    ///     - id: the user's uid
+    /// - Returns: none
     @MainActor // Same as Dispatchqueue.main.async
     private func uploadUserData(email: String, userName: String?, id: String) async throws {
         let user = User(email: email, userName: userName!, profileImageUrl: nil)

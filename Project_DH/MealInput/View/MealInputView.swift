@@ -8,6 +8,8 @@
 
 import SwiftUI
 import PhotosUI
+
+
 struct MealInputView: View {
     @StateObject var viewModel = MealInputViewModel()
     @StateObject var profileViewModel = ProfileViewModel()
@@ -20,11 +22,11 @@ struct MealInputView: View {
     @State private var savePressed = false
     
     
-    
     enum SourceType {
         case camera
         case photoLibrary
     }
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -145,6 +147,10 @@ struct MealInputView: View {
     }// End of body
     
     
+    /// This function handles the logic for requesting the food item information from the AI.
+    /// - Parameters:
+    ///     - for: the image of the food item
+    /// - Returns: none
     func getMealInfo(for image: UIImage) {
         isProcessingMealInfo = true
         Task {
@@ -170,6 +176,9 @@ struct MealInputView: View {
     }
     
     
+    /// This function is for clearing all user inputs on the MealInputView.
+    /// - Parameters: none
+    /// - Returns: none
     func clearInputs() {
         self.image = UIImage(resource: .plus)
         viewModel.calories = "0"
@@ -179,11 +188,8 @@ struct MealInputView: View {
     
 }
 
-#Preview {
-    MealInputView()
-}
 
-
+/// This is the view for displaying the image in a circular border.
 struct CircularImageView: View {
     var image: UIImage
     
@@ -194,6 +200,13 @@ struct CircularImageView: View {
             .clipShape(Circle())
     }
 }
+
+
+#Preview {
+    MealInputView()
+}
+
+
 
 
 

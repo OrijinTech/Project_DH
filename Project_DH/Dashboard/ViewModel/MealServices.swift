@@ -9,9 +9,16 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 class MealServices: ObservableObject {
+    
     @Published var meals = [Meal]()
     private var db = Firestore.firestore()
     
+    
+    /// This function fetches all meals for a given user and specified date.
+    /// - Parameters:
+    ///     - for: user's id
+    ///     - on: the meals are fetched on this date
+    /// - Returns: none
     @MainActor
     func fetchMeals(for userId: String?, on date: Date) async throws {
         guard let userId = userId else { return }
@@ -30,6 +37,10 @@ class MealServices: ObservableObject {
         }
     }
     
+    
+    /// This function is for loading mock data of meals.
+    /// - Parameters: none
+    /// - Returns: none
     func loadMockData() {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd HH:mm"

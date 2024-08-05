@@ -10,10 +10,15 @@ import UIKit
 
 
 final class TopViewController {
+    
     static let sharedTopController = TopViewController()
     private init() {}
     
-    // MARK: Get the top view controller
+    
+    /// This method gets the top view controller.
+    /// - Parameters:
+    ///     - controller: The optional controller to check against.
+    /// - Returns: The top ViewController.
     @MainActor
     func topViewController(controller: UIViewController? = nil) -> UIViewController? {
         let controller = controller ?? getKeyWindow()?.rootViewController
@@ -34,12 +39,16 @@ final class TopViewController {
         return controller
     }
     
+    
+    ///  This function returns the key window of the application. The key window is the window currently receiving user events.
+    /// - Parameters: none
+    /// - Returns: The key UIWindow.
     private func getKeyWindow() -> UIWindow? {
            return UIApplication.shared
                .connectedScenes
                .compactMap { $0 as? UIWindowScene }
                .flatMap { $0.windows }
                .first { $0.isKeyWindow }
-       }
+    }
     
 }

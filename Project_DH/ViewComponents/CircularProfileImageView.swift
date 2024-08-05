@@ -8,7 +8,9 @@
 import SwiftUI
 import Kingfisher
 
+
 struct CircularProfileImageView: View {
+    
     var user: User?
     var height: CGFloat?
     var width: CGFloat?
@@ -49,6 +51,7 @@ struct CircularProfileImageView: View {
 
     }
 }
+
 
 #Preview {
     CircularProfileImageView(user: User.MOCK_USER, width: 40, height: 40, showCircle: false)

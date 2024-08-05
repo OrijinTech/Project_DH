@@ -8,6 +8,11 @@
 import SwiftUI
 import AuthenticationServices
 
+
+/// The major view for showing the registration page.
+/// - Parameters:
+///     - none
+/// - Returns: none
 struct RegistrationView: View {
     @StateObject var authViewModel = RegisterViewModel()
     @Environment(\.dismiss) private var dismiss

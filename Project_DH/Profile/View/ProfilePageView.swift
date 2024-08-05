@@ -7,7 +7,9 @@
 
 import SwiftUI
 
+
 struct ProfilePageView: View {
+    
     @StateObject var viewModel = ProfileViewModel()
     @State private var showingProfileInfo: Bool = false
     @State private var showingProfilePreview: Bool = false
@@ -99,6 +101,7 @@ struct ProfilePageView: View {
 //        }
     }
 }
+
 
 #Preview {
     ProfilePageView()

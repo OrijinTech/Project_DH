@@ -11,7 +11,9 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import SwiftUI
 
+
 class ChatViewModel: ObservableObject {
+    
     @Published var chat: AppChat?
     @Published var messages: [AppMessage] = []
     @Published var messageText: String = ""
@@ -22,11 +24,16 @@ class ChatViewModel: ObservableObject {
     let chatId: String
     let db = Firestore.firestore()
     
+    
     init(chatId: String) {
         self.chatId = chatId
     }
     
-    // Get OpenAI API Key from config.plist (in gitignore)
+    
+    /// This function loads the configuration information from the config.plist.
+    /// - Parameters: none
+    /// - Returns: The configuration in the form of dictionary [String : Any].
+    /// - Note: This is our way of getting the OpenAI API Key. This file is in gitignore.
     func loadConfig() -> [String: Any]? {
         if let path = Bundle.main.path(forResource: "config", ofType: "plist"),
            let xml = FileManager.default.contents(atPath: path),
@@ -37,6 +44,9 @@ class ChatViewModel: ObservableObject {
     }
     
     
+    /// This function fetches all chat messages.
+    /// - Parameters: none
+    /// - Returns: none
     func fetchData() {
         db.collection(Collection().chats).document(chatId).getDocument(as: AppChat.self) { result in
             switch result {
@@ -68,6 +78,9 @@ class ChatViewModel: ObservableObject {
     }
     
     
+    /// This function sends the message to the OpenAI's AI model, and appends the new message received from the model to the message list.
+    /// - Parameters: none
+    /// - Returns: none
     func sendMessage() async throws{
         var newMessage = AppMessage(id: UUID().uuidString, text: messageText, role: .user)
         
@@ -93,11 +106,18 @@ class ChatViewModel: ObservableObject {
     }
     
     
+    /// This function stores the message on the Firebase.
+    /// - Parameters:
+    ///     - message: The message to save.
+    /// - Returns: The document reference.
     private func storeMessage(message: AppMessage) throws -> DocumentReference {
         return try db.collection(Collection().chats).document(chatId).collection(Document().message).addDocument(from: message)
     }
     
     
+    /// This function will pair the chat instance with an AI model, and save that information on Firebase.
+    /// - Parameters: none
+    /// - Returns: none
     private func setupNewChat() {
         db.collection(Collection().chats).document(chatId).updateData([DataConst().model: selectedModel.rawValue])
         DispatchQueue.main.async { [weak self] in
@@ -106,6 +126,10 @@ class ChatViewModel: ObservableObject {
     }
     
     
+    /// This function calls the OpenAI API to get a response from the model.
+    /// - Parameters:
+    ///     - for: The message which the user inputs.
+    /// - Returns: none
     func generateResponse(for message: AppMessage) async throws{
         guard let config = loadConfig(),
               let apiKey = config["OpenAI_API_KEY"] as? String else {
@@ -139,7 +163,7 @@ class ChatViewModel: ObservableObject {
 }
 
 
-// This is the struct of an message for GPT query
+/// This is the struct of an message for GPT query
 struct AppMessage: Identifiable, Codable, Hashable {
     @DocumentID var id: String?
     var text: String

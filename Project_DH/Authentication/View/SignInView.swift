@@ -11,6 +11,11 @@ import GoogleSignIn
 import GoogleSignInSwift
 import CryptoKit
 
+
+/// The major view for the sign in page.
+/// - Parameters:
+///     - none
+/// - Returns: none
 struct SignInView: View {
     @StateObject var authViewModel = SignInViewModel()
     @Environment(\.dismiss) private var dismiss

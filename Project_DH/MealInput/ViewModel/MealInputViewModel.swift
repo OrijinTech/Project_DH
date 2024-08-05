@@ -12,6 +12,7 @@ import FirebaseFirestoreSwift
 import SwiftUI
 import FirebaseStorage
 
+
 class MealInputViewModel: ObservableObject {
     @Published var calories: String?
     @Published var mealName = ""
@@ -20,11 +21,13 @@ class MealInputViewModel: ObservableObject {
     @Published var imageChanged = false
     @Published var showInputError = false
     
-    
     private let db = Firestore.firestore()
     
     
-    // Get OpenAI API Key from config.plist (in gitignore)
+    /// This function loads the configuration information from the config.plist.
+    /// - Parameters: none
+    /// - Returns: The configuration in the form of dictionary [String : Any].
+    /// - Note: This is our way of getting the OpenAI API Key. This file is in gitignore.
     func loadConfig() -> [String: Any]? {
         if let path = Bundle.main.path(forResource: "config", ofType: "plist"),
            let xml = FileManager.default.contents(atPath: path),
@@ -35,12 +38,10 @@ class MealInputViewModel: ObservableObject {
     }
     
     
-    // TODO: The pipeline for calling the calorie generation, and at the same time calling the firestore database to store the photo.
-    func getCalories(for image: UIImage){
-        print("pass")
-    }
-    
-    
+    /// This function checks if the food item photo is a valid input.
+    /// - Parameters:
+    ///     - for: the image of the food item
+    /// - Returns: Boolean value whether the food item is a valid input to the AI model.
     func validFoodItem(for image: UIImage) async throws -> Bool {
         print("NOTE: Checking whether the food item is a valid input.")
         
@@ -86,8 +87,10 @@ class MealInputViewModel: ObservableObject {
     }
     
     
-    // OpenAI API call for generating output based on image/text input
-    // TODO: Camera-GPT-Input Implementation, refer to notion task
+    /// This function calls the OpenAI API to estimate the calories in the given food item image.
+    /// - Parameters:
+    ///     - for: the image of the food item
+    /// - Returns: none
     func generateCalories(for image: UIImage) async throws {
         print("NOTE: Predicting Calories..")
         
@@ -137,6 +140,10 @@ class MealInputViewModel: ObservableObject {
     }
     
     
+    /// This function calls the OpenAI API to estimate the name of the given food item image.
+    /// - Parameters:
+    ///     - for: the image of the food item
+    /// - Returns: none
     func generateMealName(for image: UIImage) async throws {
         print("NOTE: Generating the meal name.")
         
@@ -183,7 +190,11 @@ class MealInputViewModel: ObservableObject {
     }
     
     
-    // Saving the food Item to Firebase
+    /// This function saves the food item to Firebase.
+    /// - Parameters:
+    ///     - image: the image of the food item
+    ///     - userId: the current user's id
+    /// - Returns: none
     @MainActor
     func saveFoodItem(image: UIImage, userId: String, completion: @escaping (Error?) -> Void) async throws {
         guard let imageUrl = try? await FoodItemImageUploader.uploadImage(image) else {
@@ -211,7 +222,10 @@ class MealInputViewModel: ObservableObject {
         self.showMessageWindow = true
     }
     
-    // Determine the meal type based on the current time
+    
+    /// This function determines the meal type based on the current time.
+    /// - Parameters: none
+    /// - Returns: The string of the meal type.
     func determineMealType() -> String {
         let hour = Calendar.current.component(.hour, from: Date())
         print("It is hour \(hour)")
@@ -227,7 +241,12 @@ class MealInputViewModel: ObservableObject {
         }
     }
     
-    // Check if a meal exists for the current user and meal type
+    
+    /// This function checks if the  meal already exists for the current user and meal type. Ex.: If the user already have food items in breakfast, it means that the breakfast meal type already exists.
+    /// - Parameters:
+    ///     - userId: the current user's id
+    ///     - mealType: the meal type to check for repetitiveness
+    /// - Returns: none
     func checkForExistingMeal(userId: String, mealType: String, completion: @escaping (Meal?) -> Void) {
         let calendar = Calendar.current
         let currentDate = Date()
@@ -255,7 +274,12 @@ class MealInputViewModel: ObservableObject {
             }
     }
     
-    // Create a new meal document
+    
+    /// This function creates a new meal on the Firebase.
+    /// - Parameters:
+    ///     - userId: the current user's id
+    ///     - mealType: the meal type to create
+    /// - Returns: none
     func createNewMeal(userId: String, mealType: String, completion: @escaping (String?) -> Void) {
         let meal = Meal(date: Date(), mealType: mealType, userId: userId)
         print("Meal date is \(meal.date)")
@@ -269,7 +293,12 @@ class MealInputViewModel: ObservableObject {
         }
     }
     
-    // Helper function to create a FoodItem document
+    
+    /// This function creates a new food item on the Firebase.
+    /// - Parameters:
+    ///     - mealId: the meal id which this food item belongs to
+    ///     - imageUrl: the food item's image url
+    /// - Returns: none
     func createFoodItem(mealId: String, imageUrl: String, completion: @escaping (Error?) -> Void) {
         guard let calories = Int(self.calories ?? "0") else {
             completion(NSError(domain: "AppErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid calorie number"]))

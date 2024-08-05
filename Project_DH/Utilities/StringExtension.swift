@@ -47,6 +47,10 @@ extension String {
 }
 
 
+/// Extracts the number substring from a string.
+/// - Parameters:
+///     - from: The string containing numbers.
+/// - Returns: Returns the optional string which is a number. Returns nil if no number substring is found.
 func extractNumber(from text: String) -> String? {
     // Define the regex pattern to match the first number
     let pattern = "\\d+"
@@ -63,7 +67,6 @@ func extractNumber(from text: String) -> String? {
             return numberString
         }
     }
-    
     // Return nil if no match is found
     return nil
 }

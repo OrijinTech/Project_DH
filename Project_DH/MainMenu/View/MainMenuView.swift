@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+
+/// The view which handles all major tabs of the application. The logic for the bottom tabs.
 struct MainMenuView: View {
     /*
     enum Tab: Int {
@@ -14,7 +16,6 @@ struct MainMenuView: View {
     }
     */
     var body: some View {
-        
         TabView {
             DashboardView()
                 .tabItem {
@@ -49,9 +50,9 @@ struct MainMenuView: View {
         }
         // system background color automatically adjust the color
         .tint(.primary)
-        
     }
 }
+
 
 #Preview {
     MainMenuView()

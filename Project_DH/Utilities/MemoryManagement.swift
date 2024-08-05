@@ -7,6 +7,10 @@
 
 import Foundation
 
+
+/// The function clears the cache.
+/// - Parameters: none
+/// - Returns: none
 func clearCache() {
     URLCache.shared.removeAllCachedResponses()
     print("Cache cleared")
