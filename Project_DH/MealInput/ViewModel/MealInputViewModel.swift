@@ -15,11 +15,14 @@ import FirebaseStorage
 
 class MealInputViewModel: ObservableObject {
     @Published var calories: String?
+    @Published var predictedCalories: String?
+    @Published var image: UIImage?
     @Published var mealName = ""
     @Published var showMessageWindow = false
     @Published var isLoading = false
     @Published var imageChanged = false
     @Published var showInputError = false
+    @Published var sliderValue: Double = 100.0
     
     private let db = Firestore.firestore()
     
@@ -135,6 +138,7 @@ class MealInputViewModel: ObservableObject {
         let cal_num = extractNumber(from: calorie_string)
         
         await MainActor.run {
+            self.predictedCalories = cal_num
             self.calories = cal_num
         }
     }
@@ -286,6 +290,7 @@ class MealInputViewModel: ObservableObject {
         print("Meal type is \(meal.mealType)")
         do {
             let newDocRef = try db.collection("meal").addDocument(from: meal)
+            self.clearInputs()
             completion(newDocRef.documentID)
         } catch {
             print("Error creating meal: \(error)")
@@ -309,8 +314,7 @@ class MealInputViewModel: ObservableObject {
         let foodItem = FoodItem(mealId: mealId, calorieNumber: Int(calories), foodName: self.mealName, imageURL: imageUrl)
         do {
             let _ = try db.collection("foodItems").addDocument(from: foodItem)
-            self.calories = "0"
-            self.mealName = ""
+            self.clearInputs()
             completion(nil)
         } catch {
             completion(error)
@@ -318,4 +322,27 @@ class MealInputViewModel: ObservableObject {
     }
     
     
+    /// Calculate the calories based on the slider value picked by the user.
+    /// - Parameters:none
+    /// - Returns: none
+    func calorieIntakePercentage() {
+        self.calories = String(Int((Double(self.predictedCalories ?? "0") ?? 0) * self.sliderValue / 100))
+    }
+    
+    
+    /// This function is for clearing all user inputs on the MealInputView.
+    /// - Parameters: none
+    /// - Returns: none
+    func clearInputs() {
+        print("Clearing Inputs")
+        self.image = UIImage(resource: .plus)
+        self.predictedCalories = nil
+        self.sliderValue = 100.0
+        self.calories = nil
+        self.mealName = ""
+    }
+    
+    
 }
+
+

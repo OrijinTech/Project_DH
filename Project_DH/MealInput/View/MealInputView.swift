@@ -13,7 +13,6 @@ import PhotosUI
 struct MealInputView: View {
     @StateObject var viewModel = MealInputViewModel()
     @StateObject var profileViewModel = ProfileViewModel()
-    @State private var image: UIImage?
     @State private var isConfirmationDialogPresented: Bool = false
     @State private var isImagePickerPresented: Bool = false
     @State private var sourceType: SourceType = .camera
@@ -48,10 +47,10 @@ struct MealInputView: View {
                         Spacer()
                         
                         ZStack{
-                            CircularImageView(image: image ?? UIImage(resource: .plus))
-                                .onChange(of: image) {
-                                    if image != UIImage(resource: .plus){
-                                        getMealInfo(for: image!)
+                            CircularImageView(image: viewModel.image ?? UIImage(resource: .plus))
+                                .onChange(of: viewModel.image) {
+                                    if viewModel.image != UIImage(resource: .plus){
+                                        getMealInfo(for: viewModel.image!)
                                     }
                                 }
                         }
@@ -70,19 +69,39 @@ struct MealInputView: View {
                         }
                         .fullScreenCover(isPresented: $isImagePickerPresented) {
                             if sourceType == .camera{
-                                FoodImagePicker(isPresented: $isImagePickerPresented, image: $image, sourceType: .camera)
+                                FoodImagePicker(isPresented: $isImagePickerPresented, image: $viewModel.image, sourceType: .camera)
                             }else{
-                                FoodPhotoPicker(selectedImage: $image, pickedPhoto: $pickedPhoto)
+                                FoodPhotoPicker(selectedImage: $viewModel.image, pickedPhoto: $pickedPhoto)
                             }
                         }
                         .padding(.bottom)
                         
-                        HStack{
-                            Text("Calories Detected: \(viewModel.calories ?? "0")")
-                                .font(.title3)
+                        VStack {
+                            HStack{
+                                Text("Calories Detected: \(viewModel.calories ?? "0")")
+                                    .font(.title3)
+                                
+                                if let calories = viewModel.calories, !calories.isEmpty {
+                                    Text("(\(String(Int(viewModel.sliderValue)))%)")
+                                }
+                            }
                         }
                         .padding(.top, 20)
-                        .padding(.bottom, 50)
+                        .padding(.bottom, 30)
+                        
+                        // Slider to pick percentage of the calories.
+                        HStack {
+                            Text("0%")
+                            Slider(value: $viewModel.sliderValue, in: 0...100, step: 1)
+                                            .frame(width: 170)
+                                            .disabled(!viewModel.imageChanged || isProcessingMealInfo || savePressed)
+                                            .onChange(of: viewModel.sliderValue) {
+                                                viewModel.calorieIntakePercentage()
+                                            }
+                            Text("100%")
+                        }
+                        .frame(width: 270)
+                        .padding(.bottom, 20)
                         
                         // Save Meal Button
                         Button {
@@ -95,7 +114,7 @@ struct MealInputView: View {
                                 if let userId = profileViewModel.currentUser?.uid {
                                     do {
                                         // Save the food item
-                                        try await viewModel.saveFoodItem(image: image!, userId: userId) { error in
+                                        try await viewModel.saveFoodItem(image: viewModel.image!, userId: userId) { error in
                                             if let error = error {
                                                 print("ERROR: Save meal button \n\(error.localizedDescription)")
                                             } else {
@@ -106,7 +125,7 @@ struct MealInputView: View {
                                         print("ERROR: Save meal button \n\(error.localizedDescription)")
                                     }
                                 }
-                                self.image = UIImage(resource: .plus)
+                                viewModel.image = UIImage(resource: .plus)
                                 viewModel.imageChanged = false
                             }
                         } label: {
@@ -163,7 +182,7 @@ struct MealInputView: View {
                 }
                 else {
                     // clear input
-                    clearInputs()
+                    viewModel.clearInputs()
                     viewModel.showInputError = true
                     viewModel.imageChanged = false
                 }
@@ -173,16 +192,6 @@ struct MealInputView: View {
             }
             isProcessingMealInfo = false
         }
-    }
-    
-    
-    /// This function is for clearing all user inputs on the MealInputView.
-    /// - Parameters: none
-    /// - Returns: none
-    func clearInputs() {
-        self.image = UIImage(resource: .plus)
-        viewModel.calories = "0"
-        viewModel.mealName = ""
     }
     
     
