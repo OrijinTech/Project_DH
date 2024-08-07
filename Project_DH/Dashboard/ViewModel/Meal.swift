@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import FirebaseFirestoreSwift
 
-struct Meal: Decodable, Identifiable, Encodable {
+struct Meal: Decodable, Identifiable, Encodable, Equatable {
     /// The uid of the meal.
     @DocumentID var id: String?
     /// The date of creation for the meal.

@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import Combine
 import FirebaseFirestore
+import FirebaseStorage
 import FirebaseFirestoreSwift
 
 
@@ -66,7 +67,7 @@ class DashboardViewModel: ObservableObject {
                 }
             } catch {
                 DispatchQueue.main.async {
-                    print("Failed to fetch meals: \(error.localizedDescription)")
+                    print("ERROR: Failed to fetch meals: \(error.localizedDescription) \nSource: DashboardViewModel/fetchMeals()")
                     self.isLoading = false
                 }
             }
@@ -143,13 +144,14 @@ class DashboardViewModel: ObservableObject {
     ///     - foodItems: List of food items.
     ///     - item: The food item to delete.
     /// - Returns: The updated food item list.
-    func deleteFoodItem(foodItems: inout [FoodItem], item: FoodItem) -> [FoodItem]{
-        guard let id = item.id else {return foodItems}
+    func deleteFoodItem(foodItems: [FoodItem], item: FoodItem) -> [FoodItem]{
+        var updatedFoodItems = foodItems
+        guard let id = item.id else {return updatedFoodItems}
         db.collection("foodItems").document(id).delete()
-        if let index = foodItems.firstIndex(of: item) {
-            foodItems.remove(at: index)
+        if let index = updatedFoodItems.firstIndex(of: item) {
+            updatedFoodItems.remove(at: index)
         }
-        return foodItems
+        return updatedFoodItems
     }
     
     
@@ -160,7 +162,14 @@ class DashboardViewModel: ObservableObject {
     func deleteMeal(mealID: String) {
         print("NOTE: Deleting Meal ID: \(mealID)")
         db.collection("meal").document(mealID).delete()
+        if let index = meals.firstIndex(where: { $0.id == mealID }) {
+            meals.remove(at: index)
+        }
     }
+    
+
+
+
     
     
     

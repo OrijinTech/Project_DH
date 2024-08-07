@@ -86,3 +86,45 @@ struct FoodItemImageUploader {
     }
     
 }
+
+
+struct ImageManipulation {
+    
+    /// Deletes the image on Firebase Storage with a given image url.
+    /// - Parameters:
+    ///     - fimageURL: The string of the raw image URL.
+    /// - Returns: none
+    static func deleteImageOnFirebase(imageURL: String) async throws{
+        guard let url = URL(string: imageURL) else {
+            throw NSError(domain: "Invalid URL", code: -1, userInfo: nil)
+        }
+
+        // Extract the path from the URL
+        let path = extractPath(from: url)
+        let storageRef = Storage.storage().reference(withPath: path)
+        
+        do {
+            try await storageRef.delete()
+        } catch {
+            print("ERROR: FAILED TO DELETE FILE AT PATH: \(path) \n\(error.localizedDescription) \nSource: ImageServices/ImageManipulation/deleteImageOnFirebase()")
+            throw error
+        }
+    }
+    
+    
+    /// Extracts the relative path for Firebase Storage from a given url.
+    /// - Parameters:
+    ///     - from: the raw url of the image stored on Firebase Storage.
+    /// - Returns: String of the relative path.
+    static func extractPath(from url: URL) -> String {
+        // Firebase storage URLs typically have 'o/' before the path
+        let pathComponents = url.pathComponents
+        if let index = pathComponents.firstIndex(of: "o") {
+            let componentsAfterO = pathComponents.dropFirst(index + 1)
+            let path = componentsAfterO.joined(separator: "/")
+            return path
+        }
+        return ""
+    }
+    
+}

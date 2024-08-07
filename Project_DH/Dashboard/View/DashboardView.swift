@@ -45,16 +45,16 @@ struct DashboardView: View {
                         
                         VStack {
                             if !viewModel.breakfastItems.isEmpty {
-                                MealSectionView(title: "Breakfast", foodItems: $viewModel.breakfastItems, calorieNum: $viewModel.sumCalories, meals: $viewModel.meals)
+                                MealSectionView(title: "Breakfast", foodItems: $viewModel.breakfastItems, calorieNum: $viewModel.sumCalories)
                             }
                             if !viewModel.lunchItems.isEmpty {
-                                MealSectionView(title: "Lunch", foodItems: $viewModel.lunchItems, calorieNum: $viewModel.sumCalories, meals:  $viewModel.meals)
+                                MealSectionView(title: "Lunch", foodItems: $viewModel.lunchItems, calorieNum: $viewModel.sumCalories)
                             }
                             if !viewModel.dinnerItems.isEmpty {
-                                MealSectionView(title: "Dinner", foodItems: $viewModel.dinnerItems, calorieNum: $viewModel.sumCalories, meals:  $viewModel.meals)
+                                MealSectionView(title: "Dinner", foodItems: $viewModel.dinnerItems, calorieNum: $viewModel.sumCalories)
                             }
                             if !viewModel.snackItems.isEmpty {
-                                MealSectionView(title: "Snack", foodItems: $viewModel.snackItems, calorieNum: $viewModel.sumCalories, meals:  $viewModel.meals)
+                                MealSectionView(title: "Snack", foodItems: $viewModel.snackItems, calorieNum: $viewModel.sumCalories)
                             }
                         }
                         .padding(.horizontal)

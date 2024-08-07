@@ -15,8 +15,6 @@ struct MealSectionView: View {
     @Binding var foodItems: [FoodItem]
     @Binding var calorieNum: Int
     var selectedFoodItemId = ""
-    @Binding var meals: [Meal]
-    
     
     
     var body: some View {
@@ -36,7 +34,6 @@ struct MealSectionView: View {
                                 Text(foodItem.foodName)
                                 Text("Calories: \(foodItem.calorieNumber)")
                                     .onAppear {
-                                        print("ADDING CALORIES")
                                         calorieNum += foodItem.calorieNumber
                                     }
                             }
@@ -65,14 +62,7 @@ struct MealSectionView: View {
                     }
                     .swipeActions { // Swipe to delete
                         Button(role: .destructive) {
-                            calorieNum -= foodItem.calorieNumber
-                            foodItems = viewModel.deleteFoodItem(foodItems: &foodItems, item: foodItem)
-                            if foodItems.count == 0 {
-                                viewModel.deleteMeal(mealID: foodItem.mealId)
-                            }
-                            if meals.count == 0 {
-                                meals = [Meal]() // TODO: STILL NOT SHOWING "NO MEALS" when no meal detected.
-                            }
+                            deleteFoodItem(foodItem: foodItem)
                         } label: {
                             Label("Delete", systemImage: "trash.fill")
                         }
@@ -86,6 +76,29 @@ struct MealSectionView: View {
         }
         .padding(.vertical)
     }
+    
+    
+    /// This function classifies each fetched food item by calling the fetchFoodItems function.
+    /// - Parameters:
+    ///     - foodItem: The food item to delete.
+    /// - Returns: none
+    func deleteFoodItem(foodItem: FoodItem) {
+        let imageUrl = foodItem.imageURL
+        calorieNum -= foodItem.calorieNumber
+        foodItems = viewModel.deleteFoodItem(foodItems: foodItems, item: foodItem)
+        Task {
+            do {
+                try await ImageManipulation.deleteImageOnFirebase(imageURL: imageUrl)
+            } catch {
+                print("ERROR: Error deleting image. \nSource: MealSectionView/deleteFoodItem()")
+            }
+        }
+        if foodItems.count == 0 {
+            viewModel.deleteMeal(mealID: foodItem.mealId)
+        }
+    }
+    
+    
 }
 
 
@@ -93,9 +106,8 @@ struct MealSectionView: View {
     struct Preview: View {
         @State var calNum = 10
         @State var foodItems = [FoodItem(mealId: "1", calorieNumber: 200, foodName: "Apple", imageURL: "https://via.placeholder.com/150")]
-        @State var meals = [Meal]()
         var body: some View {
-            MealSectionView(title: "Sample Meal", foodItems: $foodItems, calorieNum: $calNum, meals: $meals)
+            MealSectionView(title: "Sample Meal", foodItems: $foodItems, calorieNum: $calNum)
         }
     }
     return Preview()
