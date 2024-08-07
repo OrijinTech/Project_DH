@@ -136,4 +136,32 @@ class DashboardViewModel: ObservableObject {
             }
         }
     }
+    
+    
+    /// This function deletes the food item from a list of food items, and removes from the Firebase.
+    /// - Parameters:
+    ///     - foodItems: List of food items.
+    ///     - item: The food item to delete.
+    /// - Returns: The updated food item list.
+    func deleteFoodItem(foodItems: inout [FoodItem], item: FoodItem) -> [FoodItem]{
+        guard let id = item.id else {return foodItems}
+        db.collection("foodItems").document(id).delete()
+        if let index = foodItems.firstIndex(of: item) {
+            foodItems.remove(at: index)
+        }
+        return foodItems
+    }
+    
+    
+    /// This function deletes the meal from the meals list, and removes from the Firebase.
+    /// - Parameters:
+    ///     - mealID: The meal id of the meal to delete.
+    /// - Returns: none
+    func deleteMeal(mealID: String) {
+        print("NOTE: Deleting Meal ID: \(mealID)")
+        db.collection("meal").document(mealID).delete()
+    }
+    
+    
+    
 }

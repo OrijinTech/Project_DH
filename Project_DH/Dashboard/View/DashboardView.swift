@@ -10,8 +10,8 @@ import SwiftUI
 
 
 struct DashboardView: View {
-    @ObservedObject var viewModel = DashboardViewModel()
     
+    @ObservedObject var viewModel = DashboardViewModel()
     @State private var selectedDate: Date = Date()
     @State private var originalDate: Date = Date()
     @State private var showingPopover = false
@@ -45,19 +45,20 @@ struct DashboardView: View {
                         
                         VStack {
                             if !viewModel.breakfastItems.isEmpty {
-                                MealSectionView(title: "Breakfast", foodItems: viewModel.breakfastItems, calorieNum: $viewModel.sumCalories)
+                                MealSectionView(title: "Breakfast", foodItems: $viewModel.breakfastItems, calorieNum: $viewModel.sumCalories, meals: $viewModel.meals)
                             }
                             if !viewModel.lunchItems.isEmpty {
-                                MealSectionView(title: "Lunch", foodItems: viewModel.lunchItems, calorieNum: $viewModel.sumCalories)
+                                MealSectionView(title: "Lunch", foodItems: $viewModel.lunchItems, calorieNum: $viewModel.sumCalories, meals:  $viewModel.meals)
                             }
                             if !viewModel.dinnerItems.isEmpty {
-                                MealSectionView(title: "Dinner", foodItems: viewModel.dinnerItems, calorieNum: $viewModel.sumCalories)
+                                MealSectionView(title: "Dinner", foodItems: $viewModel.dinnerItems, calorieNum: $viewModel.sumCalories, meals:  $viewModel.meals)
                             }
                             if !viewModel.snackItems.isEmpty {
-                                MealSectionView(title: "Snack", foodItems: viewModel.snackItems, calorieNum: $viewModel.sumCalories)
+                                MealSectionView(title: "Snack", foodItems: $viewModel.snackItems, calorieNum: $viewModel.sumCalories, meals:  $viewModel.meals)
                             }
                         }
                         .padding(.horizontal)
+                        
                     }
                     .refreshable { // Pull down to refresh
                         loadedFirstTime = true
@@ -154,3 +155,5 @@ func getGreeting() -> String {
     DashboardView()
         .environment(\.locale, Locale(identifier: "zh-Hans"))
 }
+
+

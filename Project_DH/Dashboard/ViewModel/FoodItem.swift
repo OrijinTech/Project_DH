@@ -10,7 +10,8 @@ import SwiftUI
 import FirebaseFirestoreSwift
 
 
-class FoodItem: Codable, Identifiable {
+class FoodItem: Codable, Identifiable, Equatable {
+    
     /// The uid of the food item.
     @DocumentID var id: String?
     /// The associated meal id which this food item belongs to.
@@ -29,7 +30,13 @@ class FoodItem: Codable, Identifiable {
         self.foodName = foodName
         self.imageURL = imageURL
     }
-
+    
+    
+    /// Conform to Equatable protocol
+    static func == (lhs: FoodItem, rhs: FoodItem) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
     
     /// This function turns the FoodItem object into a dictionary format. This is usually used for encoding.
     /// - Parameters: none
