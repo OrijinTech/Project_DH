@@ -236,7 +236,7 @@ class MealInputViewModel: ObservableObject {
         switch hour {
         case 6..<10:
             return "Breakfast"
-        case 10..<14:
+        case 11..<14:
             return "Lunch"
         case 17..<21:
             return "Dinner"
@@ -290,7 +290,6 @@ class MealInputViewModel: ObservableObject {
         print("Meal type is \(meal.mealType)")
         do {
             let newDocRef = try db.collection("meal").addDocument(from: meal)
-            self.clearInputs()
             completion(newDocRef.documentID)
         } catch {
             print("Error creating meal: \(error)")

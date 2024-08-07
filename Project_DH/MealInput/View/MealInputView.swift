@@ -81,7 +81,7 @@ struct MealInputView: View {
                                 Text("Calories Detected: \(viewModel.calories ?? "0")")
                                     .font(.title3)
                                 
-                                if let calories = viewModel.calories, !calories.isEmpty {
+                                if let calories = viewModel.calories, calories != "0" {
                                     Text("(\(String(Int(viewModel.sliderValue)))%)")
                                 }
                             }
