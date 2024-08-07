@@ -310,7 +310,7 @@ class MealInputViewModel: ObservableObject {
         }
         print("The mealName is \(self.mealName)")
         
-        let foodItem = FoodItem(mealId: mealId, calorieNumber: Int(calories), foodName: self.mealName, imageURL: imageUrl)
+        let foodItem = FoodItem(mealId: mealId, calorieNumber: Int(calories), foodName: self.mealName, imageURL: imageUrl, percentage: Int(self.sliderValue))
         do {
             let _ = try db.collection("foodItems").addDocument(from: foodItem)
             self.clearInputs()

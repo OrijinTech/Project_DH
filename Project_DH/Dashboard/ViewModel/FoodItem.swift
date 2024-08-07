@@ -22,13 +22,16 @@ class FoodItem: Codable, Identifiable, Equatable {
     var foodName: String
     /// The image url of the food item picture.
     var imageURL: String
+    /// The percentage of food item consumed
+    var percentageConsumed: Int?
 
     
-    init(mealId: String, calorieNumber: Int, foodName: String, imageURL: String) {
+    init(mealId: String, calorieNumber: Int, foodName: String, imageURL: String, percentage: Int) {
         self.mealId = mealId
         self.calorieNumber = calorieNumber
         self.foodName = foodName
         self.imageURL = imageURL
+        self.percentageConsumed = percentage
     }
     
     

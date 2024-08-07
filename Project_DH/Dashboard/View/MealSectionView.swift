@@ -37,8 +37,12 @@ struct MealSectionView: View {
                                         calorieNum += foodItem.calorieNumber
                                     }
                             }
+                            .padding(.trailing, 20)
                             
                             Spacer()
+                            
+                            // Food Percentage Eaten
+                            Text("\(String(foodItem.percentageConsumed ?? 100))%")
                             
                             AsyncImage(url: URL(string: foodItem.imageURL)) { phase in
                                 switch phase {
@@ -105,7 +109,7 @@ struct MealSectionView: View {
 #Preview {
     struct Preview: View {
         @State var calNum = 10
-        @State var foodItems = [FoodItem(mealId: "1", calorieNumber: 200, foodName: "Apple", imageURL: "https://via.placeholder.com/150")]
+        @State var foodItems = [FoodItem(mealId: "1", calorieNumber: 200, foodName: "Apple", imageURL: "https://via.placeholder.com/150", percentage: 100)]
         var body: some View {
             MealSectionView(title: "Sample Meal", foodItems: $foodItems, calorieNum: $calNum)
         }
