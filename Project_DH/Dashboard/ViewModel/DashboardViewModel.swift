@@ -27,25 +27,9 @@ class DashboardViewModel: ObservableObject {
     @Published var profileViewModel = ProfileViewModel()
     @Published var selectedDate = Date()
     
-    private var cancellable: AnyCancellable?
+    @Published var cancellable: AnyCancellable?
     private var mealServices = MealServices()
     private var db = Firestore.firestore()
-    
-    init() {
-        startObservingUser()
-    }
-    
-    /// Observe changes to current user and perform an action when the user ID (uid) changes
-    /// - Parameters: none
-    /// - Returns: none
-    private func startObservingUser() {
-        cancellable = profileViewModel.$currentUser
-            .compactMap { $0?.uid } // Only proceed if currentUser.uid is non-nil
-            .sink { [weak self] uid in
-                self?.fetchMeals(for: uid)
-            }
-    }
-    
     
     /// This function fetches all meals for a given user id for a designated day.
     /// - Parameters:
@@ -60,7 +44,7 @@ class DashboardViewModel: ObservableObject {
                 try await mealServices.fetchMeals(for: userId, on: dateToFetch)
                 DispatchQueue.main.async {
                     self.meals = self.mealServices.meals
-                    self.categorizeFoodItems() // Also fetching food items here
+                    self.categorizeFoodItems()
                     self.sumCalories = 0
                     self.isLoading = false
                     self.isRefreshing = false
@@ -167,10 +151,12 @@ class DashboardViewModel: ObservableObject {
         }
     }
     
-
-
-
-    
-    
-    
+    func updateFoodItem(_ foodItem: FoodItem) async {
+        guard let id = foodItem.id else { return }
+        do {
+            try db.collection("foodItems").document(id).setData(from: foodItem)
+        } catch {
+            print("ERROR: Failed to update food item: \(error.localizedDescription)")
+        }
+    }
 }

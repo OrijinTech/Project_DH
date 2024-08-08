@@ -17,6 +17,8 @@ struct DashboardView: View {
     @State private var showingPopover = false
     @State private var isGreetingVisible: Bool = true
     @State private var loadedFirstTime = false
+    @State private var showEditPopup = false
+    @State private var selectedFoodItem: FoodItem?
     
     
     var body: some View {
@@ -45,16 +47,16 @@ struct DashboardView: View {
                         
                         VStack {
                             if !viewModel.breakfastItems.isEmpty {
-                                MealSectionView(title: "Breakfast", foodItems: $viewModel.breakfastItems, calorieNum: $viewModel.sumCalories)
+                                MealSectionView(title: "Breakfast", foodItems: $viewModel.breakfastItems, calorieNum: $viewModel.sumCalories, showEditPopup: $showEditPopup, selectedFoodItem: $selectedFoodItem)
                             }
                             if !viewModel.lunchItems.isEmpty {
-                                MealSectionView(title: "Lunch", foodItems: $viewModel.lunchItems, calorieNum: $viewModel.sumCalories)
+                                MealSectionView(title: "Lunch", foodItems: $viewModel.lunchItems, calorieNum: $viewModel.sumCalories, showEditPopup: $showEditPopup, selectedFoodItem: $selectedFoodItem)
                             }
                             if !viewModel.dinnerItems.isEmpty {
-                                MealSectionView(title: "Dinner", foodItems: $viewModel.dinnerItems, calorieNum: $viewModel.sumCalories)
+                                MealSectionView(title: "Dinner", foodItems: $viewModel.dinnerItems, calorieNum: $viewModel.sumCalories, showEditPopup: $showEditPopup, selectedFoodItem: $selectedFoodItem)
                             }
                             if !viewModel.snackItems.isEmpty {
-                                MealSectionView(title: "Snack", foodItems: $viewModel.snackItems, calorieNum: $viewModel.sumCalories)
+                                MealSectionView(title: "Snack", foodItems: $viewModel.snackItems, calorieNum: $viewModel.sumCalories, showEditPopup: $showEditPopup, selectedFoodItem: $selectedFoodItem)
                             }
                         }
                         .padding(.horizontal)
@@ -69,8 +71,6 @@ struct DashboardView: View {
                         }
                     }
                 }
-                
-                
             } // End of VStack
             .navigationTitle(isGreetingVisible ? "\(getGreeting()), \(viewModel.profileViewModel.currentUser?.userName ?? "The Healthy One!")" : "\(formattedDate(selectedDate))")
             .navigationBarTitleDisplayMode(.inline)
@@ -85,6 +85,14 @@ struct DashboardView: View {
                 viewModel.sumCalories = 0
                 if let uid = viewModel.profileViewModel.currentUser?.uid {
                     viewModel.fetchMeals(for: uid)
+                } else {
+                    // Wait for the uid to be available
+                    viewModel.cancellable = viewModel.profileViewModel.$currentUser
+                        .compactMap { $0?.uid } // Only proceed if currentUser.uid is non-nil
+                        .sink { uid in
+                            viewModel.fetchMeals(for: uid)
+                            viewModel.cancellable?.cancel() // Cancel the subscription
+                        }
                 }
                 selectedDate = Date()
             }

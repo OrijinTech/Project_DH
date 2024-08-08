@@ -14,7 +14,9 @@ struct MealSectionView: View {
     var title: String
     @Binding var foodItems: [FoodItem]
     @Binding var calorieNum: Int
-    var selectedFoodItemId = ""
+    @Binding var showEditPopup: Bool
+    @Binding var selectedFoodItem: FoodItem?
+    /// var selectedFoodItemId = ""
     
     
     var body: some View {
@@ -28,6 +30,8 @@ struct MealSectionView: View {
                 ForEach(foodItems) { foodItem in
                     Button(action: {
                         // action here for selecting the food item
+                        selectedFoodItem = foodItem
+                        showEditPopup = true
                     }) {
                         HStack {
                             VStack(alignment: .leading) {
@@ -62,7 +66,7 @@ struct MealSectionView: View {
                         }
                         .padding(.horizontal)
                         .frame(height: 80)
-//                        .background(RoundedRectangle(cornerRadius: 8).stroke(Color.black, lineWidth: 1))
+                        //                        .background(RoundedRectangle(cornerRadius: 8).stroke(Color.black, lineWidth: 1))
                     }
                     .swipeActions { // Swipe to delete
                         Button(role: .destructive) {
@@ -73,12 +77,15 @@ struct MealSectionView: View {
                     }
                     .listRowInsets(EdgeInsets(top: 10, leading: 5, bottom: 10, trailing: 5))
                 }
-            }// End of List View
-//            .listStyle(PlainListStyle())
+            } // End of List View
             .frame(height: CGFloat(foodItems.count) * 150) // Adjust height based on the number of items
             .padding(.horizontal, -20)
         }
         .padding(.vertical)
+        .overlay(
+            FoodItemEditView(foodItem: $selectedFoodItem, isPresented: $showEditPopup, calorieNum: $calorieNum, viewModel: viewModel)
+                .opacity(showEditPopup ? 1 : 0)
+        )
     }
     
     
@@ -108,11 +115,14 @@ struct MealSectionView: View {
 
 #Preview {
     struct Preview: View {
-        @State var calNum = 10
-        @State var foodItems = [FoodItem(mealId: "1", calorieNumber: 200, foodName: "Apple", imageURL: "https://via.placeholder.com/150", percentage: 100)]
-        var body: some View {
-            MealSectionView(title: "Sample Meal", foodItems: $foodItems, calorieNum: $calNum)
+            @State var calNum = 10
+            @State var foodItems = [FoodItem(mealId: "1", calorieNumber: 200, foodName: "Apple", imageURL: "https://via.placeholder.com/150", percentage: 100)]
+            @State var showEditPopup = false
+            @State var selectedFoodItem: FoodItem?
+
+            var body: some View {
+                MealSectionView(title: "Sample Meal", foodItems: $foodItems, calorieNum: $calNum, showEditPopup: $showEditPopup, selectedFoodItem: $selectedFoodItem)
+            }
         }
-    }
-    return Preview()
+        return Preview()
 }
