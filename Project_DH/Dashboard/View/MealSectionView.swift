@@ -82,10 +82,6 @@ struct MealSectionView: View {
             .padding(.horizontal, -20)
         }
         .padding(.vertical)
-        .overlay(
-            FoodItemEditView(foodItem: $selectedFoodItem, isPresented: $showEditPopup, calorieNum: $calorieNum, viewModel: viewModel)
-                .opacity(showEditPopup ? 1 : 0)
-        )
     }
     
     

@@ -13,12 +13,22 @@ struct FoodItemEditView: View {
     @Binding var calorieNum: Int
     @ObservedObject var viewModel: DashboardViewModel
 
+    @State private var originalFoodName: String = ""
+    @State private var originalCalorieNumber: Int = 0
+    @State private var originalCalorieSum: Int = 0
+    
     var body: some View {
         ZStack {
             // Background overlay to detect taps outside the card
             Color.black.opacity(0.4)
                 .edgesIgnoringSafeArea(.all)
                 .onTapGesture {
+                    if let foodItem = foodItem {
+                        // Reset to original values
+                        foodItem.foodName = originalFoodName
+                        foodItem.calorieNumber = originalCalorieNumber
+                        calorieNum = originalCalorieSum
+                    }
                     isPresented = false
                 }
 
@@ -48,23 +58,32 @@ struct FoodItemEditView: View {
                     ))
                     .multilineTextAlignment(.center)
                     .padding()
+                    
 
-                    TextField("Calories", value: Binding(
-                        get: { foodItem.calorieNumber },
-                        set: { foodItem.calorieNumber = $0 }
-                    ), formatter: NumberFormatter())
-                    .keyboardType(.numberPad)
-                    .multilineTextAlignment(.center)
+                    HStack {
+                        Text("Calories:")
+                        TextField("", value: Binding(
+                            get: { foodItem.calorieNumber },
+                            set: { newValue in
+                                let difference = newValue - foodItem.calorieNumber
+                                calorieNum += difference
+                                foodItem.calorieNumber = newValue
+                            }
+                        ), formatter: NumberFormatter())
+                        .keyboardType(.numberPad)
+                        .multilineTextAlignment(.center)
+                    }
                     .padding()
 
                     Button("Save") {
                         Task {
                             await viewModel.updateFoodItem(foodItem)
+                            viewModel.fetchMeals(for: viewModel.profileViewModel.currentUser?.uid ?? "")
                             isPresented = false
                         }
                     }
                     .padding()
-                    .frame(maxWidth: 150)
+                    .frame(maxWidth: 200)
                     .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(8)
@@ -74,8 +93,16 @@ struct FoodItemEditView: View {
                 .background(Color.white)
                 .cornerRadius(8)
                 .shadow(radius: 8)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.black.opacity(0.4).edgesIgnoringSafeArea(.all))
+                .frame(maxWidth: 300)
+                .onAppear {
+                    // Store the original values when the view appears
+                    originalFoodName = foodItem.foodName
+                    originalCalorieNumber = foodItem.calorieNumber
+                    originalCalorieSum = calorieNum
+                }
+                .onTapGesture {
+                    // Prevent tap propagation to the background
+                }
             }
         }
     }
