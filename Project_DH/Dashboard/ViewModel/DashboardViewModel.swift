@@ -31,6 +31,7 @@ class DashboardViewModel: ObservableObject {
     private var mealServices = MealServices()
     private var db = Firestore.firestore()
     
+    
     /// This function fetches all meals for a given user id for a designated day.
     /// - Parameters:
     ///     - for: user's id
@@ -119,6 +120,97 @@ class DashboardViewModel: ObservableObject {
                     print("NOTE: Unknown meal type")
                 }
             }
+            
+        }
+    }
+    
+    
+    func moveFoodItem(to targetMealType: String, foodItemId: String) async {
+        print("I am calling this moveFoodItem funciton")
+        print("And the foodItemId is \(foodItemId)")
+        print("Dinner items I have numbers of : \(self.dinnerItems.count)")
+        print("Dinner items I have these: \(self.dinnerItems)")
+        print("Breakfast items: \(self.breakfastItems.map { $0.id })")
+        print("Lunch items: \(self.lunchItems.map { $0.id })")
+        print("Dinner items: \(self.dinnerItems.map { $0.id })")
+        print("Snack items: \(self.snackItems.map { $0.id })")
+        print("The meals I have now are : \(meals.count)")
+        
+        
+        guard let foodItem = getFoodItem(by: foodItemId) else { return }
+
+        // Determine if a new meal needs to be created
+        var targetMealId: String? = meals.first(where: { $0.mealType.lowercased() == targetMealType.lowercased() })?.id
+
+        print("I am working towards it now!!!")
+        if targetMealId == nil {
+            // Create a new meal for the target type
+            let meal = Meal(date: Date(), mealType: targetMealType, userId: profileViewModel.currentUser?.uid ?? "")
+            do {
+                targetMealId = try await createMeal(meal: meal)
+            } catch {
+                print("Error creating meal: \(error)")
+                return
+            }
+        }
+
+        print("Here I have mealId \(foodItem.mealId)")
+        print("The mealId I am moving to is \(targetMealId)")
+        // Move the food item to the new meal
+        foodItem.mealId = targetMealId!
+        do {
+            try await db.collection("foodItems").document(foodItemId).setData(from: foodItem)
+            // Refresh the meals and food items
+            await fetchMeals(for: profileViewModel.currentUser?.uid ?? "")
+        } catch {
+            print("ERROR: Failed to move food item: \(error.localizedDescription)")
+        }
+       
+    }
+    
+    
+    private func getFoodItem(by id: String) -> FoodItem? {
+        print("Searching for FoodItem with id: \(id)")
+
+        if let item = self.breakfastItems.first(where: { $0.id == id }) {
+            print("Found in breakfastItems: \(item.foodName)")
+            return item
+        }
+        if let item = self.lunchItems.first(where: { $0.id == id }) {
+            print("Found in lunchItems: \(item.foodName)")
+            return item
+        }
+        if let item = self.dinnerItems.first(where: { $0.id == id }) {
+            print("Found in dinnerItems: \(item.foodName)")
+            return item
+        }
+        if let item = self.snackItems.first(where: { $0.id == id }) {
+            print("Found in snackItems: \(item.foodName)")
+            return item
+        }
+
+        print("No FoodItem found with id: \(id)")
+        return nil
+    }
+    
+    
+    private func createMeal(meal: Meal) async throws -> String {
+        let document = try db.collection("meal").addDocument(from: meal)
+        return document.documentID
+    }
+    
+    
+    /// This function create a new meal into the Firebase
+    /// - Parameters:
+    ///     - meal: The meal item to add
+    /// - Returns: The new mealId created by the Firebase
+    func createNewMeal(meal: Meal) -> String {
+        do {
+            let documentRef = try db.collection("meals").addDocument(from: meal)
+            return documentRef.documentID
+        } catch {
+            print("Error creating new meal: \(error.localizedDescription)")
+            return ""
         }
     }
     
@@ -151,6 +243,11 @@ class DashboardViewModel: ObservableObject {
         }
     }
     
+    
+    /// This function update the foodItem from the foodItem list
+    /// - Parameters:
+    ///     - foodItem: The foodItem
+    /// - Returns: none
     func updateFoodItem(_ foodItem: FoodItem) async {
         guard let id = foodItem.id else { return }
         do {

@@ -66,7 +66,6 @@ struct MealSectionView: View {
                         }
                         .padding(.horizontal)
                         .frame(height: 80)
-                        //                        .background(RoundedRectangle(cornerRadius: 8).stroke(Color.black, lineWidth: 1))
                     }
                     .swipeActions { // Swipe to delete
                         Button(role: .destructive) {
@@ -76,13 +75,33 @@ struct MealSectionView: View {
                         }
                     }
                     .listRowInsets(EdgeInsets(top: 10, leading: 5, bottom: 10, trailing: 5))
+                    .onDrag {
+                        NSItemProvider(object: foodItem.id! as NSString)
+                    }
                 }
+                .onInsert(of: ["public.text"], perform: handleDrop)
             } // End of List View
             .frame(height: CGFloat(foodItems.count) * 150) // Adjust height based on the number of items
             .padding(.horizontal, -20)
         }
         .padding(.vertical)
     }
+    
+    
+    private func handleDrop(index: Int, itemProviders: [NSItemProvider]) {
+        for provider in itemProviders {
+            provider.loadObject(ofClass: NSString.self) { item, error in
+                DispatchQueue.main.async {
+                    if let foodItemId = item as? String {
+                        Task {
+                            print("In MealSectionView, the foodItemId is \(foodItemId)")
+                            await viewModel.moveFoodItem(to: title, foodItemId: foodItemId)
+                        }
+                    }
+                }
+            }
+        }
+        }
     
     
     /// This function classifies each fetched food item by calling the fetchFoodItems function.
