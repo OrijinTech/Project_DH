@@ -10,7 +10,6 @@ import SwiftUI
 struct DashboardView: View {
 
     @ObservedObject var viewModel = DashboardViewModel()
-    @State private var selectedDate: Date = Date()
     @State private var originalDate: Date = Date()
     @State private var showingPopover = false
     @State private var isGreetingVisible: Bool = true
@@ -45,16 +44,16 @@ struct DashboardView: View {
 
                             VStack {
                                 if !viewModel.breakfastItems.isEmpty {
-                                    MealSectionView(title: "Breakfast", foodItems: $viewModel.breakfastItems, calorieNum: $viewModel.sumCalories, showEditPopup: $showEditPopup, selectedFoodItem: $selectedFoodItem)
+                                    MealSectionView(viewModel: viewModel, title: "Breakfast", foodItems: $viewModel.breakfastItems, calorieNum: $viewModel.sumCalories, showEditPopup: $showEditPopup, selectedFoodItem: $selectedFoodItem)
                                 }
                                 if !viewModel.lunchItems.isEmpty {
-                                    MealSectionView(title: "Lunch", foodItems: $viewModel.lunchItems, calorieNum: $viewModel.sumCalories, showEditPopup: $showEditPopup, selectedFoodItem: $selectedFoodItem)
+                                    MealSectionView(viewModel: viewModel, title: "Lunch", foodItems: $viewModel.lunchItems, calorieNum: $viewModel.sumCalories, showEditPopup: $showEditPopup, selectedFoodItem: $selectedFoodItem)
                                 }
                                 if !viewModel.dinnerItems.isEmpty {
-                                    MealSectionView(title: "Dinner", foodItems: $viewModel.dinnerItems, calorieNum: $viewModel.sumCalories, showEditPopup: $showEditPopup, selectedFoodItem: $selectedFoodItem)
+                                    MealSectionView(viewModel: viewModel, title: "Dinner", foodItems: $viewModel.dinnerItems, calorieNum: $viewModel.sumCalories, showEditPopup: $showEditPopup, selectedFoodItem: $selectedFoodItem)
                                 }
                                 if !viewModel.snackItems.isEmpty {
-                                    MealSectionView(title: "Snack", foodItems: $viewModel.snackItems, calorieNum: $viewModel.sumCalories, showEditPopup: $showEditPopup, selectedFoodItem: $selectedFoodItem)
+                                    MealSectionView(viewModel: viewModel, title: "Snack", foodItems: $viewModel.snackItems, calorieNum: $viewModel.sumCalories, showEditPopup: $showEditPopup, selectedFoodItem: $selectedFoodItem)
                                 }
                             }
                             .padding(.horizontal)
@@ -64,16 +63,16 @@ struct DashboardView: View {
                             viewModel.isRefreshing = true
                             viewModel.sumCalories = 0
                             if let uid = viewModel.profileViewModel.currentUser?.uid {
-                                viewModel.fetchMeals(for: uid, on: selectedDate)
+                                viewModel.fetchMeals(for: uid, on: viewModel.selectedDate)
                             }
                         }
                     }
                 } // End of VStack
-                .navigationTitle(isGreetingVisible ? "\(getGreeting()), \(viewModel.profileViewModel.currentUser?.userName ?? "The Healthy One!")" : "\(formattedDate(selectedDate))")
+                .navigationTitle(isGreetingVisible ? "\(getGreeting()), \(viewModel.profileViewModel.currentUser?.userName ?? "The Healthy One!")" : "\(formattedDate(viewModel.selectedDate))")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar(content: {
                     ToolbarItem(placement: .topBarTrailing) {
-                        CalendarView(selectedDate: $selectedDate, originalDate: $originalDate, showingPopover: $showingPopover, viewModel: viewModel)
+                        CalendarView(selectedDate: $viewModel.selectedDate, originalDate: $originalDate, showingPopover: $showingPopover, viewModel: viewModel)
                     }
                 })
                 .onAppear {
@@ -91,7 +90,7 @@ struct DashboardView: View {
                                 viewModel.cancellable?.cancel() // Cancel the subscription
                             }
                     }
-                    selectedDate = Date()
+                    viewModel.selectedDate = Date()
                 }
             } // End of Navigation Stack
 

@@ -19,7 +19,6 @@ class MealServices: ObservableObject {
     ///     - for: user's id
     ///     - on: the meals are fetched on this date
     /// - Returns: none
-    @MainActor
     func fetchMeals(for userId: String?, on date: Date) async throws {
         guard let userId = userId else { return }
         

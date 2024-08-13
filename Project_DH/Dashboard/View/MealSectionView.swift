@@ -88,20 +88,25 @@ struct MealSectionView: View {
     }
     
     
+    /// This function handles the drop logic for food item
+    /// - Parameters:
+    ///     - index: The index of food item need to be drop
+    ///     - itemProviders: used for indicating the item we are processing
+    /// - Returns: A DateFormatter object.
     private func handleDrop(index: Int, itemProviders: [NSItemProvider]) {
         for provider in itemProviders {
             provider.loadObject(ofClass: NSString.self) { item, error in
                 DispatchQueue.main.async {
                     if let foodItemId = item as? String {
                         Task {
-                            print("In MealSectionView, the foodItemId is \(foodItemId)")
+                            print("I am moving food item to \(title)")
                             await viewModel.moveFoodItem(to: title, foodItemId: foodItemId)
                         }
                     }
                 }
             }
         }
-        }
+    }
     
     
     /// This function classifies each fetched food item by calling the fetchFoodItems function.

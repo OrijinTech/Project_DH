@@ -75,6 +75,7 @@ class DashboardViewModel: ObservableObject {
         for meal in meals {
             fetchFoodItems(mealId: meal.id ?? "", mealType: meal.mealType)
         }
+        print("I have number of meals: \(meals.count)")
     }
     
     
@@ -125,50 +126,53 @@ class DashboardViewModel: ObservableObject {
     }
     
     
+    /// This function handle the drag and drop food item logic from one list to another list
+    /// - Parameters:
+    ///     - targetMealType: the meal type list we are moving to (ex. breakfast, dinner ..)
+    ///     - foodItemId: the food item id we are moving
+    /// - Returns: none
     func moveFoodItem(to targetMealType: String, foodItemId: String) async {
-        print("I am calling this moveFoodItem funciton")
-        print("And the foodItemId is \(foodItemId)")
-        print("Dinner items I have numbers of : \(self.dinnerItems.count)")
-        print("Dinner items I have these: \(self.dinnerItems)")
-        print("Breakfast items: \(self.breakfastItems.map { $0.id })")
-        print("Lunch items: \(self.lunchItems.map { $0.id })")
-        print("Dinner items: \(self.dinnerItems.map { $0.id })")
-        print("Snack items: \(self.snackItems.map { $0.id })")
-        print("The meals I have now are : \(meals.count)")
-        
-        
-        guard let foodItem = getFoodItem(by: foodItemId) else { return }
-
-        // Determine if a new meal needs to be created
-        var targetMealId: String? = meals.first(where: { $0.mealType.lowercased() == targetMealType.lowercased() })?.id
-
-        print("I am working towards it now!!!")
-        if targetMealId == nil {
-            // Create a new meal for the target type
-            let meal = Meal(date: Date(), mealType: targetMealType, userId: profileViewModel.currentUser?.uid ?? "")
-            do {
-                targetMealId = try await createMeal(meal: meal)
-            } catch {
-                print("Error creating meal: \(error)")
-                return
+        if let foodItem = getFoodItem(by: foodItemId) {
+            // Determine if a new meal needs to be created
+            var targetMealId: String? = meals.first(where: { $0.mealType.lowercased() == targetMealType.lowercased() })?.id
+            
+            if targetMealId == nil {
+                // Create a new meal for the target type
+                let meal = Meal(date: Date(), mealType: targetMealType, userId: profileViewModel.currentUser?.uid ?? "")
+                targetMealId = createNewMeal(meal: meal)
             }
-        }
-
-        print("Here I have mealId \(foodItem.mealId)")
-        print("The mealId I am moving to is \(targetMealId)")
-        // Move the food item to the new meal
-        foodItem.mealId = targetMealId!
-        do {
-            try await db.collection("foodItems").document(foodItemId).setData(from: foodItem)
+            // Move the food item to the new meal
+            let originalMealId  = foodItem.mealId
+            foodItem.mealId = targetMealId!
+            do {
+                try db.collection("foodItems").document(foodItemId).setData(from: foodItem)
+                //TODO: check if orginal mealtype has no foodItem left, if so then delete the meal
+                // Fetch remaining food items in the original meal
+                let remainingFoodItems = try await db.collection("foodItems")
+                    .whereField("mealId", isEqualTo: originalMealId)
+                    .getDocuments()
+                if remainingFoodItems.isEmpty {
+                    // If no items are left, delete the original meal
+                    deleteMeal(mealID: originalMealId)
+                }
+            } catch {
+                print("ERROR: Failed to move food item: \(error.localizedDescription)")
+            }
             // Refresh the meals and food items
-            await fetchMeals(for: profileViewModel.currentUser?.uid ?? "")
-        } catch {
-            print("ERROR: Failed to move food item: \(error.localizedDescription)")
+            DispatchQueue.main.async {
+                self.fetchMeals(for: self.profileViewModel.currentUser?.uid ?? "")
+            }
+        } else {
+            print("foodItem not found when moving food item!")
         }
        
     }
     
     
+    /// This function helps to get the foodItem from the list
+    /// - Parameters:
+    ///     - id: The foodItem id
+    /// - Returns: The foodItem found from the meal list
     private func getFoodItem(by id: String) -> FoodItem? {
         print("Searching for FoodItem with id: \(id)")
 
@@ -192,13 +196,7 @@ class DashboardViewModel: ObservableObject {
         print("No FoodItem found with id: \(id)")
         return nil
     }
-    
-    
-    private func createMeal(meal: Meal) async throws -> String {
-        let document = try db.collection("meal").addDocument(from: meal)
-        return document.documentID
-    }
-    
+
     
     /// This function create a new meal into the Firebase
     /// - Parameters:
