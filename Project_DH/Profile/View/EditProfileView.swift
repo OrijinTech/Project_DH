@@ -114,7 +114,27 @@ struct EditProfileView: View {
                                     .foregroundStyle(Color(.systemGray2))
                             }
                             .onTapGesture {
-                                viewModel.curState = option
+                                viewModel.curStateAccount = option
+                                viewModel.editInfoWindowTitle = option.title
+                                viewModel.editInfoWindowPlaceHolder = option.placeholder
+                                viewModel.showEditWindow = true
+                            }
+                        }
+                    }
+                    
+                    Section(header: Text("Dietary Info")){
+                        ForEach(DietaryInfoOptions.allCases){ option in
+                            HStack {
+                                Text(option.title)
+                                Spacer()
+                                Text(viewModel.getUserDietaryInfo(with: option))
+                                    .font(.subheadline)
+                                    .foregroundStyle(Color(.systemGray2))
+                            }
+                            .onTapGesture {
+                                viewModel.curStateDietary = option
+                                viewModel.editInfoWindowTitle = option.title
+                                viewModel.editInfoWindowPlaceHolder = option.placeholder
                                 viewModel.showEditWindow = true
                             }
                         }
@@ -137,10 +157,10 @@ struct EditProfileView: View {
     var EditInfoView: some View {
         VStack {
             VStack {
-                Text(viewModel.curState.title)
+                Text(viewModel.editInfoWindowTitle)
                     .font(.title3)
                     .padding(.top, 10)
-                TextField(viewModel.curState.placeholder, text: $viewModel.strToChange)
+                TextField(viewModel.editInfoWindowPlaceHolder, text: $viewModel.strToChange)
                 Divider()
                 HStack(alignment: .center, spacing: 50) {
                     Button {
@@ -151,8 +171,10 @@ struct EditProfileView: View {
                     Divider()
                     Button { // Save the title
                         Task {
-                            try await viewModel.updateInfo(with: viewModel.curState, strInfo: viewModel.strToChange)
+                            try await viewModel.updateInfo(with: viewModel.curStateAccount, with: viewModel.curStateDietary, strInfo: viewModel.strToChange)
                             viewModel.strToChange = ""
+                            viewModel.curStateAccount = nil
+                            viewModel.curStateDietary = nil
                         }
                         viewModel.showEditWindow = false
                         

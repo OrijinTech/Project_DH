@@ -38,8 +38,8 @@ struct User: Codable, Identifiable, Hashable {
     // Personal Information
     var birthday: Date?
     var gender: String?
-    var businessCards: [String]? // TODO: Create the card data model
-     
+    var targetCalories: String?
+    
 }
 
 

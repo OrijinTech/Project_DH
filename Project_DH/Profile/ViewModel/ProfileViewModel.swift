@@ -14,12 +14,18 @@ import SwiftUI
 
 /// Receive the user data from the UserService to this view model. We can then pass the user info into the profile view from this view model
 class ProfileViewModel: ObservableObject {
+    // Main view
     @Published var currentUser: User?
     @Published var profileImage: Image?
     @Published var userName = ""
     @Published var uiImage: UIImage?
+    
+    // Edit window
     @Published var showEditWindow = false
-    @Published var curState = AccountOptions.email
+    @Published var curStateAccount: AccountOptions?
+    @Published var curStateDietary: DietaryInfoOptions?
+    @Published var editInfoWindowTitle = LocalizedStringKey("")
+    @Published var editInfoWindowPlaceHolder = LocalizedStringKey("")
     @Published var strToChange = ""
     
     private var cancellables = Set<AnyCancellable>()
@@ -92,26 +98,41 @@ class ProfileViewModel: ObservableObject {
     ///     - strInfo: The information to update.
     /// - Returns: none
     @MainActor
-    func updateInfo(with enumType: AccountOptions, strInfo: String?) async throws {
+    func updateInfo(with accountEnum: AccountOptions?, with dietaryEnum: DietaryInfoOptions?, strInfo: String?) async throws {
         guard strInfo != nil else { return }
-        switch enumType {
-        case .username:
-            try await UserServices.sharedUser.updateAccountOptions(with: strInfo!, enumInfo: .username)
-        case .lastName:
-            try await UserServices.sharedUser.updateAccountOptions(with: strInfo!, enumInfo: .lastName)
-        case .firstName:
-            try await UserServices.sharedUser.updateAccountOptions(with: strInfo!, enumInfo: .firstName)
-        case .email:
-            try await UserServices.sharedUser.updateAccountOptions(with: strInfo!, enumInfo: .email)
-        case .password:
-            try await UserServices.sharedUser.updateAccountOptions(with: strInfo!, enumInfo: .password)
-        case .birthday:
-            try await UserServices.sharedUser.updateAccountOptions(with: strInfo!, enumInfo: .birthday)
+        if accountEnum != nil {
+            switch accountEnum {
+            case .username:
+                try await UserServices.sharedUser.updateAccountOptions(with: strInfo!, enumInfo: .username)
+            case .lastName:
+                try await UserServices.sharedUser.updateAccountOptions(with: strInfo!, enumInfo: .lastName)
+            case .firstName:
+                try await UserServices.sharedUser.updateAccountOptions(with: strInfo!, enumInfo: .firstName)
+            case .email:
+                try await UserServices.sharedUser.updateAccountOptions(with: strInfo!, enumInfo: .email)
+            case .password:
+                try await UserServices.sharedUser.updateAccountOptions(with: strInfo!, enumInfo: .password)
+            case .birthday:
+                try await UserServices.sharedUser.updateAccountOptions(with: strInfo!, enumInfo: .birthday)
+            case .none:
+                return
+            }
         }
+        
+        if dietaryEnum != nil{
+            switch dietaryEnum {
+            case .targetCalories:
+                try await UserServices.sharedUser.updateDietaryOptions(with: strInfo!, enumInfo: .targetCalories)
+            case .none:
+                return
+            }
+        }
+        
+
     }
     
     
-    /// This function displays the current user information.
+    /// This function displays the current user's account information.
     /// - Parameters:
     ///     - with: The enum of AccountOptions.
     /// - Returns: none
@@ -132,6 +153,21 @@ class ProfileViewModel: ObservableObject {
         }
     }
     
+    
+    /// This function displays the current user's dietary information.
+    /// - Parameters:
+    ///     - with: The enum of DietaryInfoOptions.
+    /// - Returns: none
+    func getUserDietaryInfo(with enumType: DietaryInfoOptions) -> String {
+        switch enumType {
+        case .targetCalories:
+            if let calories = currentUser?.targetCalories {
+                return calories
+            } else {
+                return ""
+            }
+        }
+    }
     
 //    private func loadImage() async {
 //        guard let item = selectedItem else { return }

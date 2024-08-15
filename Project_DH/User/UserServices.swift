@@ -89,10 +89,10 @@ class UserServices {
     
     
     // TODO: Need a more general function for uploading more various user data
-    /// The generic function to update user's information.
+    /// The generic function to update user's  account information.
     /// - Parameters:
     ///     - with: The information to change.
-    ///     - enumInfo: The AccountOptions.
+    ///     - enumInfo: The AccountOptions enum option.
     /// - Returns: none
     @MainActor
     func updateAccountOptions(with infoToChange: String, enumInfo: AccountOptions) async throws {
@@ -114,6 +114,22 @@ class UserServices {
             print("SHOULD CHANGE PASSWORD")
         case .birthday:
             print("SHOULD CHANGE BIRTHDAY")
+        }
+    }
+    
+    
+    /// The generic function to update user's dietary information.
+    /// - Parameters:
+    ///     - with: The dietary information to change
+    ///     - enumInfo: The DietaryInfoOptions enum option.
+    /// - Returns: none
+    @MainActor
+    func updateDietaryOptions(with infoToChange: String, enumInfo: DietaryInfoOptions) async throws {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        switch enumInfo {
+        case .targetCalories:
+            try await Firestore.firestore().collection(Collection().user).document(currentUid).updateData(["targetCalories": infoToChange])
+            self.currentUser?.targetCalories = infoToChange
         }
     }
     

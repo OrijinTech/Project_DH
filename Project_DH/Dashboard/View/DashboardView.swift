@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct DashboardView: View {
 
     @ObservedObject var viewModel = DashboardViewModel()
@@ -16,7 +17,7 @@ struct DashboardView: View {
     @State private var loadedFirstTime = false
     @State private var showEditPopup = false
     @State private var selectedFoodItem: FoodItem?
-
+    
     var body: some View {
         ZStack {
             NavigationStack {
@@ -33,11 +34,14 @@ struct DashboardView: View {
                             .padding()
                     } else {
                         ScrollView {
-                            // Show sum of calories
+                            // Show sum of calories                            
                             VStack(alignment: .leading) {
-                                HStack() {
-                                    Text(LocalizedStringKey("Calories for today: \(viewModel.sumCalories)"))
+                                if let targetCalories = viewModel.profileViewModel.currentUser?.targetCalories {
+                                    ProgressBarView(targetCalories: Int(targetCalories)!, currentCalories: viewModel.sumCalories)
+                                } else {
+                                    Text("You Consumed \(viewModel.sumCalories) Calories Today")
                                         .font(.title)
+                                        .padding(.top, 10)
                                 }
                             }
                             .padding(.vertical, 40)
@@ -101,6 +105,7 @@ struct DashboardView: View {
         } // End of ZStack
     }
 
+    
     /// Produce a DateFormatter object, with adjusted date and time style.
     /// - Parameters: none
     /// - Returns: A DateFormatter object.
@@ -111,6 +116,7 @@ struct DashboardView: View {
         return formatter
     }()
 
+    
     /// A function used to format date.
     /// - Parameters: _date: The date object.
     /// - Returns: String of the formatted date.
@@ -118,6 +124,7 @@ struct DashboardView: View {
         return dateFormatter.string(from: date)
     }
 
+    
     /// The function starts a timer with a 5-second interval.
     /// - Parameters: _date: The date object.
     /// - Returns: String of the formatted date.
@@ -129,6 +136,7 @@ struct DashboardView: View {
         }
     }
 }
+
 
 /// A function used to print greetings according to system time
 /// - Parameters: none

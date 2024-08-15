@@ -81,3 +81,25 @@ enum AccountOptions: Int, CaseIterable, Identifiable {
     }
 }
 
+
+enum DietaryInfoOptions: Int, CaseIterable, Identifiable {
+    var id: Int { return self.rawValue }
+    
+    case targetCalories
+    
+    /// Title of each options in user info edit page.
+    var title: LocalizedStringKey {
+        switch self {
+        case .targetCalories:
+            return "Change Target Calories"
+        }
+    }
+    
+    /// Placeholder to show for each user info field.
+    var placeholder: LocalizedStringKey {
+        switch self {
+        case .targetCalories:
+            return "target calories"
+        }
+    }
+}
