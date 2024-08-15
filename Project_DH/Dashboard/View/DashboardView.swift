@@ -18,6 +18,8 @@ struct DashboardView: View {
     @State private var showEditPopup = false
     @State private var selectedFoodItem: FoodItem?
     
+    
+    
     var body: some View {
         ZStack {
             NavigationStack {
@@ -35,7 +37,7 @@ struct DashboardView: View {
                     } else {
                         ScrollView {
                             // Show sum of calories                            
-                            VStack(alignment: .leading) {
+                            VStack(alignment: .center) {
                                 if let targetCalories = viewModel.profileViewModel.currentUser?.targetCalories {
                                     ProgressBarView(targetCalories: Int(targetCalories)!, currentCalories: viewModel.sumCalories)
                                 } else {
@@ -43,6 +45,12 @@ struct DashboardView: View {
                                         .font(.title)
                                         .padding(.top, 10)
                                 }
+                                if viewModel.exceededCalorieTarget {
+                                    Text(LocalizedStringKey("Be careful, you exceeded your calorie limit!"))
+                                        .foregroundStyle(Color.red)
+                                        .font(.subheadline)
+                                }
+                                
                             }
                             .padding(.vertical, 40)
 

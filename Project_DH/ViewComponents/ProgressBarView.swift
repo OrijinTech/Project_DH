@@ -18,10 +18,16 @@ struct ProgressBarView: View {
                 Text("Target Calories: \(Int(targetCalories))")
                     .font(.title)
                     .padding(.bottom, 10)
-                
-                ProgressView(value: Double(currentCalories), total: Double(targetCalories))
-                    .progressViewStyle(LinearProgressViewStyle())
-                    .padding(.horizontal)
+                if currentCalories > targetCalories {
+                    ProgressView(value: Double(targetCalories), total: Double(targetCalories))
+                        .progressViewStyle(LinearProgressViewStyle())
+                        .padding(.horizontal)
+                }
+                else {
+                    ProgressView(value: Double(currentCalories), total: Double(targetCalories))
+                        .progressViewStyle(LinearProgressViewStyle())
+                        .padding(.horizontal)
+                }
                 Text("You Consumed \(currentCalories) Calories Today")
                     .font(.headline)
                     .padding(.top, 10)

@@ -21,11 +21,13 @@ class DashboardViewModel: ObservableObject {
     @Published var dinnerItems = [FoodItem]()
     @Published var snackItems = [FoodItem]()
     @Published var sumCalories = 0
+    @Published var exceededCalorieTarget = false
     
     @Published var isLoading = true
     @Published var isRefreshing = false
     @Published var profileViewModel = ProfileViewModel()
     @Published var selectedDate = Date()
+    
     
     @Published var cancellable: AnyCancellable?
     private var mealServices = MealServices()
@@ -60,6 +62,32 @@ class DashboardViewModel: ObservableObject {
     }
     
     
+    /// Checks whether the current calorie intake exceeded the user's target.
+    /// - Parameters: none
+    /// - Returns: Bool
+    func checkCalorieTarget() {
+        if let calTarget = profileViewModel.currentUser?.targetCalories {
+            print("NOTE: FIRST TRUE \(calTarget), \(self.sumCalories)")
+            
+            if Int(calTarget) == 0 {
+                exceededCalorieTarget = false
+            } else {
+                exceededCalorieTarget = Int(calTarget)! < self.sumCalories
+            }
+        } else {
+            exceededCalorieTarget = false
+        }
+
+    }
+    
+    
+    func sumUpCalories(for foodItems: [FoodItem]) {
+        for foodItem in foodItems {
+            sumCalories += foodItem.calorieNumber
+        }
+    }
+    
+    
     /// This function classifies each fetched food item by calling the fetchFoodItems function.
     /// - Parameters: none
     /// - Returns: none
@@ -76,6 +104,7 @@ class DashboardViewModel: ObservableObject {
             fetchFoodItems(mealId: meal.id ?? "", mealType: meal.mealType)
         }
         print("I have number of meals: \(meals.count)")
+
     }
     
     
@@ -120,6 +149,8 @@ class DashboardViewModel: ObservableObject {
                 default:
                     print("NOTE: Unknown meal type")
                 }
+                self.sumUpCalories(for: foodItems)
+                self.checkCalorieTarget()
             }
             
         }
@@ -254,4 +285,6 @@ class DashboardViewModel: ObservableObject {
             print("ERROR: Failed to update food item: \(error.localizedDescription)")
         }
     }
+    
+    
 }

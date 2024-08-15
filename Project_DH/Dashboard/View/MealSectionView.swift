@@ -37,9 +37,6 @@ struct MealSectionView: View {
                             VStack(alignment: .leading) {
                                 Text(foodItem.foodName)
                                 Text("Calories: \(foodItem.calorieNumber)")
-                                    .onAppear {
-                                        calorieNum += foodItem.calorieNumber
-                                    }
                             }
                             .padding(.trailing, 20)
                             
