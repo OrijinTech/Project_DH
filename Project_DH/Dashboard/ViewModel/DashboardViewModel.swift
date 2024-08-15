@@ -191,7 +191,7 @@ class DashboardViewModel: ObservableObject {
             }
             // Refresh the meals and food items
             DispatchQueue.main.async {
-                self.fetchMeals(for: self.profileViewModel.currentUser?.uid ?? "")
+                self.fetchMeals(for: self.profileViewModel.currentUser?.uid ?? "", on: self.selectedDate)
             }
         } else {
             print("foodItem not found when moving food item!")
