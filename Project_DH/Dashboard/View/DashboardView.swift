@@ -51,7 +51,7 @@ struct DashboardView: View {
                                 }
                                 
                             }
-                            .padding(.vertical, 40)
+                            .padding(.top, 40)
 
                             VStack {
                                 if !viewModel.breakfastItems.isEmpty {

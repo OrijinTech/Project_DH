@@ -11,6 +11,9 @@ import SwiftUI
 struct ProgressBarView: View {
     var targetCalories: Int
     var currentCalories: Int
+    // Progress bar
+    var lineWidth: CGFloat = 15
+    var color: Color = .blue
     
     var body: some View {
         VStack {
@@ -24,13 +27,41 @@ struct ProgressBarView: View {
                         .padding(.horizontal)
                 }
                 else {
-                    ProgressView(value: Double(currentCalories), total: Double(targetCalories))
-                        .progressViewStyle(LinearProgressViewStyle())
-                        .padding(.horizontal)
+                    ZStack {
+                        // Background Circle
+                        Circle()
+                            .stroke(lineWidth: lineWidth)
+                            .opacity(0.3)
+                            .foregroundColor(color)
+
+                        // Progress Circle
+                        Circle()
+                            .trim(from: 0.0, to: CGFloat(min(Double(currentCalories) / Double(targetCalories), 1.0)))
+                            .stroke(style: StrokeStyle(lineWidth: lineWidth, lineCap: .round, lineJoin: .round))
+                            .foregroundColor(color)
+                            .rotationEffect(Angle(degrees: 270.0)) // Start from the top
+                            .animation(.linear, value: Double(currentCalories) / Double(targetCalories))
+
+                        // Progress Text
+                        VStack {
+                            Text(String(format: "%.0f%%", min(Double(currentCalories) / Double(targetCalories), 1.0) * 100.0))
+                                .font(.largeTitle)
+                                .foregroundColor(color)
+                            
+                            Divider()
+                                .padding(.horizontal, 30)
+                                .bold()
+                            
+                            Text("\(currentCalories)Cal")
+                                .font(.largeTitle)
+                                .foregroundColor(color)
+                        }
+                        
+                    }
+                    .padding(.horizontal, 80)
+                    .padding(.top, 20)
                 }
-                Text("You Consumed \(currentCalories) Calories Today")
-                    .font(.headline)
-                    .padding(.top, 10)
+                
             } else {
                 Text("You Consumed \(currentCalories) Calories Today")
                     .font(.title)
