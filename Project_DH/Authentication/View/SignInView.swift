@@ -168,7 +168,11 @@ struct SignInView: View {
             }
             
         } // End of Navigation Stack
+        .onTapGesture {
+            UIApplication.shared.hideKeyboard()  // Dismiss the keyboard on any tap
+        }
         .navigationBarBackButtonHidden()
+        
     }
     
 }

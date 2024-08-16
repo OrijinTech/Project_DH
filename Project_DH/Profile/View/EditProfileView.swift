@@ -160,7 +160,12 @@ struct EditProfileView: View {
                 Text(viewModel.editInfoWindowTitle)
                     .font(.title3)
                     .padding(.top, 10)
-                TextField(viewModel.editInfoWindowPlaceHolder, text: $viewModel.strToChange)
+                if viewModel.editInfoWindowTitle == "Change Target Calories" {
+                    TextField(viewModel.editInfoWindowPlaceHolder, text: $viewModel.strToChange)
+                        .keyboardType(.numberPad)
+                } else {
+                    TextField(viewModel.editInfoWindowPlaceHolder, text: $viewModel.strToChange)
+                }
                 Divider()
                 HStack(alignment: .center, spacing: 50) {
                     Button {

@@ -162,6 +162,9 @@ struct MealInputView: View {
             } // End of ZStack
             
         } // End of Navigation Stack
+        .onTapGesture {
+            UIApplication.shared.hideKeyboard()  // Dismiss the keyboard on any tap
+        }
         
     }// End of body
     

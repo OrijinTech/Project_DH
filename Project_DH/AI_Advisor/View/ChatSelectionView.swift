@@ -46,6 +46,7 @@ struct ChatSelectionView: View {
                                                 .foregroundStyle(.gray)
                                         }
                                         
+                                        Spacer()
                                         // Text for displaying the model name
 //                                            Spacer()
 //                                            Text(chat.model?.rawValue ?? "")
@@ -58,7 +59,10 @@ struct ChatSelectionView: View {
                                         
                                     }
                                     .padding(.vertical, 7)
+                                    .contentShape(Rectangle())
+                                    
                                 }
+                                .buttonStyle(PlainButtonStyle())
                                 .onLongPressGesture {
                                     viewModel.curTitle = chat.topic ?? "New Chat"
                                     viewModel.curID = chat.id ?? ""

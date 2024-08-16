@@ -23,10 +23,11 @@
 		541D352E2BE3D7E600AF38AF /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D35222BE3D7E600AF38AF /* RegisterViewModel.swift */; };
 		541D35322BE3D7E600AF38AF /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D35272BE3D7E600AF38AF /* RegistrationView.swift */; };
 		541D35332BE3D7E600AF38AF /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D35282BE3D7E600AF38AF /* SignInView.swift */; };
-		541D91C52BE7D323000DED2B /* TapGestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D91C42BE7D323000DED2B /* TapGestures.swift */; };
+		541D91C52BE7D323000DED2B /* TapGestures(legacy).swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D91C42BE7D323000DED2B /* TapGestures(legacy).swift */; };
 		541D91C82BE7DC75000DED2B /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 541D91C72BE7DC75000DED2B /* GoogleSignIn */; };
 		541D91CA2BE7DC75000DED2B /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 541D91C92BE7DC75000DED2B /* GoogleSignInSwift */; };
 		541D91CF2BE800FA000DED2B /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D91CE2BE800FA000DED2B /* TopViewController.swift */; };
+		542DF68F2C6F7FE1003A5568 /* KeyboardDismiss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542DF68E2C6F7FE1003A5568 /* KeyboardDismiss.swift */; };
 		543AC1222BF27A7E004CC8E1 /* FirstTimeSignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543AC1212BF27A7E004CC8E1 /* FirstTimeSignInView.swift */; };
 		5440E77B2C4A49B3007579EC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5440E77A2C4A49B3007579EC /* GoogleService-Info.plist */; };
 		545700FC2C6E43C5008110D1 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545700FB2C6E43C5008110D1 /* ProgressBarView.swift */; };
@@ -93,9 +94,10 @@
 		541D35222BE3D7E600AF38AF /* RegisterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		541D35272BE3D7E600AF38AF /* RegistrationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
 		541D35282BE3D7E600AF38AF /* SignInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
-		541D91C42BE7D323000DED2B /* TapGestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapGestures.swift; sourceTree = "<group>"; };
+		541D91C42BE7D323000DED2B /* TapGestures(legacy).swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TapGestures(legacy).swift"; sourceTree = "<group>"; };
 		541D91CD2BE7E09B000DED2B /* Project-DH-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Project-DH-Info.plist"; sourceTree = SOURCE_ROOT; };
 		541D91CE2BE800FA000DED2B /* TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
+		542DF68E2C6F7FE1003A5568 /* KeyboardDismiss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardDismiss.swift; sourceTree = "<group>"; };
 		543AC1212BF27A7E004CC8E1 /* FirstTimeSignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTimeSignInView.swift; sourceTree = "<group>"; };
 		5440E77A2C4A49B3007579EC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		545700FB2C6E43C5008110D1 /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
@@ -336,11 +338,12 @@
 				5479997B2BE3DF7D007A7CCE /* FirebaseConstants.swift */,
 				547999752BE3DE70007A7CCE /* AlertContent.swift */,
 				547999772BE3DE9E007A7CCE /* StringExtension.swift */,
-				541D91C42BE7D323000DED2B /* TapGestures.swift */,
+				541D91C42BE7D323000DED2B /* TapGestures(legacy).swift */,
 				541D91CE2BE800FA000DED2B /* TopViewController.swift */,
 				54C06B142BEBA129005D98A7 /* TimeManager.swift */,
 				54A59C412C550FF200617B83 /* PopUpMessageView.swift */,
 				54BF6FE22C594095006151F6 /* MemoryManagement.swift */,
+				542DF68E2C6F7FE1003A5568 /* KeyboardDismiss.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -584,6 +587,7 @@
 				047512BF2C6568DE005F223A /* FoodItemEditView.swift in Sources */,
 				54D631062BF77D2400AD4A66 /* OwnedNameCard.swift in Sources */,
 				04EB98A52C54B759001621A6 /* Meal.swift in Sources */,
+				542DF68F2C6F7FE1003A5568 /* KeyboardDismiss.swift in Sources */,
 				54D6310A2BF77DA000AD4A66 /* NameCardInfo.swift in Sources */,
 				5479997C2BE3DF7D007A7CCE /* FirebaseConstants.swift in Sources */,
 				54FB02842C4BD974004D8451 /* ChatSelectionViewModel.swift in Sources */,
@@ -608,7 +612,7 @@
 				547999722BE3DE05007A7CCE /* UserCell.swift in Sources */,
 				541D352C2BE3D7E600AF38AF /* AuthServices.swift in Sources */,
 				54E926B82BEE4835001ACDD8 /* ImageServices.swift in Sources */,
-				541D91C52BE7D323000DED2B /* TapGestures.swift in Sources */,
+				541D91C52BE7D323000DED2B /* TapGestures(legacy).swift in Sources */,
 				547999782BE3DE9E007A7CCE /* StringExtension.swift in Sources */,
 				547FE76F2C4A55BF00C80790 /* ProfileViewModel.swift in Sources */,
 				547999762BE3DE70007A7CCE /* AlertContent.swift in Sources */,

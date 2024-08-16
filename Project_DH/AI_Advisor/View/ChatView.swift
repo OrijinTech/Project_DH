@@ -62,6 +62,9 @@ struct ChatView: View {
                 }
             }
         }
+        .onTapGesture {
+            UIApplication.shared.hideKeyboard()  // Dismiss the keyboard on any tap
+        }
         .onAppear {
             viewModel.fetchData()
         }

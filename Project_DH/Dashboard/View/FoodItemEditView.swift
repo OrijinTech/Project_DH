@@ -105,6 +105,9 @@ struct FoodItemEditView: View {
                     // Prevent tap propagation to the background
                 }
             }
+        }// End of ZStack
+        .onTapGesture {
+            UIApplication.shared.hideKeyboard()  // Dismiss the keyboard on any tap
         }
     }
     
@@ -119,6 +122,9 @@ struct FoodItemEditView: View {
         }
         let originalCalories = Double(calNum) / (Double(foodItem.percentageConsumed!)/100)
         let percentage = Double(foodItem.calorieNumber) / originalCalories * 100
+        if percentage > 100 {
+            return 100
+        }
         return Int(round(percentage))
     }
     

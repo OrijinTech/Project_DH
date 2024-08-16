@@ -69,6 +69,7 @@ struct MealSectionView: View {
                             deleteFoodItem(foodItem: foodItem)
                         } label: {
                             Label("Delete", systemImage: "trash.fill")
+                                .foregroundStyle(Color.red)
                         }
                     }
                     .listRowInsets(EdgeInsets(top: 10, leading: 5, bottom: 10, trailing: 5))

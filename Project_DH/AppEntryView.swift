@@ -18,7 +18,6 @@ struct AppEntryView: View {
                 SignInView()
             }
         }// End of Navigation Stack
-        .onAppear(perform: UIApplication.shared.addTapGestureRecognizer) // Tap gesture for textfield tap-away.
     }
 }
 
