@@ -77,6 +77,7 @@ struct FoodItemEditView: View {
 
                     Button("Save") {
                         Task {
+                            foodItem.percentageConsumed = calcNewPercentage(for: Double(originalCalorieNumber))
                             await viewModel.updateFoodItem(foodItem)
                             viewModel.fetchMeals(for: viewModel.profileViewModel.currentUser?.uid ?? "")
                             isPresented = false
@@ -106,6 +107,21 @@ struct FoodItemEditView: View {
             }
         }
     }
+    
+    
+    /// Calculates the new percentage of the consumed food item.
+    /// - Parameters: 
+    ///     - for calNum:  The original calorie number of the food item before modification.
+    /// - Returns: The percentage calculated.
+    func calcNewPercentage(for calNum: Double) -> Int {
+        guard let foodItem = foodItem, foodItem.percentageConsumed != 0 else {
+            return 0 // Return 0 or any appropriate default value if percentageConsumed is 0 or foodItem is nil.
+        }
+        let originalCalories = Double(calNum) / (Double(foodItem.percentageConsumed!)/100)
+        let percentage = Double(foodItem.calorieNumber) / originalCalories * 100
+        return Int(round(percentage))
+    }
+    
 }
 
 #Preview {

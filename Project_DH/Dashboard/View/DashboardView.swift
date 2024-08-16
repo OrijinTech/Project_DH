@@ -19,7 +19,6 @@ struct DashboardView: View {
     @State private var selectedFoodItem: FoodItem?
     
     
-    
     var body: some View {
         ZStack {
             NavigationStack {
@@ -115,7 +114,8 @@ struct DashboardView: View {
 
     
     /// Produce a DateFormatter object, with adjusted date and time style.
-    /// - Parameters: none
+    /// - Parameters: 
+    ///     - none
     /// - Returns: A DateFormatter object.
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -126,7 +126,8 @@ struct DashboardView: View {
 
     
     /// A function used to format date.
-    /// - Parameters: _date: The date object.
+    /// - Parameters: 
+    ///     - _date: The date object.
     /// - Returns: String of the formatted date.
     func formattedDate(_ date: Date) -> String {
         return dateFormatter.string(from: date)
@@ -134,7 +135,8 @@ struct DashboardView: View {
 
     
     /// The function starts a timer with a 5-second interval.
-    /// - Parameters: _date: The date object.
+    /// - Parameters:
+    ///     - _date: The date object.
     /// - Returns: String of the formatted date.
     func startTimer() {
         Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { timer in
@@ -147,7 +149,8 @@ struct DashboardView: View {
 
 
 /// A function used to print greetings according to system time
-/// - Parameters: none
+/// - Parameters: 
+///     - none
 /// - Returns: String of the greeting.
 func getGreeting() -> String {
     let hour = Calendar.current.component(.hour, from: Date())
