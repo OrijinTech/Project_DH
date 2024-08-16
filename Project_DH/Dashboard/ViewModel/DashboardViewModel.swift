@@ -22,6 +22,7 @@ class DashboardViewModel: ObservableObject {
     @Published var snackItems = [FoodItem]()
     @Published var sumCalories = 0
     @Published var exceededCalorieTarget = false
+    @Published var wholeFoodItem = false
     
     @Published var isLoading = true
     @Published var isRefreshing = false

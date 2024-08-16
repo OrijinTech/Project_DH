@@ -58,28 +58,34 @@ struct FoodItemEditView: View {
                     ))
                     .multilineTextAlignment(.center)
                     .padding()
-                    
 
-                    HStack {
-                        Text("Calories:")
-                        TextField("", value: Binding(
-                            get: { foodItem.calorieNumber },
-                            set: { newValue in
-                                let difference = newValue - foodItem.calorieNumber
-                                calorieNum += difference
-                                foodItem.calorieNumber = newValue
-                            }
-                        ), formatter: NumberFormatter())
-                        .keyboardType(.numberPad)
-                        .multilineTextAlignment(.center)
+                    VStack() {
+                        HStack {
+                            Text("Calories:")
+                            Spacer()
+                            TextField("", value: Binding(
+                                get: { foodItem.calorieNumber },
+                                set: { newValue in
+                                    let difference = newValue - foodItem.calorieNumber
+                                    calorieNum += difference
+                                    foodItem.calorieNumber = newValue
+                                }
+                            ), formatter: NumberFormatter())
+                            .keyboardType(.numberPad)
+                        }
+                        
+                        Toggle("All Eaten:", isOn: $viewModel.wholeFoodItem)
+                            .toggleStyle(SwitchToggleStyle(tint: .brand))
+                            .font(.custom("custom", size: 15))
                     }
-                    .padding()
+                    .padding(.horizontal, 35)
 
                     Button("Save") {
                         Task {
                             foodItem.percentageConsumed = calcNewPercentage(for: Double(originalCalorieNumber))
                             await viewModel.updateFoodItem(foodItem)
                             viewModel.fetchMeals(for: viewModel.profileViewModel.currentUser?.uid ?? "")
+                            viewModel.wholeFoodItem = false
                             isPresented = false
                         }
                     }
@@ -122,7 +128,7 @@ struct FoodItemEditView: View {
         }
         let originalCalories = Double(calNum) / (Double(foodItem.percentageConsumed!)/100)
         let percentage = Double(foodItem.calorieNumber) / originalCalories * 100
-        if percentage > 100 {
+        if percentage > 100 || viewModel.wholeFoodItem {
             return 100
         }
         return Int(round(percentage))
