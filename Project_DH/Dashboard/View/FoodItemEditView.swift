@@ -66,6 +66,7 @@ struct FoodItemEditView: View {
                             TextField("", value: Binding(
                                 get: { foodItem.calorieNumber },
                                 set: { newValue in
+                                    viewModel.wholeFoodItem = false
                                     let difference = newValue - foodItem.calorieNumber
                                     calorieNum += difference
                                     foodItem.calorieNumber = newValue
@@ -84,7 +85,7 @@ struct FoodItemEditView: View {
                         Task {
                             foodItem.percentageConsumed = calcNewPercentage(for: Double(originalCalorieNumber))
                             await viewModel.updateFoodItem(foodItem)
-                            viewModel.fetchMeals(for: viewModel.profileViewModel.currentUser?.uid ?? "")
+                            viewModel.fetchMeals(for: viewModel.profileViewModel.currentUser?.uid ?? "", on: viewModel.selectedDate)
                             viewModel.wholeFoodItem = false
                             isPresented = false
                         }
@@ -128,6 +129,9 @@ struct FoodItemEditView: View {
         }
         let originalCalories = Double(calNum) / (Double(foodItem.percentageConsumed!)/100)
         let percentage = Double(foodItem.calorieNumber) / originalCalories * 100
+        if viewModel.wholeFoodItem {
+            foodItem.calorieNumber = Int(round(originalCalories))
+        }
         if percentage > 100 || viewModel.wholeFoodItem {
             return 100
         }
