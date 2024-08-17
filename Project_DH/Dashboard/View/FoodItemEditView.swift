@@ -75,7 +75,7 @@ struct FoodItemEditView: View {
                             .keyboardType(.numberPad)
                         }
                         
-                        Toggle("All Eaten:", isOn: $viewModel.wholeFoodItem)
+                        Toggle("Set as 100% finished:", isOn: $viewModel.wholeFoodItem)
                             .toggleStyle(SwitchToggleStyle(tint: .brand))
                             .font(.custom("custom", size: 15))
                     }
@@ -129,9 +129,6 @@ struct FoodItemEditView: View {
         }
         let originalCalories = Double(calNum) / (Double(foodItem.percentageConsumed!)/100)
         let percentage = Double(foodItem.calorieNumber) / originalCalories * 100
-        if viewModel.wholeFoodItem {
-            foodItem.calorieNumber = Int(round(originalCalories))
-        }
         if percentage > 100 || viewModel.wholeFoodItem {
             return 100
         }
