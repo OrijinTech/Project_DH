@@ -12,8 +12,9 @@ struct ProgressBarView: View {
     var targetCalories: Int
     var currentCalories: Int
     // Progress bar
-    var lineWidth: CGFloat = 15
+    var lineWidth: CGFloat = 18
     var color: Color = .blue
+    var rotationAngle: CGFloat = 153
     
     var body: some View {
         VStack {
@@ -30,16 +31,18 @@ struct ProgressBarView: View {
                     ZStack {
                         // Background Circle
                         Circle()
-                            .stroke(lineWidth: lineWidth)
+                            .trim(from: 0.0, to: 0.65)
+                            .stroke(style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
                             .opacity(0.3)
                             .foregroundColor(color)
+                            .rotationEffect(Angle(degrees: rotationAngle))
 
                         // Progress Circle
                         Circle()
-                            .trim(from: 0.0, to: CGFloat(min(Double(currentCalories) / Double(targetCalories), 1.0)))
+                            .trim(from: 0.0, to: CGFloat(min(Double(currentCalories) / Double(targetCalories), 1.0)) * 0.65)
                             .stroke(style: StrokeStyle(lineWidth: lineWidth, lineCap: .round, lineJoin: .round))
                             .foregroundColor(color)
-                            .rotationEffect(Angle(degrees: 270.0)) // Start from the top
+                            .rotationEffect(Angle(degrees: rotationAngle)) // Start from the top
                             .animation(.linear, value: Double(currentCalories) / Double(targetCalories))
 
                         // Progress Text
