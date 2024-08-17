@@ -25,6 +25,7 @@ struct MealSectionView: View {
                 .font(.title2)
                 .bold()
                 .padding(.leading)
+                .padding(.top, 20)
             
             List {
                 ForEach(foodItems) { foodItem in
@@ -64,6 +65,8 @@ struct MealSectionView: View {
                         .padding(.horizontal)
                         .frame(height: 80)
                     }
+                    .padding(.vertical, 10)
+                    .listRowInsets(EdgeInsets())
                     .swipeActions { // Swipe to delete
                         Button(role: .destructive) {
                             deleteFoodItem(foodItem: foodItem)
@@ -72,19 +75,25 @@ struct MealSectionView: View {
                                 .foregroundStyle(Color.red)
                         }
                     }
-                    .listRowInsets(EdgeInsets(top: 10, leading: 5, bottom: 10, trailing: 5))
                     .onDrag {
                         NSItemProvider(object: foodItem.id! as NSString)
                     }
-                }
+                } // End of For each
                 .onInsert(of: ["public.text"], perform: handleDrop)
+
             } // End of List View
-            .frame(height: CGFloat(foodItems.count) * 150) // Adjust height based on the number of items
-            .padding(.horizontal, -20)
+            .frame(minHeight: CGFloat(foodItems.count) * 100 + 40) // Adjust height based on the number of items (each row + padding)
+            .shadow(color: Color.black.opacity(0.2), radius: 10, x:2, y:2)
+            .scrollContentBackground(.hidden)  // Hide default background
+            .padding(.top, -35)
+            .scrollDisabled(true) // Disable scrolling
+            .padding(.bottom, 30)
         }
-        .padding(.vertical)
+        .background(LinearGradient(gradient: Gradient(colors: [Color("brandLightGreen"), Color("brandDarkGreen")]), startPoint: .top, endPoint: .bottom))
+        .padding(.bottom, 30)
+        .clipShape(RoundedRectangle(cornerRadius: 20))
+        .shadow(color: Color.black.opacity(0.5), radius: 10, x:0, y:2)
     }
-    
     
     /// This function handles the drop logic for food item
     /// - Parameters:
@@ -134,7 +143,7 @@ struct MealSectionView: View {
 #Preview {
     struct Preview: View {
             @State var calNum = 10
-            @State var foodItems = [FoodItem(mealId: "1", calorieNumber: 200, foodName: "Apple", imageURL: "https://via.placeholder.com/150", percentage: 100)]
+            @State var foodItems = [FoodItem(mealId: "1", calorieNumber: 200, foodName: "Apple", imageURL: "https://via.placeholder.com/150", percentage: 100), FoodItem(mealId: "1", calorieNumber: 200, foodName: "Apple", imageURL: "https://via.placeholder.com/150", percentage: 100),FoodItem(mealId: "1", calorieNumber: 200, foodName: "Apple", imageURL: "https://via.placeholder.com/150", percentage: 100)]
             @State var showEditPopup = false
             @State var selectedFoodItem: FoodItem?
 

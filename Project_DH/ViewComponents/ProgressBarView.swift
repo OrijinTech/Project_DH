@@ -36,6 +36,7 @@ struct ProgressBarView: View {
                             .opacity(0.3)
                             .foregroundColor(color)
                             .rotationEffect(Angle(degrees: rotationAngle))
+                            .shadow(color: Color.black.opacity(0.2), radius: 10, x:0, y:2)
 
                         // Progress Circle
                         Circle()

@@ -35,7 +35,7 @@ struct DashboardView: View {
                             .padding()
                     } else {
                         ScrollView {
-                            // Show sum of calories                            
+                            // Show sum of calories
                             VStack(alignment: .center) {
                                 if let targetCalories = viewModel.profileViewModel.currentUser?.targetCalories {
                                     ProgressBarView(targetCalories: Int(targetCalories)!, currentCalories: viewModel.sumCalories)
@@ -52,7 +52,7 @@ struct DashboardView: View {
                                 
                             }
                             .padding(.top, 40)
-
+                            
                             VStack {
                                 if !viewModel.breakfastItems.isEmpty {
                                     MealSectionView(viewModel: viewModel, title: "Breakfast", foodItems: $viewModel.breakfastItems, calorieNum: $viewModel.sumCalories, showEditPopup: $showEditPopup, selectedFoodItem: $selectedFoodItem)
@@ -67,7 +67,8 @@ struct DashboardView: View {
                                     MealSectionView(viewModel: viewModel, title: "Snack", foodItems: $viewModel.snackItems, calorieNum: $viewModel.sumCalories, showEditPopup: $showEditPopup, selectedFoodItem: $selectedFoodItem)
                                 }
                             }
-                            .padding(.horizontal)
+                            
+                            
                         }
                         .refreshable { // Pull down to refresh
                             loadedFirstTime = true
