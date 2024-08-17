@@ -80,7 +80,10 @@ struct MealSectionView: View {
                     }
                 } // End of For each
                 .onInsert(of: ["public.text"], perform: handleDrop)
-
+                .listRowBackground(RoundedRectangle(cornerRadius: 20)
+                    .fill(Color.white)
+                    .padding(.vertical, 5))
+                .listRowSeparator(.hidden)
             } // End of List View
             .frame(minHeight: CGFloat(foodItems.count) * 100 + 40) // Adjust height based on the number of items (each row + padding)
             .shadow(color: Color.black.opacity(0.2), radius: 10, x:2, y:2)
@@ -91,7 +94,7 @@ struct MealSectionView: View {
         }
         .background(LinearGradient(gradient: Gradient(colors: [Color("brandLightGreen"), Color("brandDarkGreen")]), startPoint: .top, endPoint: .bottom))
         .clipShape(RoundedRectangle(cornerRadius: 20))
-        .shadow(color: Color.black.opacity(0.5), radius: 10, x:0, y:2)
+        .shadow(color: Color.black.opacity(0.3), radius: 5, x:0, y:2)
         .padding(.bottom, 40)
     }
     
