@@ -87,13 +87,13 @@ struct RegistrationView: View {
                 //MARK: Privacy and Policy
                 VStack{
                     Toggle("I agree to the Privacy Policy", isOn: $authViewModel.privacy)
-                        .toggleStyle(SwitchToggleStyle(tint: .brand))
+                        .toggleStyle(SwitchToggleStyle(tint: .brandDarkGreen))
                         .font(.custom("custom", size: 15))
                         .padding(.leading, 30)
                         .padding(.trailing, 40)
                     
                     Toggle("I agree to the Terms and Conditions", isOn: $authViewModel.conditions)
-                        .toggleStyle(SwitchToggleStyle(tint: .brand))
+                        .toggleStyle(SwitchToggleStyle(tint: .brandDarkGreen))
                         .font(.custom("custom", size: 15))
                         .padding(.leading, 30)
                         .padding(.trailing, 40)
@@ -110,7 +110,7 @@ struct RegistrationView: View {
                 .fontWeight(.semibold)
                 .foregroundStyle(.white)
                 .frame(width: 310, height: 45)
-                .background(.brand)
+                .background(.brandDarkGreen)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .padding(.bottom, 30)
                 .shadow(radius: 3)
@@ -128,7 +128,7 @@ struct RegistrationView: View {
                 } label: {
                     HStack {
                         Image(systemName: "chevron.backward")
-                            .foregroundStyle(.brand)
+                            .foregroundStyle(.brandDarkGreen)
                     }
                 }
             }

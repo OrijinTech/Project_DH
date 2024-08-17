@@ -21,7 +21,7 @@ struct CalendarView: View {
         }) {
             HStack {
                 Image(systemName: "calendar")
-                    .foregroundStyle(.brand)
+                    .foregroundStyle(.brandDarkGreen)
             }
         }
         .popover(isPresented: $showingPopover) {

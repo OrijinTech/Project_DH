@@ -90,9 +90,9 @@ struct MealSectionView: View {
             .padding(.bottom, 30)
         }
         .background(LinearGradient(gradient: Gradient(colors: [Color("brandLightGreen"), Color("brandDarkGreen")]), startPoint: .top, endPoint: .bottom))
-        .padding(.bottom, 30)
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .shadow(color: Color.black.opacity(0.5), radius: 10, x:0, y:2)
+        .padding(.bottom, 40)
     }
     
     /// This function handles the drop logic for food item

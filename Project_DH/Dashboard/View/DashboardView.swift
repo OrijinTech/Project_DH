@@ -42,7 +42,7 @@ struct DashboardView: View {
                                 } else {
                                     Text("You Consumed \(viewModel.sumCalories) Calories Today")
                                         .font(.title)
-                                        .padding(.top, 10)
+                                        .padding(.top, 5)
                                 }
                                 if viewModel.exceededCalorieTarget {
                                     Text(LocalizedStringKey("Be careful, you exceeded your calorie limit!"))
@@ -51,7 +51,7 @@ struct DashboardView: View {
                                 }
                                 
                             }
-                            .padding(.top, 40)
+                            .padding(.bottom, -20)
                             
                             VStack {
                                 if !viewModel.breakfastItems.isEmpty {

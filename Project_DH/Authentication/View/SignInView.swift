@@ -78,7 +78,7 @@ struct SignInView: View {
                 } label: {
                     Text("Forgot password?")
                         .font(.footnote)
-                        .foregroundStyle(.brand)
+                        .foregroundStyle(.brandDarkGreen)
                         .fontWeight(.semibold)
                         .padding(.top)
                         .padding(.trailing, 28)
@@ -94,7 +94,7 @@ struct SignInView: View {
                 .fontWeight(.semibold)
                 .foregroundStyle(.white)
                 .frame(width: 300, height: 45)
-                .background(.brand)
+                .background(.brandDarkGreen)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .padding(.vertical)
                 .shadow(radius: 3)
@@ -160,7 +160,7 @@ struct SignInView: View {
                         RegistrationView()
                     } label: {
                         Text("Sign Up")
-                            .foregroundStyle(.brand)
+                            .foregroundStyle(.brandDarkGreen)
                     }
                 }
                 .font(.footnote)

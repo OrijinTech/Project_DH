@@ -13,7 +13,7 @@ struct ProgressBarView: View {
     var currentCalories: Int
     // Progress bar
     var lineWidth: CGFloat = 18
-    var color: Color = .blue
+    var color: Color = .green
     var rotationAngle: CGFloat = 153
     
     var body: some View {
@@ -33,7 +33,7 @@ struct ProgressBarView: View {
                         Circle()
                             .trim(from: 0.0, to: 0.65)
                             .stroke(style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
-                            .opacity(0.3)
+                            .opacity(0.2)
                             .foregroundColor(color)
                             .rotationEffect(Angle(degrees: rotationAngle))
                             .shadow(color: Color.black.opacity(0.2), radius: 10, x:0, y:2)
@@ -42,7 +42,7 @@ struct ProgressBarView: View {
                         Circle()
                             .trim(from: 0.0, to: CGFloat(min(Double(currentCalories) / Double(targetCalories), 1.0)) * 0.65)
                             .stroke(style: StrokeStyle(lineWidth: lineWidth, lineCap: .round, lineJoin: .round))
-                            .foregroundColor(color)
+                            .foregroundStyle(LinearGradient(gradient: Gradient(colors: [Color("brandLightGreen"), Color("brandDarkGreen")]), startPoint: .top, endPoint: .bottom))
                             .rotationEffect(Angle(degrees: rotationAngle)) // Start from the top
                             .animation(.linear, value: Double(currentCalories) / Double(targetCalories))
 

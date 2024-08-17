@@ -76,7 +76,7 @@ struct FoodItemEditView: View {
                         }
                         
                         Toggle("Set as 100% finished:", isOn: $viewModel.wholeFoodItem)
-                            .toggleStyle(SwitchToggleStyle(tint: .brand))
+                            .toggleStyle(SwitchToggleStyle(tint: .brandDarkGreen))
                             .font(.custom("custom", size: 15))
                     }
                     .padding(.horizontal, 35)

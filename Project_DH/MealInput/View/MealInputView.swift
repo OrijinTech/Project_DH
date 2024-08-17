@@ -134,7 +134,7 @@ struct MealInputView: View {
                         .fontWeight(.semibold)
                         .foregroundStyle(.white)
                         .frame(width: 180, height: 45)
-                        .background(.brand)
+                        .background(.brandDarkGreen)
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                         .padding(.vertical)
                         .shadow(radius: 3)

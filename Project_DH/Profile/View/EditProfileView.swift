@@ -36,7 +36,7 @@ struct EditProfileView: View {
                     } label: {
                         HStack {
                             Image(systemName: "chevron.backward")
-                                .foregroundStyle(.brand)
+                                .foregroundStyle(.brandDarkGreen)
                         }
                     }.padding(.leading, 30)
                     
@@ -50,7 +50,7 @@ struct EditProfileView: View {
                         }
                     } label: {
                         Text(LocalizedStringKey("Save"))
-                            .foregroundStyle(.brand)
+                            .foregroundStyle(.brandDarkGreen)
                             .opacity(!pickedPhoto ? 0 : 1)
                     }
                     .padding(.trailing, 30)

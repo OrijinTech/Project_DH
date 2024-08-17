@@ -56,7 +56,7 @@ struct ProfilePageView: View {
                             .font(.footnote)
                             .fontWeight(.semibold)
                             .frame(width: 130, height: 25)
-                            .foregroundStyle(.brand)
+                            .foregroundStyle(.brandDarkGreen)
                             .background(Color(.systemGray6))
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
@@ -83,7 +83,7 @@ struct ProfilePageView: View {
                         AuthServices.sharedAuth.signOut()
                     } label: {
                         Text("Log Out")
-                            .foregroundStyle(.brand)
+                            .foregroundStyle(.brandDarkGreen)
                     }
                 }
             }

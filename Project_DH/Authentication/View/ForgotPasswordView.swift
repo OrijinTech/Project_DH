@@ -62,7 +62,7 @@ struct ForgotPasswordView: View {
                 .fontWeight(.semibold)
                 .foregroundStyle(.white)
                 .frame(width: 310, height: 45)
-                .background(.brand)
+                .background(.brandDarkGreen)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .padding(.vertical)
                 
@@ -83,7 +83,7 @@ struct ForgotPasswordView: View {
                 } label: {
                     HStack {
                         Image(systemName: "chevron.backward")
-                            .foregroundStyle(.brand)
+                            .foregroundStyle(.brandDarkGreen)
                     }
                 }
             }

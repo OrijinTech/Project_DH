@@ -57,7 +57,7 @@ struct ChatView: View {
                 } label: {
                     HStack {
                         Image(systemName: "chevron.backward")
-                            .foregroundStyle(.brand)
+                            .foregroundStyle(.brandDarkGreen)
                     }
                 }
             }
@@ -111,7 +111,7 @@ struct ChatView: View {
                 Text("Send")
                     .padding()
                     .foregroundStyle(.white)
-                    .background(Color.brand)
+                    .background(Color.brandDarkGreen)
                     .bold()
                     .clipShape(RoundedRectangle(cornerRadius: 12))
             }
@@ -133,7 +133,7 @@ struct ChatView: View {
                 .padding(.horizontal)
                 .padding(.vertical, 12)
                 .foregroundStyle(message.role == .user ? .white : .black)
-                .background(message.role == .user ? .brand : .white)
+                .background(message.role == .user ? .brandDarkGreen : .white)
                 .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
             if (message.role == .assistant) {
                 Spacer()
