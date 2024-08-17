@@ -46,7 +46,7 @@ struct DashboardView: View {
                                 }
                                 if viewModel.exceededCalorieTarget {
                                     Text(LocalizedStringKey("Be careful, you exceeded your calorie limit!"))
-                                        .foregroundStyle(Color.red)
+                                        .foregroundStyle(Color.brandRed)
                                         .font(.subheadline)
                                 }
                                 

@@ -68,7 +68,7 @@ struct SignInView: View {
                     Spacer()
                 }
                 .font(.footnote)
-                .foregroundStyle(.red)
+                .foregroundStyle(.brandRed)
                 .padding(.leading, 30)
                 
                 

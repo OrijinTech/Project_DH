@@ -42,7 +42,7 @@ struct CalendarView: View {
                     }
                     .frame(width: 70)
                     .padding(10)
-                    .background(Color.red)
+                    .background(Color.brandRed)
                     .foregroundColor(.white)
                     .cornerRadius(8)
                     
@@ -56,7 +56,7 @@ struct CalendarView: View {
                     }
                     .frame(width: 70)
                     .padding(10)
-                    .background(Color.blue)
+                    .background(Color.brandDarkGreen)
                     .foregroundColor(.white)
                     .cornerRadius(8)
                 }

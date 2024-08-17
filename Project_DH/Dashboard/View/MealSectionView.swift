@@ -72,8 +72,8 @@ struct MealSectionView: View {
                             deleteFoodItem(foodItem: foodItem)
                         } label: {
                             Label("Delete", systemImage: "trash.fill")
-                                .foregroundStyle(Color.red)
                         }
+                        .tint(Color.brandRed)
                     }
                     .onDrag {
                         NSItemProvider(object: foodItem.id! as NSString)

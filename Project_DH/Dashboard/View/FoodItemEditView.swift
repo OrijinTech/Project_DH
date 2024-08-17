@@ -92,7 +92,7 @@ struct FoodItemEditView: View {
                     }
                     .padding()
                     .frame(maxWidth: 200)
-                    .background(Color.blue)
+                    .background(Color.brandDarkGreen)
                     .foregroundColor(.white)
                     .cornerRadius(8)
                     .padding()

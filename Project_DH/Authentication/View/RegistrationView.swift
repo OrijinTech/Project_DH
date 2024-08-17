@@ -80,7 +80,7 @@ struct RegistrationView: View {
                     Spacer()
                 }
                 .font(.footnote)
-                .foregroundStyle(.red)
+                .foregroundStyle(.brandRed)
                 .padding(.leading, 30)
                 .padding(.bottom, 5)
                 

@@ -74,6 +74,7 @@ struct ChatSelectionView: View {
                                     } label: {
                                         Label("Delete", systemImage: "trash.fill")
                                     }
+                                    .tint(Color.brandRed)
                                 }
                             }
                         }

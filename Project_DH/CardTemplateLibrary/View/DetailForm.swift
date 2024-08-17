@@ -51,7 +51,7 @@ struct DetailForm: View {
                     self.presentationMode.wrappedValue.dismiss()
                 }) {
                     Text("Cancel")
-                        .foregroundColor(.red)
+                        .foregroundColor(.brandRed)
                 }
             }
             .navigationBarTitle("Enter Details", displayMode: .inline)
