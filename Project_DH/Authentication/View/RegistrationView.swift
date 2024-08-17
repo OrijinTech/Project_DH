@@ -29,7 +29,7 @@ struct RegistrationView: View {
                 Text("Let's get started!")
                     .font(.title2)
                     .padding(.bottom, 80)
-                    .shadow(radius: 3)
+                    .shadow(color: Color.black.opacity(0.1), radius: 2)
                 
                 // MARK: User Input Textfields
                 VStack{

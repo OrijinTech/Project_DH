@@ -31,7 +31,7 @@ struct SignInView: View {
                 Text("Welcome Back!")
                     .font(.title2)
                     .padding(.bottom, 100)
-                    .shadow(radius: 3)
+                    .shadow(color: Color.black.opacity(0.1), radius: 2)
                 
                 VStack{
                     HStack {
