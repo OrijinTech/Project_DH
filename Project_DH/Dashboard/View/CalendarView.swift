@@ -24,7 +24,7 @@ struct CalendarView: View {
                     .foregroundStyle(.brandDarkGreen)
             }
         }
-        .popover(isPresented: $showingPopover) {
+        .sheet(isPresented: $showingPopover) {
             VStack {
                 DatePicker(
                     "Select Date",
@@ -62,6 +62,7 @@ struct CalendarView: View {
                 }
                 .padding(.top)
             }
+            .presentationDetents([.height(500)])
         }
     }
 }
