@@ -10,46 +10,53 @@ import SwiftUI
 
 /// The view which handles all major tabs of the application. The logic for the bottom tabs.
 struct MainMenuView: View {
-    /*
-    enum Tab: Int {
-        case myDay, myCoach, mediaInput, community, profile
-    }
-    */
+    
     var body: some View {
-        TabView {
-            DashboardView()
-                .tabItem {
-                    Image(systemName: "person.crop.rectangle.fill")
-                }
-                .tag(0)
+
+        ZStack(alignment: .bottom) {
+            TabView {
+                DashboardView()
+                    .tabItem {
+                        Image(systemName: "person.crop.rectangle.fill")
+                    }
+                    .tag(0)
+                
+                ChatSelectionView()
+                    .tabItem {
+                        Image(systemName: "face.smiling.fill")
+                    }
+                    .tag(1)
+                
+                MealInputView()
+                    .tabItem {
+                        Image(systemName: "plus.app.fill")
+                    }
+                    .tag(2)
+                
+                Text("Display Users Community!")
+                    .tabItem {
+                        Image(systemName: "bubble")
+                    }
+                    .tag(3)
+                
+                ProfilePageView()
+                    .tabItem {
+                        Image(systemName: "person.crop.circle.fill")
+                    }
+                    .tag(4)
+            }
+            .tint(.primary)
             
-            ChatSelectionView()
-                .tabItem {
-                    Image(systemName: "face.smiling.fill")
-                }
-                .tag(1)
-            
-            MealInputView()
-                .tabItem {
-                    Image(systemName: "plus.app.fill")
-                }
-            
-            // TODO: implement Community
-            Text("Display Users Community!")
-                .tabItem {
-                    Image(systemName: "bubble")
-                }
-                .tag(2)
-            
-            ProfilePageView()
-                .tabItem {
-                    Image(systemName: "person.crop.circle.fill")
-                    
-                }
-                .tag(3)
+            // Custom border line above the tab icons
+            VStack(spacing: 0) {
+                Divider()
+                    .background(Color.gray)
+                    .frame(height: 1)
+                    .padding(.bottom, 49)
+            }
+            .edgesIgnoringSafeArea(.bottom) // Ensures the Divider is aligned with the tab bar
         }
-        // system background color automatically adjust the color
-        .tint(.primary)
+
     }
 }
 
