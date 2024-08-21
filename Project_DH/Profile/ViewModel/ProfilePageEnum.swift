@@ -12,18 +12,18 @@ import SwiftUI
 enum ProfileOptions: Int, CaseIterable, Identifiable {
     var id: Int { return self.rawValue }
     
-    case socialMedia
-    case businessInfo
+    case meals
+    case myStatistics
     case friends
     case settings
     
     /// The title of the options for the profile page menu.
     var title: LocalizedStringKey {
         switch self {
-        case .socialMedia:
-            return "Social Media"
-        case .businessInfo:
-            return "Business Info"
+        case .meals:
+            return "Meals"
+        case .myStatistics:
+            return "My Statistics"
         case .friends:
             return "My Friends"
         case .settings:

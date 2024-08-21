@@ -92,7 +92,7 @@ struct MealSectionView: View {
             .scrollDisabled(true) // Disable scrolling
             .padding(.bottom, 30)
         }
-        .background(LinearGradient(gradient: Gradient(colors: [Color("brandLightGreen"), Color("brandDarkGreen")]), startPoint: .top, endPoint: .bottom))
+        .background(LinearGradient(gradient: Gradient(colors: [Color.brandLightTurquoise, Color.brandTurquoise]), startPoint: .top, endPoint: .bottom))
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .shadow(color: Color.black.opacity(0.4), radius: 5, x:0, y:2)
         .padding(.bottom, 40)

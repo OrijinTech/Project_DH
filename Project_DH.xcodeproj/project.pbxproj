@@ -71,6 +71,9 @@
 		54D6310D2BF77DF500AD4A66 /* CardListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D6310C2BF77DF500AD4A66 /* CardListViewModel.swift */; };
 		54E926B62BEE47D6001ACDD8 /* ImageTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E926B52BEE47D6001ACDD8 /* ImageTools.swift */; };
 		54E926B82BEE4835001ACDD8 /* ImageServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E926B72BEE4835001ACDD8 /* ImageServices.swift */; };
+		54E9D6D02C76721E00CFD7A0 /* RoundedCornerShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E9D6CF2C76721E00CFD7A0 /* RoundedCornerShape.swift */; };
+		54E9D6D22C76726200CFD7A0 /* TopShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E9D6D12C76726200CFD7A0 /* TopShadow.swift */; };
+		54E9D6D42C76864400CFD7A0 /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E9D6D32C76864300CFD7A0 /* UIConstants.swift */; };
 		54FB02802C4BD8D9004D8451 /* ChatSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FB027F2C4BD8D9004D8451 /* ChatSelectionView.swift */; };
 		54FB02822C4BD907004D8451 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FB02812C4BD907004D8451 /* ChatView.swift */; };
 		54FB02842C4BD974004D8451 /* ChatSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FB02832C4BD974004D8451 /* ChatSelectionViewModel.swift */; };
@@ -139,6 +142,9 @@
 		54D6310C2BF77DF500AD4A66 /* CardListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardListViewModel.swift; sourceTree = "<group>"; };
 		54E926B52BEE47D6001ACDD8 /* ImageTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTools.swift; sourceTree = "<group>"; };
 		54E926B72BEE4835001ACDD8 /* ImageServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageServices.swift; sourceTree = "<group>"; };
+		54E9D6CF2C76721E00CFD7A0 /* RoundedCornerShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCornerShape.swift; sourceTree = "<group>"; };
+		54E9D6D12C76726200CFD7A0 /* TopShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopShadow.swift; sourceTree = "<group>"; };
+		54E9D6D32C76864300CFD7A0 /* UIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
 		54FB027F2C4BD8D9004D8451 /* ChatSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSelectionView.swift; sourceTree = "<group>"; };
 		54FB02812C4BD907004D8451 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		54FB02832C4BD974004D8451 /* ChatSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSelectionViewModel.swift; sourceTree = "<group>"; };
@@ -347,6 +353,9 @@
 				54BF6FE22C594095006151F6 /* MemoryManagement.swift */,
 				542DF68E2C6F7FE1003A5568 /* KeyboardDismiss.swift */,
 				547DA2DA2C711350003A37CA /* GradientColor.swift */,
+				54E9D6CF2C76721E00CFD7A0 /* RoundedCornerShape.swift */,
+				54E9D6D12C76726200CFD7A0 /* TopShadow.swift */,
+				54E9D6D32C76864300CFD7A0 /* UIConstants.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -596,6 +605,7 @@
 				54FB02842C4BD974004D8451 /* ChatSelectionViewModel.swift in Sources */,
 				04EB98A72C54BA08001621A6 /* MealServices.swift in Sources */,
 				547999812BE3E15B007A7CCE /* CircularProfileImageView.swift in Sources */,
+				54E9D6D22C76726200CFD7A0 /* TopShadow.swift in Sources */,
 				54FB02822C4BD907004D8451 /* ChatView.swift in Sources */,
 				54A59C422C550FF200617B83 /* PopUpMessageView.swift in Sources */,
 				541D35322BE3D7E600AF38AF /* RegistrationView.swift in Sources */,
@@ -624,8 +634,10 @@
 				5479997F2BE3E04F007A7CCE /* dividerOr.swift in Sources */,
 				043097332BE6FBD60016FCD8 /* LibraryView.swift in Sources */,
 				54B449992BDD407B00E35D49 /* Project_DHApp.swift in Sources */,
+				54E9D6D42C76864400CFD7A0 /* UIConstants.swift in Sources */,
 				547FE7722C4A566E00C80790 /* EditProfileView.swift in Sources */,
 				54D6310D2BF77DF500AD4A66 /* CardListViewModel.swift in Sources */,
+				54E9D6D02C76721E00CFD7A0 /* RoundedCornerShape.swift in Sources */,
 				54A59C3E2C54E52F00617B83 /* FoodItem.swift in Sources */,
 				547DA2DB2C711350003A37CA /* GradientColor.swift in Sources */,
 				54E926B62BEE47D6001ACDD8 /* ImageTools.swift in Sources */,
