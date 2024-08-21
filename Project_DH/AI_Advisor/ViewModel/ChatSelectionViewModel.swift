@@ -158,7 +158,7 @@ enum ChatModel: String, Codable, CaseIterable, Hashable {
         case .gpt4:
             return .gpt4
         case .gpt4_o:
-            return .gpt4_vision_preview
+            return .gpt4_o
         }
     }
 }
