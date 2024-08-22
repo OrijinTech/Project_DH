@@ -19,7 +19,7 @@ struct ForgotPasswordView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
+            VStack {
                 Text(LocalizedStringKey("Please enter your account's associated email address. A reset link will be sent to the address."))
                     .font(.subheadline)
                     .padding(.vertical, 60)
@@ -68,6 +68,7 @@ struct ForgotPasswordView: View {
                 
                 Spacer()
             }
+            .ignoresSafeArea(.keyboard)
             
         }// End of Navigation Stack
         .navigationTitle("Reset Password")

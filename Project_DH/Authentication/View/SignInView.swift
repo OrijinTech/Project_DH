@@ -9,7 +9,6 @@ import SwiftUI
 import AuthenticationServices
 import GoogleSignIn
 import GoogleSignInSwift
-import CryptoKit
 
 
 /// The major view for the sign in page.
@@ -33,34 +32,32 @@ struct SignInView: View {
                     .padding(.bottom, 100)
                     .shadow(color: Color.black.opacity(0.1), radius: 2)
                 
-                VStack{
-                    HStack {
-                        Image(systemName: "envelope")
-                            .padding(.leading, 10)
-                        TextField("Email", text: $authViewModel.email)
-                            .textInputAutocapitalization(.never)
-                            .keyboardType(.emailAddress)
-                            .font(.subheadline)
-                            .padding(12)
-                    }
-                    .background(Color(.systemGray6))
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                    .padding(.horizontal, 30)
-                    .padding(.bottom, 10)
+                HStack {
+                    Image(systemName: "envelope")
+                        .padding(.leading, 10)
+                    TextField("Email", text: $authViewModel.email)
+                        .textContentType(.emailAddress)
+                        .textInputAutocapitalization(.never)
+                        .keyboardType(.emailAddress)
+                        .font(.subheadline)
+                        .padding(12)
                     
-                    
-                    HStack {
-                        Image(systemName: "key.horizontal")
-                            .padding(.leading, 10)
-                        SecureField("Password", text: $authViewModel.password)
-                            .textInputAutocapitalization(.never)
-                            .font(.subheadline)
-                            .padding(12)
-                    }
-                    .background(Color(.systemGray6))
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                    .padding(.horizontal, 30)
                 }
+                .background(Color(.systemGray6))
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .padding(.horizontal, 30)
+                .padding(.bottom, 10)
+                
+                
+                HStack {
+                    Image(systemName: "key.horizontal")
+                        .padding(.leading, 10)
+                    SecureFieldView(text: $authViewModel.password, placeholder: "Password")
+                        .padding(12)
+                }
+                .background(Color(.systemGray6))
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .padding(.horizontal, 30)
                 
                 
                 HStack { // ERROR MESSAGE
@@ -166,12 +163,17 @@ struct SignInView: View {
                 .font(.footnote)
                 .padding(.vertical)
             }
+            .ignoresSafeArea(.keyboard)
+            
+            
             
         } // End of Navigation Stack
+        .navigationBarBackButtonHidden()
         .onTapGesture {
             UIApplication.shared.hideKeyboard()  // Dismiss the keyboard on any tap
         }
-        .navigationBarBackButtonHidden()
+        
+        
         
     }
     

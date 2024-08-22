@@ -64,9 +64,7 @@ struct RegistrationView: View {
                     HStack {
                         Image(systemName: "key.horizontal")
                             .padding(.leading, 10)
-                        SecureField("Password", text: $authViewModel.password)
-                            .textInputAutocapitalization(.never)
-                            .font(.subheadline)
+                        SecureFieldView(text: $authViewModel.password, placeholder: "Password")
                             .padding(12)
                     }
                     .background(Color(.systemGray6))

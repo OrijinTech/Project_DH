@@ -27,12 +27,13 @@
 		541D91C82BE7DC75000DED2B /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 541D91C72BE7DC75000DED2B /* GoogleSignIn */; };
 		541D91CA2BE7DC75000DED2B /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 541D91C92BE7DC75000DED2B /* GoogleSignInSwift */; };
 		541D91CF2BE800FA000DED2B /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D91CE2BE800FA000DED2B /* TopViewController.swift */; };
-		542DF68F2C6F7FE1003A5568 /* KeyboardDismiss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542DF68E2C6F7FE1003A5568 /* KeyboardDismiss.swift */; };
+		542DF68F2C6F7FE1003A5568 /* KeyboardTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542DF68E2C6F7FE1003A5568 /* KeyboardTools.swift */; };
 		543AC1222BF27A7E004CC8E1 /* FirstTimeSignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543AC1212BF27A7E004CC8E1 /* FirstTimeSignInView.swift */; };
 		5440E77B2C4A49B3007579EC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5440E77A2C4A49B3007579EC /* GoogleService-Info.plist */; };
 		545700FC2C6E43C5008110D1 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545700FB2C6E43C5008110D1 /* ProgressBarView.swift */; };
 		5474F6682C7740A400BF86F4 /* DropDownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5474F6672C7740A400BF86F4 /* DropDownMenu.swift */; };
 		5474F66A2C7770B500BF86F4 /* DateTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5474F6692C7770B500BF86F4 /* DateTools.swift */; };
+		5474F6712C77C31800BF86F4 /* SecureFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5474F6702C77C31800BF86F4 /* SecureFieldView.swift */; };
 		547999662BE3DD80007A7CCE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 547999652BE3DD80007A7CCE /* FirebaseAuth */; };
 		547999682BE3DD80007A7CCE /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 547999672BE3DD80007A7CCE /* FirebaseFirestore */; };
 		5479996A2BE3DD80007A7CCE /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 547999692BE3DD80007A7CCE /* FirebaseFirestoreSwift */; };
@@ -104,12 +105,13 @@
 		541D91C42BE7D323000DED2B /* TapGestures(legacy).swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TapGestures(legacy).swift"; sourceTree = "<group>"; };
 		541D91CD2BE7E09B000DED2B /* Project-DH-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Project-DH-Info.plist"; sourceTree = SOURCE_ROOT; };
 		541D91CE2BE800FA000DED2B /* TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
-		542DF68E2C6F7FE1003A5568 /* KeyboardDismiss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardDismiss.swift; sourceTree = "<group>"; };
+		542DF68E2C6F7FE1003A5568 /* KeyboardTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardTools.swift; sourceTree = "<group>"; };
 		543AC1212BF27A7E004CC8E1 /* FirstTimeSignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTimeSignInView.swift; sourceTree = "<group>"; };
 		5440E77A2C4A49B3007579EC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		545700FB2C6E43C5008110D1 /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
 		5474F6672C7740A400BF86F4 /* DropDownMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownMenu.swift; sourceTree = "<group>"; };
 		5474F6692C7770B500BF86F4 /* DateTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTools.swift; sourceTree = "<group>"; };
+		5474F6702C77C31800BF86F4 /* SecureFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureFieldView.swift; sourceTree = "<group>"; };
 		5479996D2BE3DE05007A7CCE /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5479996E2BE3DE05007A7CCE /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		5479996F2BE3DE05007A7CCE /* UserServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserServices.swift; sourceTree = "<group>"; };
@@ -357,7 +359,7 @@
 				54C06B142BEBA129005D98A7 /* TimeManager.swift */,
 				54A59C412C550FF200617B83 /* PopUpMessageView.swift */,
 				54BF6FE22C594095006151F6 /* MemoryManagement.swift */,
-				542DF68E2C6F7FE1003A5568 /* KeyboardDismiss.swift */,
+				542DF68E2C6F7FE1003A5568 /* KeyboardTools.swift */,
 				547DA2DA2C711350003A37CA /* GradientColor.swift */,
 				54E9D6CF2C76721E00CFD7A0 /* RoundedCornerShape.swift */,
 				54E9D6D12C76726200CFD7A0 /* TopShadow.swift */,
@@ -371,6 +373,7 @@
 		5479997D2BE3E019007A7CCE /* ViewComponents */ = {
 			isa = PBXGroup;
 			children = (
+				5474F6702C77C31800BF86F4 /* SecureFieldView.swift */,
 				547999802BE3E15B007A7CCE /* CircularProfileImageView.swift */,
 				5479997E2BE3E04F007A7CCE /* dividerOr.swift */,
 				545700FB2C6E43C5008110D1 /* ProgressBarView.swift */,
@@ -618,7 +621,8 @@
 				54D631062BF77D2400AD4A66 /* OwnedNameCard.swift in Sources */,
 				04EB98A52C54B759001621A6 /* Meal.swift in Sources */,
 				54E9D6D72C773B3D00CFD7A0 /* MealType.swift in Sources */,
-				542DF68F2C6F7FE1003A5568 /* KeyboardDismiss.swift in Sources */,
+				5474F6712C77C31800BF86F4 /* SecureFieldView.swift in Sources */,
+				542DF68F2C6F7FE1003A5568 /* KeyboardTools.swift in Sources */,
 				54D6310A2BF77DA000AD4A66 /* NameCardInfo.swift in Sources */,
 				5479997C2BE3DF7D007A7CCE /* FirebaseConstants.swift in Sources */,
 				54FB02842C4BD974004D8451 /* ChatSelectionViewModel.swift in Sources */,
