@@ -75,7 +75,7 @@ struct ProfilePageView: View {
                             } label: {
                                 Text(option.title)
                                     .foregroundStyle(Color(.black))
-                                    .font(.custom("brand", size: Fontsize().brand_button))
+                                    .font(.system(size: Fontsize().brand_button))
                             }
                             .padding(.vertical)
                         }
@@ -92,8 +92,7 @@ struct ProfilePageView: View {
                         } label: {
                             Text("Log Out")
                                 .foregroundStyle(.brandDarkGreen)
-                                .font(.custom("brand", size: Fontsize().brand_button))
-                                .bold()
+                                .font(.system(size: Fontsize().brand_button, weight: .bold))
                         }
                         .listRowInsets(.init(top: 0, leading: 30, bottom: 0, trailing: 0))
                         .listRowBackground(Capsule().fill(Color.brandLightTurquoise))
