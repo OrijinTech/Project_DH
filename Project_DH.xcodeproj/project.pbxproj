@@ -430,15 +430,14 @@
 				541D351F2BE3D79100AF38AF /* Authentication */,
 				547999892BE41DA2007A7CCE /* MainMenu */,
 				540CB15F2C4BE6E20033F69F /* Dashboard */,
-				043097212BE6EB910016FCD8 /* NameCardRepo */,
-				043097222BE6EBD60016FCD8 /* CardTemplateLibrary */,
+				54FB027C2C4BD786004D8451 /* AI_Advisor */,
 				540CB1662C4D04EB0033F69F /* MealInput */,
 				547FE7692C4A558E00C80790 /* Profile */,
-				54FB027C2C4BD786004D8451 /* AI_Advisor */,
 				547999702BE3DE05007A7CCE /* User */,
 				5479997D2BE3E019007A7CCE /* ViewComponents */,
 				547999742BE3DE63007A7CCE /* Utilities */,
 				54B4499E2BDD407C00E35D49 /* Preview Content */,
+				54E9D6D52C773A3900CFD7A0 /* Legacy */,
 				54B4499C2BDD407C00E35D49 /* Assets.xcassets */,
 				541D91CD2BE7E09B000DED2B /* Project-DH-Info.plist */,
 				54C06B112BE9665D005D98A7 /* Project_DHDebug.entitlements */,
@@ -454,6 +453,15 @@
 				54B4499F2BDD407C00E35D49 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		54E9D6D52C773A3900CFD7A0 /* Legacy */ = {
+			isa = PBXGroup;
+			children = (
+				043097212BE6EB910016FCD8 /* NameCardRepo */,
+				043097222BE6EBD60016FCD8 /* CardTemplateLibrary */,
+			);
+			path = Legacy;
 			sourceTree = "<group>";
 		};
 		54FB027C2C4BD786004D8451 /* AI_Advisor */ = {
