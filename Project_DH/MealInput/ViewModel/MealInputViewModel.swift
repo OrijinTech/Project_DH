@@ -24,6 +24,8 @@ class MealInputViewModel: ObservableObject {
     @Published var showInputError = false
     @Published var sliderValue: Double = 100.0
     @Published var selectedMealType: MealType?
+    @Published var selectedDate = Date()
+    
     
     private let db = Firestore.firestore()
     
@@ -199,9 +201,10 @@ class MealInputViewModel: ObservableObject {
     /// - Parameters:
     ///     - image: the image of the food item
     ///     - userId: the current user's id
+    ///     - date: the date which the item will be saved to
     /// - Returns: none
     @MainActor
-    func saveFoodItem(image: UIImage, userId: String, completion: @escaping (Error?) -> Void) async throws {
+    func saveFoodItem(image: UIImage, userId: String, date: Date, completion: @escaping (Error?) -> Void) async throws {
         guard let imageUrl = try? await FoodItemImageUploader.uploadImage(image) else {
             print("ERROR: FAILED TO GET imageURL! \nSource: saveFoodItem() ")
             return
@@ -214,12 +217,12 @@ class MealInputViewModel: ObservableObject {
         let mealType = selectedMealType!
         
         print("NOTE: MealType is \(mealType). \nSource: MealInputViewModel/saveFoodItem()")
-        checkForExistingMeal(userId: userId, mealType: mealType) { existingMeal in
+        checkForExistingMeal(userId: userId, mealType: mealType, date: date) { existingMeal in
             if let meal = existingMeal {
                 self.createFoodItem(mealId: meal.id!, imageUrl: imageUrl, completion: completion)
                 print("NOTE: I am creating a new food item! \nSource: MealInputViewModel/saveFoodItem()")
             } else {
-                self.createNewMeal(userId: userId, mealType: mealType) { newMealId in
+                self.createNewMeal(userId: userId, mealType: mealType, date: date) { newMealId in
                     if let mealId = newMealId {
                         self.createFoodItem(mealId: mealId, imageUrl: imageUrl, completion: completion)
                     } else {
@@ -255,10 +258,11 @@ class MealInputViewModel: ObservableObject {
     /// - Parameters:
     ///     - userId: the current user's id
     ///     - mealType: the meal type to check for repetitiveness
+    ///     - date: the date which the item will be checked against
     /// - Returns: none
-    func checkForExistingMeal(userId: String, mealType: String, completion: @escaping (Meal?) -> Void) {
+    func checkForExistingMeal(userId: String, mealType: String, date: Date, completion: @escaping (Meal?) -> Void) {
         let calendar = Calendar.current
-        let currentDate = Date()
+        let currentDate = date
         let startOfDay = calendar.startOfDay(for: currentDate)
         let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)!
         
@@ -288,9 +292,10 @@ class MealInputViewModel: ObservableObject {
     /// - Parameters:
     ///     - userId: the current user's id
     ///     - mealType: the meal type to create
+    ///     - date: the date when you want your meal to be created
     /// - Returns: none
-    func createNewMeal(userId: String, mealType: String, completion: @escaping (String?) -> Void) {
-        let meal = Meal(date: Date(), mealType: mealType, userId: userId)
+    func createNewMeal(userId: String, mealType: String, date: Date, completion: @escaping (String?) -> Void) {
+        let meal = Meal(date: date, mealType: mealType, userId: userId)
         print("Meal date is \(meal.date)")
         print("Meal type is \(meal.mealType)")
         do {
@@ -339,6 +344,7 @@ class MealInputViewModel: ObservableObject {
     func clearInputs() {
         print("NOTE: Clearing Inputs")
         self.image = UIImage(resource: .plus)
+        self.selectedDate = Date()
         self.imageChanged = false
         self.predictedCalories = nil
         self.sliderValue = 100.0

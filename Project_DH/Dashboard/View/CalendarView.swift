@@ -13,6 +13,8 @@ struct CalendarView: View {
     @Binding var originalDate: Date
     @Binding var showingPopover: Bool
     @ObservedObject var viewModel = DashboardViewModel()
+    /// Whether to fetch meals when done is pressed in to hide the calendar view.
+    var fetchOnDone: Bool
     
     var body: some View {
         Button(action: {
@@ -49,8 +51,10 @@ struct CalendarView: View {
                     Spacer().frame(width: 20)
 
                     Button("Done") {
-                        if let uid = viewModel.profileViewModel.currentUser?.uid {
-                            viewModel.fetchMeals(for: uid, on: selectedDate)
+                        if fetchOnDone {
+                            if let uid = viewModel.profileViewModel.currentUser?.uid {
+                                viewModel.fetchMeals(for: uid, on: viewModel.selectedDate)
+                            }
                         }
                         showingPopover = false
                     }
@@ -68,5 +72,5 @@ struct CalendarView: View {
 }
 
 #Preview {
-    CalendarView(selectedDate: .constant(Date()), originalDate: .constant(Date()), showingPopover: .constant(true))
+    CalendarView(selectedDate: .constant(Date()), originalDate: .constant(Date()), showingPopover: .constant(true), fetchOnDone: true)
 }

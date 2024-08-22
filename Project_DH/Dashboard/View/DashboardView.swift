@@ -80,12 +80,12 @@ struct DashboardView: View {
                         }
                     }
                 } // End of VStack
-//                .navigationTitle(isGreetingVisible ? "\(getGreeting()), \(viewModel.profileViewModel.currentUser?.userName ?? "The Healthy One!")" : "\(formattedDate(viewModel.selectedDate))")
+//                .navigationTitle(isGreetingVisible ? "\(getGreeting()), \(viewModel.profileViewModel.currentUser?.userName ?? "The Healthy One!")" : "\(DateTools().formattedDate(viewModel.selectedDate))")
                 .navigationTitle("EatUp")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar(content: {
                     ToolbarItem(placement: .topBarTrailing) {
-                        CalendarView(selectedDate: $viewModel.selectedDate, originalDate: $originalDate, showingPopover: $showingPopover, viewModel: viewModel)
+                        CalendarView(selectedDate: $viewModel.selectedDate, originalDate: $originalDate, showingPopover: $showingPopover, viewModel: viewModel, fetchOnDone: true)
                     }
                 })
                 .onAppear {
@@ -112,27 +112,6 @@ struct DashboardView: View {
                 FoodItemEditView(foodItem: $selectedFoodItem, isPresented: $showEditPopup, calorieNum: $viewModel.sumCalories, viewModel: viewModel)
             }
         } // End of ZStack
-    }
-
-    
-    /// Produce a DateFormatter object, with adjusted date and time style.
-    /// - Parameters: 
-    ///     - none
-    /// - Returns: A DateFormatter object.
-    private let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
-        return formatter
-    }()
-
-    
-    /// A function used to format date.
-    /// - Parameters: 
-    ///     - _date: The date object.
-    /// - Returns: String of the formatted date.
-    func formattedDate(_ date: Date) -> String {
-        return dateFormatter.string(from: date)
     }
 
     
