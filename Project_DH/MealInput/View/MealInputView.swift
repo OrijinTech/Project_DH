@@ -105,12 +105,6 @@ struct MealInputView: View {
                                     .padding(.vertical, 12)
                             }
                             
-//                            VStack {
-//
-//                            }
-//                            .padding(.top, 20)
-//                            .padding(.bottom, 30)
-                            
                             // Slider to pick percentage of the calories.
                             HStack {
                                 Text("0%")
