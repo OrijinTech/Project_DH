@@ -20,7 +20,6 @@ struct MealInputView: View {
     @State private var isProcessingMealInfo = false
     @State private var savePressed = false
     
-    
     enum SourceType {
         case camera
         case photoLibrary
@@ -101,7 +100,12 @@ struct MealInputView: View {
                             Text("100%")
                         }
                         .frame(width: 270)
-                        .padding(.bottom, 20)
+                        .padding(.bottom, 30)
+                        
+                        // Select Meal Type
+                        DropDownMenu(selection: $viewModel.selectedMealType, hint: viewModel.determineMealType(), options: [.breakfast, .lunch, .dinner, .snack])
+                            .padding(.bottom, 40)
+                            .disabled(isProcessingMealInfo || savePressed)
                         
                         // Save Meal Button
                         Button {
@@ -125,20 +129,33 @@ struct MealInputView: View {
                                         print("ERROR: Save meal button \n\(error.localizedDescription)")
                                     }
                                 }
-                                viewModel.image = UIImage(resource: .plus)
-                                viewModel.imageChanged = false
+//                                viewModel.image = UIImage(resource: .plus)
+//                                viewModel.imageChanged = false
+                                viewModel.clearInputs()
                             }
                         } label: {
-                            Text("Save Meal                                                     ")
+                            Text(LocalizedStringKey("Save Meal                                                     "))
                         }
                         .fontWeight(.semibold)
                         .foregroundStyle(.white)
                         .frame(width: 180, height: 45)
                         .background(.brandDarkGreen)
                         .clipShape(RoundedRectangle(cornerRadius: 8))
-                        .padding(.vertical)
+                        .padding(.bottom, 3)
                         .shadow(radius: 3)
                         .disabled(!viewModel.imageChanged || isProcessingMealInfo || savePressed)
+                        
+                        // Reset inputs
+                        Button {
+                            viewModel.clearInputs()
+                            savePressed = false
+                        } label: {
+                            Text(LocalizedStringKey("Cancel"))
+                                .foregroundStyle(.black)
+                                .frame(width: 180, height: 45)
+                        }
+                        .background((Color.white).shadow(.drop(color: .primary.opacity(0.15), radius: 4)), in: .rect(cornerRadius: 8))
+                        .disabled(savePressed || isProcessingMealInfo)
                         
                         Spacer()
                     }
@@ -146,6 +163,7 @@ struct MealInputView: View {
                     .blur(radius: viewModel.showMessageWindow ? 5 : 0)
                     .navigationTitle("ADD A MEAL")
                     .navigationBarTitleDisplayMode(.inline)
+                    .disabled(savePressed)
                     
                     if viewModel.showMessageWindow {
                         PopUpMessageView(messageTitle: "Success!", message: "Your food item is saved.", isPresented: $viewModel.showMessageWindow)
@@ -187,7 +205,6 @@ struct MealInputView: View {
                     // clear input
                     viewModel.clearInputs()
                     viewModel.showInputError = true
-                    viewModel.imageChanged = false
                 }
                 
             } catch {

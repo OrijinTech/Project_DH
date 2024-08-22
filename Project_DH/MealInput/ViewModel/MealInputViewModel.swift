@@ -23,6 +23,7 @@ class MealInputViewModel: ObservableObject {
     @Published var imageChanged = false
     @Published var showInputError = false
     @Published var sliderValue: Double = 100.0
+    @Published var selectedMealType: MealType?
     
     private let db = Firestore.firestore()
     
@@ -206,7 +207,12 @@ class MealInputViewModel: ObservableObject {
             return
         }
         
-        let mealType = determineMealType()
+        if selectedMealType == nil {
+            selectedMealType = determineMealType()
+        }
+        
+        let mealType = selectedMealType!
+        
         print("NOTE: MealType is \(mealType). \nSource: MealInputViewModel/saveFoodItem()")
         checkForExistingMeal(userId: userId, mealType: mealType) { existingMeal in
             if let meal = existingMeal {
@@ -232,7 +238,6 @@ class MealInputViewModel: ObservableObject {
     /// - Returns: The string of the meal type.
     func determineMealType() -> String {
         let hour = Calendar.current.component(.hour, from: Date())
-        print("It is hour \(hour)")
         switch hour {
         case 6..<10:
             return .breakfast
@@ -334,10 +339,12 @@ class MealInputViewModel: ObservableObject {
     func clearInputs() {
         print("NOTE: Clearing Inputs")
         self.image = UIImage(resource: .plus)
+        self.imageChanged = false
         self.predictedCalories = nil
         self.sliderValue = 100.0
         self.calories = nil
         self.mealName = ""
+        self.selectedMealType = nil
     }
     
     
