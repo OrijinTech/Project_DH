@@ -207,11 +207,11 @@ class MealInputViewModel: ObservableObject {
         }
         
         let mealType = determineMealType()
-        print("mealType is \(mealType)")
+        print("NOTE: MealType is \(mealType). \nSource: MealInputViewModel/saveFoodItem()")
         checkForExistingMeal(userId: userId, mealType: mealType) { existingMeal in
             if let meal = existingMeal {
                 self.createFoodItem(mealId: meal.id!, imageUrl: imageUrl, completion: completion)
-                print("I am creating a new food item!")
+                print("NOTE: I am creating a new food item! \nSource: MealInputViewModel/saveFoodItem()")
             } else {
                 self.createNewMeal(userId: userId, mealType: mealType) { newMealId in
                     if let mealId = newMealId {
@@ -220,7 +220,7 @@ class MealInputViewModel: ObservableObject {
                         completion(NSError(domain: "AppErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to create meal"]))
                     }
                 }
-                print("I am creating a new meal and food item!")
+                print("NOTE: I am creating a new meal and food item!, \nSource: MealInputViewModel/saveFoodItem()")
             }
         }
         self.showMessageWindow = true
@@ -235,13 +235,13 @@ class MealInputViewModel: ObservableObject {
         print("It is hour \(hour)")
         switch hour {
         case 6..<10:
-            return "Breakfast"
+            return .breakfast
         case 11..<14:
-            return "Lunch"
+            return .lunch
         case 17..<21:
-            return "Dinner"
+            return .dinner
         default:
-            return "Snack"
+            return .snack
         }
     }
     
@@ -264,7 +264,7 @@ class MealInputViewModel: ObservableObject {
             .whereField("date", isLessThan: endOfDay)
             .getDocuments { (querySnapshot, error) in
                 if let error = error {
-                    print("Error getting documents: \(error)")
+                    print("ERROR: Failed to get documents: \(error) \nSource: MealInputViewModel/checkForExistingMeal()")
                     completion(nil)
                 } else if let documents = querySnapshot?.documents, !documents.isEmpty {
                     if let meal = try? documents.first?.data(as: Meal.self) {
@@ -292,7 +292,7 @@ class MealInputViewModel: ObservableObject {
             let newDocRef = try db.collection("meal").addDocument(from: meal)
             completion(newDocRef.documentID)
         } catch {
-            print("Error creating meal: \(error)")
+            print("ERROR: Failed to create new meal. \(error) \nSource: MealInputViewModel/createNewMeal()")
             completion(nil)
         }
     }
@@ -308,7 +308,6 @@ class MealInputViewModel: ObservableObject {
             completion(NSError(domain: "AppErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid calorie number"]))
             return
         }
-        print("The mealName is \(self.mealName)")
         
         let foodItem = FoodItem(mealId: mealId, calorieNumber: Int(calories), foodName: self.mealName, imageURL: imageUrl, percentage: Int(self.sliderValue))
         do {
@@ -333,7 +332,7 @@ class MealInputViewModel: ObservableObject {
     /// - Parameters: none
     /// - Returns: none
     func clearInputs() {
-        print("Clearing Inputs")
+        print("NOTE: Clearing Inputs")
         self.image = UIImage(resource: .plus)
         self.predictedCalories = nil
         self.sliderValue = 100.0

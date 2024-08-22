@@ -45,12 +45,12 @@ class MealServices: ObservableObject {
         formatter.dateFormat = "yyyy/MM/dd HH:mm"
         
         meals = [
-            Meal(id: "1", date: formatter.date(from: "2024/07/26 08:00")!, mealType: "Breakfast", userId: "user1"),
-            Meal(id: "2", date: formatter.date(from: "2024/07/26 12:00")!, mealType: "Lunch", userId: "user1"),
-            Meal(id: "3", date: formatter.date(from: "2024/07/26 19:00")!, mealType: "Dinner", userId: "user1"),
-            Meal(id: "4", date: formatter.date(from: "2024/07/27 08:00")!, mealType: "Breakfast", userId: "user2"),
-            Meal(id: "5", date: formatter.date(from: "2024/07/27 12:00")!, mealType: "Lunch", userId: "user2"),
-            Meal(id: "6", date: formatter.date(from: "2024/07/27 19:00")!, mealType: "Dinner", userId: "user2")
+            Meal(id: "1", date: formatter.date(from: "2024/07/26 08:00")!, mealType: .breakfast, userId: "user1"),
+            Meal(id: "2", date: formatter.date(from: "2024/07/26 12:00")!, mealType: .lunch, userId: "user1"),
+            Meal(id: "3", date: formatter.date(from: "2024/07/26 19:00")!, mealType: .dinner, userId: "user1"),
+            Meal(id: "4", date: formatter.date(from: "2024/07/27 08:00")!, mealType: .breakfast, userId: "user2"),
+            Meal(id: "5", date: formatter.date(from: "2024/07/27 12:00")!, mealType: .lunch, userId: "user2"),
+            Meal(id: "6", date: formatter.date(from: "2024/07/27 19:00")!, mealType: .dinner, userId: "user2")
         ]
     }
 }

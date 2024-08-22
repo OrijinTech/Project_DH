@@ -15,7 +15,7 @@ struct Meal: Decodable, Identifiable, Encodable, Equatable {
     /// The date of creation for the meal.
     var date: Date
     /// The type of the meal.
-    var mealType: String
+    var mealType: MealType
     /// The associated user for the meal.
     var userId: String
 }
