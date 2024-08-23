@@ -88,15 +88,18 @@ struct MealSectionView: View {
             .frame(minHeight: CGFloat(foodItems.count) * 100 + 40) // Adjust height based on the number of items (each row + padding)
             .shadow(color: Color.black.opacity(0.2), radius: 10, x:2, y:2)
             .scrollContentBackground(.hidden)  // Hide default background
-            .padding(.top, -35)
             .scrollDisabled(true) // Disable scrolling
+            .padding(.top, -35)
             .padding(.bottom, 30)
-        }
+        } // End of V Stack
         .background(LinearGradient(gradient: Gradient(colors: [Color.brandLightTurquoise, Color.brandTurquoise]), startPoint: .top, endPoint: .bottom))
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .shadow(color: Color.black.opacity(0.4), radius: 5, x:0, y:2)
         .padding(.bottom, 40)
+        .padding(.horizontal, 10)
+        
     }
+    
     
     /// This function handles the drop logic for food item
     /// - Parameters:

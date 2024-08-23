@@ -49,7 +49,7 @@ struct MealInputView: View {
                                 
                                 VStack {
                                     HStack {
-                                        Text("Calories Detected: \(viewModel.calories ?? "0")")
+                                        Text("kCal: \(viewModel.calories ?? "0")")
                                             .font(.title3)
                                             .padding(.leading, 25)
                                         
@@ -59,13 +59,13 @@ struct MealInputView: View {
                                         
                                         Spacer()
                                     }
-                                    .frame(width: 270, height: 40)
+                                    .frame(width: 200, height: 40)
                                     .background((Color.white).opacity(0.9).shadow(.drop(color: .primary.opacity(0.15), radius: 4)), in: .rect(cornerRadius: 5))
                                     .padding()
                                     .opacity(viewModel.image == UIImage(resource: .plus) || viewModel.image == nil ? 0 : 1)
                                 }
                                 .padding(.top, 300)
-                                .padding(.trailing, 190)
+                                .padding(.trailing, 250)
                                 
                             }
                             .onTapGesture{

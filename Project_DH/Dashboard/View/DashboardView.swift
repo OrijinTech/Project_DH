@@ -35,40 +35,9 @@ struct DashboardView: View {
                             .padding()
                     } else {
                         ScrollView {
-                            // Show sum of calories
-                            VStack(alignment: .center) {
-                                if let targetCalories = viewModel.profileViewModel.currentUser?.targetCalories {
-                                    ProgressBarView(targetCalories: Int(targetCalories)!, currentCalories: viewModel.sumCalories)
-                                } else {
-                                    Text("You Consumed \(viewModel.sumCalories) Calories Today")
-                                        .font(.title)
-                                        .padding(.top, 5)
-                                }
-                                if viewModel.exceededCalorieTarget {
-                                    Text(LocalizedStringKey("Be careful, you exceeded your calorie limit!"))
-                                        .foregroundStyle(Color.brandRed)
-                                        .font(.subheadline)
-                                }
-                                
-                            }
-                            .padding(.bottom, -20)
-                            
-                            VStack {
-                                if !viewModel.breakfastItems.isEmpty {
-                                    MealSectionView(viewModel: viewModel, title: "Breakfast", foodItems: $viewModel.breakfastItems, calorieNum: $viewModel.sumCalories, showEditPopup: $showEditPopup, selectedFoodItem: $selectedFoodItem)
-                                }
-                                if !viewModel.lunchItems.isEmpty {
-                                    MealSectionView(viewModel: viewModel, title: "Lunch", foodItems: $viewModel.lunchItems, calorieNum: $viewModel.sumCalories, showEditPopup: $showEditPopup, selectedFoodItem: $selectedFoodItem)
-                                }
-                                if !viewModel.dinnerItems.isEmpty {
-                                    MealSectionView(viewModel: viewModel, title: "Dinner", foodItems: $viewModel.dinnerItems, calorieNum: $viewModel.sumCalories, showEditPopup: $showEditPopup, selectedFoodItem: $selectedFoodItem)
-                                }
-                                if !viewModel.snackItems.isEmpty {
-                                    MealSectionView(viewModel: viewModel, title: "Snack", foodItems: $viewModel.snackItems, calorieNum: $viewModel.sumCalories, showEditPopup: $showEditPopup, selectedFoodItem: $selectedFoodItem)
-                                }
-                            }
-                            
-                            
+                            dashboardHeader
+                                .padding(.bottom, -20)
+                            mealSections
                         }
                         .refreshable { // Pull down to refresh
                             loadedFirstTime = true
@@ -79,7 +48,7 @@ struct DashboardView: View {
                             }
                         }
                     }
-                } // End of VStack
+                }
 //                .navigationTitle(isGreetingVisible ? "\(getGreeting()), \(viewModel.profileViewModel.currentUser?.userName ?? "The Healthy One!")" : "\(DateTools().formattedDate(viewModel.selectedDate))")
                 .navigationTitle("EatUp")
                 .navigationBarTitleDisplayMode(.inline)
@@ -89,7 +58,7 @@ struct DashboardView: View {
                     }
                 })
                 .onAppear {
-                    print("FETCHING")
+                    print("NOTE: Fetching in Dashboard View On Appear.")
                     startTimer()
                     viewModel.sumCalories = 0
                     if let uid = viewModel.profileViewModel.currentUser?.uid {
@@ -107,11 +76,48 @@ struct DashboardView: View {
                 }
             } // End of Navigation Stack
 
-            // Overlay FoodItemEditView on top of the entire DashboardView
             if showEditPopup {
                 FoodItemEditView(foodItem: $selectedFoodItem, isPresented: $showEditPopup, calorieNum: $viewModel.sumCalories, viewModel: viewModel)
             }
         } // End of ZStack
+    }
+    
+    
+    var dashboardHeader: some View {
+        // Show sum of calories
+        VStack(alignment: .center) {
+            if let targetCalories = viewModel.profileViewModel.currentUser?.targetCalories {
+                ProgressBarView(targetCalories: Int(targetCalories)!, currentCalories: viewModel.sumCalories)
+            } else {
+                Text("You Consumed \(viewModel.sumCalories) Calories Today")
+                    .font(.title)
+                    .padding(.top, 5)
+            }
+            if viewModel.exceededCalorieTarget {
+                Text(LocalizedStringKey("Be careful, you exceeded your calorie limit!"))
+                    .foregroundStyle(Color.brandRed)
+                    .font(.subheadline)
+            }
+            
+        }
+    }
+    
+    
+    var mealSections: some View {
+        VStack {
+            if !viewModel.breakfastItems.isEmpty {
+                MealSectionView(viewModel: viewModel, title: "Breakfast", foodItems: $viewModel.breakfastItems, calorieNum: $viewModel.sumCalories, showEditPopup: $showEditPopup, selectedFoodItem: $selectedFoodItem)
+            }
+            if !viewModel.lunchItems.isEmpty {
+                MealSectionView(viewModel: viewModel, title: "Lunch", foodItems: $viewModel.lunchItems, calorieNum: $viewModel.sumCalories, showEditPopup: $showEditPopup, selectedFoodItem: $selectedFoodItem)
+            }
+            if !viewModel.dinnerItems.isEmpty {
+                MealSectionView(viewModel: viewModel, title: "Dinner", foodItems: $viewModel.dinnerItems, calorieNum: $viewModel.sumCalories, showEditPopup: $showEditPopup, selectedFoodItem: $selectedFoodItem)
+            }
+            if !viewModel.snackItems.isEmpty {
+                MealSectionView(viewModel: viewModel, title: "Snack", foodItems: $viewModel.snackItems, calorieNum: $viewModel.sumCalories, showEditPopup: $showEditPopup, selectedFoodItem: $selectedFoodItem)
+            }
+        }
     }
 
     
@@ -148,9 +154,11 @@ func getGreeting() -> String {
     }
 }
 
+
 #Preview("English") {
     DashboardView()
 }
+
 
 #Preview("Chinese") {
     DashboardView()
