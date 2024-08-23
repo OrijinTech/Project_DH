@@ -30,7 +30,7 @@ struct MealInputView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
+            VStack {
                 ZStack {
                     // TODO: Maybe make the loading screen nicer.
                     // While processing meal info, show loading screen
@@ -64,7 +64,7 @@ struct MealInputView: View {
                                     .padding()
                                     .opacity(viewModel.image == UIImage(resource: .plus) || viewModel.image == nil ? 0 : 1)
                                 }
-                                .padding(.top, 330)
+                                .padding(.top, 300)
                                 .padding(.trailing, 190)
                                 
                             }
@@ -90,93 +90,96 @@ struct MealInputView: View {
                             }
                             .padding(.bottom)
                             
-                            VStack{
-                                TextField("What did you eat?", text: $viewModel.mealName)
-                                    .textInputAutocapitalization(.never)
-                                    .keyboardType(.emailAddress)
-                                    .font(.title2)
-                                    .multilineTextAlignment(.center)
-                                
-                                Text("\(DateTools().formattedDate(viewModel.selectedDate))")
-                                    .textInputAutocapitalization(.never)
-                                    .keyboardType(.emailAddress)
-                                    .font(.title2)
-                                    .multilineTextAlignment(.center)
-                                    .padding(.vertical, 12)
-                            }
-                            
-                            // Slider to pick percentage of the calories.
-                            HStack {
-                                Text("0%")
-                                Slider(value: $viewModel.sliderValue, in: 0...100, step: 1)
-                                                .frame(width: 170)
-                                                .disabled(!viewModel.imageChanged || isProcessingMealInfo || savePressed)
-                                                .onChange(of: viewModel.sliderValue) {
-                                                    viewModel.calorieIntakePercentage()
-                                                }
-                                Text("100%")
-                            }
-                            .frame(width: 270)
-                            .padding(.bottom, 30)
-                            
-                            // Select Meal Type
-                            DropDownMenu(selection: $viewModel.selectedMealType, hint: viewModel.determineMealType(), options: [.breakfast, .lunch, .dinner, .snack], anchor: .top)
-                                .padding(.bottom, 40)
-                                .disabled(isProcessingMealInfo || savePressed)
-                            
-                            // Save Meal Button
-                            Button {
-                                savePressed = true
-                                Task {
-                                    defer {
-                                        savePressed = false
-                                    }
+                            VStack {
+                                VStack{
+                                    TextField("What did you eat?", text: $viewModel.mealName)
+                                        .textInputAutocapitalization(.never)
+                                        .keyboardType(.emailAddress)
+                                        .font(.title2)
+                                        .multilineTextAlignment(.center)
                                     
-                                    if let userId = profileViewModel.currentUser?.uid {
-                                        do {
-                                            // Save the food item
-                                            try await viewModel.saveFoodItem(image: viewModel.image!, userId: userId, date: viewModel.selectedDate) { error in
-                                                if let error = error {
-                                                    print("ERROR: Save meal button \n\(error.localizedDescription)")
-                                                } else {
-                                                    print("SUCCESS: Food Saved!")
-                                                }
-                                            }
-                                        } catch {
-                                            print("ERROR: Save meal button \n\(error.localizedDescription)")
-                                        }
-                                    }
-                                    viewModel.image = UIImage(resource: .plus)
-                                    viewModel.imageChanged = false
+                                    Text("\(DateTools().formattedDate(viewModel.selectedDate))")
+                                        .textInputAutocapitalization(.never)
+                                        .keyboardType(.emailAddress)
+                                        .font(.title2)
+                                        .multilineTextAlignment(.center)
+                                        .padding(.vertical, 12)
                                 }
-                            } label: {
-                                Text(LocalizedStringKey("Save Meal                                                     "))
+                                
+                                // Slider to pick percentage of the calories.
+                                HStack {
+                                    Text("0%")
+                                    Slider(value: $viewModel.sliderValue, in: 0...100, step: 1)
+                                                    .frame(width: 170)
+                                                    .disabled(!viewModel.imageChanged || isProcessingMealInfo || savePressed)
+                                                    .onChange(of: viewModel.sliderValue) {
+                                                        viewModel.calorieIntakePercentage()
+                                                    }
+                                    Text("100%")
+                                }
+                                .frame(width: 270)
+                                .padding(.bottom, 30)
+                                
+                                // Select Meal Type
+                                DropDownMenu(selection: $viewModel.selectedMealType, hint: viewModel.determineMealType(), options: [.breakfast, .lunch, .dinner, .snack], anchor: .top)
+                                    .padding(.bottom, 40)
+                                    .disabled(isProcessingMealInfo || savePressed)
+                                
+                                // Save Meal Button
+                                Button {
+                                    savePressed = true
+                                    Task {
+                                        defer {
+                                            savePressed = false
+                                        }
+                                        
+                                        if let userId = profileViewModel.currentUser?.uid {
+                                            do {
+                                                // Save the food item
+                                                try await viewModel.saveFoodItem(image: viewModel.image!, userId: userId, date: viewModel.selectedDate) { error in
+                                                    if let error = error {
+                                                        print("ERROR: Save meal button \n\(error.localizedDescription)")
+                                                    } else {
+                                                        print("SUCCESS: Food Saved!")
+                                                    }
+                                                }
+                                            } catch {
+                                                print("ERROR: Save meal button \n\(error.localizedDescription)")
+                                            }
+                                        }
+                                        viewModel.image = UIImage(resource: .plus)
+                                        viewModel.imageChanged = false
+                                    }
+                                } label: {
+                                    Text(LocalizedStringKey("Save Meal                                                     "))
+                                }
+                                .fontWeight(.semibold)
+                                .foregroundStyle(.white)
+                                .frame(width: 180, height: 45)
+                                .background(.brandDarkGreen)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .padding(.bottom, 3)
+                                .shadow(radius: 3)
+                                .disabled(!viewModel.imageChanged || isProcessingMealInfo || savePressed)
+                                .opacity(!viewModel.imageChanged || isProcessingMealInfo || savePressed ? 0.6 : 1.0)
+                                
+                                // Reset inputs
+                                Button {
+                                    viewModel.clearInputs()
+                                    savePressed = false
+                                } label: {
+                                    Text(LocalizedStringKey("Cancel"))
+                                        .foregroundStyle(.black)
+                                        .frame(width: 180, height: 45)
+                                }
+                                .background((Color.white).shadow(.drop(color: .primary.opacity(0.15), radius: 4)), in: .rect(cornerRadius: 8))
+                                .disabled(savePressed || isProcessingMealInfo)
+                                .opacity(savePressed || isProcessingMealInfo ? 0.6 : 1.0)
+                                
+                                
+                                Spacer()
                             }
-                            .fontWeight(.semibold)
-                            .foregroundStyle(.white)
-                            .frame(width: 180, height: 45)
-                            .background(.brandDarkGreen)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                            .padding(.bottom, 3)
-                            .shadow(radius: 3)
-                            .disabled(!viewModel.imageChanged || isProcessingMealInfo || savePressed)
-                            .opacity(!viewModel.imageChanged || isProcessingMealInfo || savePressed ? 0.6 : 1.0)
-                            
-                            // Reset inputs
-                            Button {
-                                viewModel.clearInputs()
-                                savePressed = false
-                            } label: {
-                                Text(LocalizedStringKey("Cancel"))
-                                    .foregroundStyle(.black)
-                                    .frame(width: 180, height: 45)
-                            }
-                            .background((Color.white).shadow(.drop(color: .primary.opacity(0.15), radius: 4)), in: .rect(cornerRadius: 8))
-                            .disabled(savePressed || isProcessingMealInfo)
-                            .opacity(savePressed || isProcessingMealInfo ? 0.6 : 1.0)
-                            
-                            
-                            Spacer()
+
                         }
                         .disabled(viewModel.showMessageWindow)
                         .blur(radius: viewModel.showMessageWindow ? 5 : 0)

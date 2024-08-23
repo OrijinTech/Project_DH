@@ -82,7 +82,7 @@ struct ProfilePageView: View {
                     }
                     .listRowSeparator(.hidden)
                     .listRowInsets(.init(top: 0, leading: 35, bottom: 0, trailing: 0))
-                    .listRowBackground(RoundedRectangle(cornerRadius: 20).fill(Color.brandLightTurquoise).padding(.vertical, 3))
+                    .listRowBackground(RoundedRectangle(cornerRadius: 12).fill(Color.brandLightTurquoise).padding(.vertical, 3).padding(.horizontal, 10))
                     
                     Spacer()
                     
@@ -95,10 +95,10 @@ struct ProfilePageView: View {
                                 .font(.system(size: Fontsize().brand_button, weight: .bold))
                         }
                         .listRowInsets(.init(top: 0, leading: 30, bottom: 0, trailing: 0))
-                        .listRowBackground(Capsule().fill(Color.brandLightTurquoise))
+                        .listRowBackground(RoundedRectangle(cornerRadius: 12).fill(Color.brandLightTurquoise).padding(.horizontal, 10))
                     }
                 }
-                .environment(\.defaultMinListRowHeight, 60)
+                .environment(\.defaultMinListRowHeight, 50)
                 .scrollDisabled(true)
                 .scrollContentBackground(.hidden)
                 .clipShape(RoundedCornerShape(radius: 20, corners: [.topLeft, .topRight]))

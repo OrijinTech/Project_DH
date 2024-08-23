@@ -9,5 +9,5 @@ import Foundation
 
 
 struct Fontsize {
-    let brand_button: CGFloat = 17
+    let brand_button: CGFloat = 15
 }
