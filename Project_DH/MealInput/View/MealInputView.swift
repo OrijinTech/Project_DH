@@ -30,7 +30,7 @@ struct MealInputView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
+            ScrollView {
                 ZStack {
                     // TODO: Maybe make the loading screen nicer.
                     // While processing meal info, show loading screen
