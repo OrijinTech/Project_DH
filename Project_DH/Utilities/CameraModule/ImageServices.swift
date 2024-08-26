@@ -8,6 +8,7 @@
 import Foundation
 import Firebase
 import FirebaseStorage
+import OpenAI
 
 
 /// This struct is for uploading general images.
@@ -71,10 +72,12 @@ struct FoodItemImageUploader {
         
         let filename = NSUUID().uuidString
         let storageRef = Storage.storage().reference(withPath: "/foodItem/\(filename)")
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpeg" // Set the content type
         print("SUCCESS: STORAGE REFERENCE RETRIEVED: \(storageRef)")
         
         do {
-            let _ = try await storageRef.putDataAsync(imageData)
+            let _ = try await storageRef.putDataAsync(imageData, metadata: metadata)
             let url = try await storageRef.downloadURL()
             print("SUCCESS: UPLOADED FOOD ITEM PHOTO WITH URL: \(url)")
             clearCache() // clears the cache after sending the image.
@@ -126,5 +129,53 @@ struct ImageManipulation {
         }
         return ""
     }
+    
+    
+    /// Downsizes the given image.
+    /// - Parameters:
+    ///     - from: The UI Image to downsize.
+    /// - Returns: Optional UI Image which is downsized.
+    static func downSizeImage(for image: UIImage) -> UIImage? {
+        // Resize the image to the target size
+        let processedImage = resizeImage(image: image, targetSize: CGSize(width: 112, height: 112))
+        
+        // Start with the highest quality compression
+        var quality: CGFloat = 1.0
+        let megabyte = 15
+        let maxSize: Int = megabyte * 1024 * 1024 // 15MB in bytes
+        
+        // Compress the image data until it's below the max size
+        var imageData = processedImage.jpegData(compressionQuality: quality)
+        while let data = imageData, data.count > maxSize && quality > 0 {
+            print("NOTE: Image larger than \(megabyte) MB, reducing the image quality...")
+            quality -= 0.1
+            imageData = processedImage.jpegData(compressionQuality: quality)
+        }
+        
+        // If we have valid image data, return the downsized image
+        if let finalImageData = imageData, let downsizedImage = UIImage(data: finalImageData) {
+            return downsizedImage
+        }
+        
+        // Return nil if the image processing fails
+        return nil
+    }
+    
+    
+    /// Converts the image to base64 string.
+    /// - Parameters:
+    ///     - from: The image to turn into base64.
+    /// - Returns: The String format of the image.
+    static func toBase64String(image: UIImage, compressionQuality: CGFloat = 1.0) -> String? {
+        // Convert the image to JPEG data
+        guard let imageData = image.jpegData(compressionQuality: compressionQuality) else {
+            print("ERROR: Failed to convert UIImage to JPEG data.")
+            return nil
+        }
+        // Encode the data to Base64 string
+        return "data:image/jpeg;base64,\(imageData.base64EncodedString())"
+    }
+    
+
     
 }

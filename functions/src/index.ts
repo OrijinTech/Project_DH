@@ -35,7 +35,7 @@ type ChatCompletionMessage = {
 export const generateResponse = functions.https.onCall(
   async (data) => {
     const messages: ChatCompletionMessage[] = data.messages;
-    const model = data.model || "gpt-4";
+    const model = data.model || "gpt-4-turbo";
 
     try {
       const response = await openai.chat.completions.create({
@@ -60,30 +60,26 @@ export const validFoodItem = functions.https.onCall(
     const imageUrl = data.imageUrl;
 
     try {
-      const messages: ChatCompletionMessage[] = [
-        {
-          role: "system",
-          content:
-            "You are a nutrition expert. Please tell me if the image " +
-            "contains any types of food.",
-        },
-        {
-          role: "system",
-          content: "Please only give YES or NO answer.",
-        },
-        {
-          role: "system",
-          content: "If you are not sure, then answer NO.",
-        },
-        {
-          role: "user",
-          content: imageUrl,
-        },
-      ];
-
       const response = await openai.chat.completions.create({
-        model: "gpt-4",
-        messages: messages,
+        model: "gpt-4o",
+        messages: [
+          {
+            role: "user",
+            content: [
+              {type: "text", text:
+                "You are a nutrition expert. Please tell me if the image " +
+                "contains any types of food." +
+                "Please only give YES or NO answer." +
+                "If you are not sure, then answer NO."},
+              {
+                type: "image_url",
+                image_url: {
+                  "url": imageUrl,
+                },
+              },
+            ],
+          },
+        ],
       });
 
       const answer = response.choices[0].message?.content
@@ -106,33 +102,29 @@ export const generateCalories = functions.https.onCall(
     const imageUrl = data.imageUrl;
 
     try {
-      const messages: ChatCompletionMessage[] = [
-        {
-          role: "system",
-          content:
-            "You are a nutrition expert. Please calculate the " +
-            "calories of the provided image.",
-        },
-        {
-          role: "system",
-          content:
-            "Please only provide the calorie number, do not give " +
-            "any textual explanation.",
-        },
-        {
-          role: "user",
-          content: imageUrl,
-        },
-      ];
-
       const response = await openai.chat.completions.create({
-        model: "gpt-4",
-        messages: messages,
+        model: "gpt-4o",
+        messages: [
+          {
+            role: "user",
+            content: [
+              {type: "text", text:
+                "You are a nutrition expert. Please calculate the " +
+                "calories of the provided image." + "Please only " +
+                "provide the calorie number, do not give any textual" +
+                "explanation."},
+              {
+                type: "image_url",
+                image_url: {
+                  "url": imageUrl,
+                },
+              },
+            ],
+          },
+        ],
       });
-
       const calorieString = response.choices[0].message?.content?.trim();
-      const calorieNumber = parseInt(calorieString || "0", 10);
-      return {calories: calorieNumber};
+      return {calories: calorieString};
     } catch (error) {
       console.error("Error calling OpenAI API:", error);
       throw new functions.https.HttpsError(
@@ -149,26 +141,25 @@ export const generateMealName = functions.https.onCall(
     const imageUrl = data.imageUrl;
 
     try {
-      const messages: ChatCompletionMessage[] = [
-        {
-          role: "system",
-          content:
-            "You are a nutrition expert. Please predict the name " +
-            "of the food.",
-        },
-        {
-          role: "system",
-          content: "Please only provide the name of the food.",
-        },
-        {
-          role: "user",
-          content: imageUrl,
-        },
-      ];
-
       const response = await openai.chat.completions.create({
-        model: "gpt-4",
-        messages: messages,
+        model: "gpt-4o",
+        messages: [
+          {
+            role: "user",
+            content: [
+              {type: "text", text:
+                "You are a nutrition expert. Please predict the name " +
+                "of the food." + "Please only provide the name of the food." +
+                "Please only provide the name of the food."},
+              {
+                type: "image_url",
+                image_url: {
+                  "url": imageUrl,
+                },
+              },
+            ],
+          },
+        ],
       });
 
       const mealName = response.choices[0].message?.content?.trim();
