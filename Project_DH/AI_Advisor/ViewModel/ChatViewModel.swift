@@ -10,6 +10,8 @@ import OpenAI
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import SwiftUI
+import FirebaseFunctions
+
 
 
 class ChatViewModel: ObservableObject {
@@ -23,6 +25,7 @@ class ChatViewModel: ObservableObject {
     
     let chatId: String
     let db = Firestore.firestore()
+    let functions = Functions.functions()
     
     
     init(chatId: String) {
@@ -130,32 +133,34 @@ class ChatViewModel: ObservableObject {
     /// - Parameters:
     ///     - for: The message which the user inputs.
     /// - Returns: none
-    func generateResponse(for message: AppMessage) async throws{
-        guard let config = loadConfig(),
-              let apiKey = config["OpenAI_API_KEY"] as? String else {
-            throw NSError(domain: "AppErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "API Key not set"])
-        }
-        let openAI = OpenAI(apiToken: apiKey)
-        // This gets the context of past messages by the user and GPT
-        // FUTURE IMPROVEMENTS: Maybe limit the number of past messages to use as context query
+    func generateResponse(for message: AppMessage) async throws {
+        // Prepare messages to send to Firebase function
         let queryMessages = messages.map { appMessage in
-            ChatQuery.ChatCompletionMessageParam(role: appMessage.role, content: appMessage.text)!
+            ["role": appMessage.role.rawValue, "content": appMessage.text]
         }
-        // input text for the OpenAI model
-        let query = ChatQuery(messages: queryMessages, model: chat?.model?.model ?? .gpt4)
-        for try await result in openAI.chatsStream(query: query) {
-            guard let newText = result.choices.first?.delta.content else { continue }
-            await MainActor.run {
-                if let lastMessage = messages.last, lastMessage.role != .user {
-                    messages[messages.count-1].text += newText
-                } else {
-                    let newMessage = AppMessage(id: result.id, text: newText, role: .assistant)
+        
+        let data: [String: Any] = [
+            "messages": queryMessages,
+            "model": chat?.model?.model.description ?? selectedModel.rawValue
+        ]
+        
+        do {
+            let result = try await functions.httpsCallable("generateResponse").call(data)
+            
+            if let responseData = result.data as? [String: Any],
+               let content = responseData["content"] as? String {
+                await MainActor.run {
+                    let newMessage = AppMessage(id: UUID().uuidString, text: content, role: .assistant)
                     messages.append(newMessage)
                 }
+                
+                if let lastMessage = messages.last {
+                    _ = try storeMessage(message: lastMessage)
+                }
             }
-        }
-        if let lastMessage = messages.last {
-            _ = try storeMessage(message: lastMessage)
+        } catch {
+            print("Error calling Firebase function: \(error.localizedDescription)")
+            throw error
         }
     }
     
