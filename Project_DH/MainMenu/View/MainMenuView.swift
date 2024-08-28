@@ -12,7 +12,6 @@ import SwiftUI
 struct MainMenuView: View {
     
     var body: some View {
-
         ZStack(alignment: .bottom) {
             TabView {
                 DashboardView()
@@ -56,6 +55,7 @@ struct MainMenuView: View {
             }
             .edgesIgnoringSafeArea(.bottom) // Ensures the Divider is aligned with the tab bar
         }
+        .ignoresSafeArea(.keyboard)
 
     }
 }
