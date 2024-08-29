@@ -36,8 +36,15 @@ struct MealInputView: View {
                         // TODO: Maybe make the loading screen nicer.
                         // While processing meal info, show loading screen
                         if isProcessingMealInfo {
-                            ProgressView("Processing your food :-)")
-                                .padding()
+                            VStack {
+                                Spacer()
+                                HStack {
+                                    Spacer()
+                                    ProgressView("Processing your food :-)")
+                                    Spacer()
+                                }
+                                Spacer()
+                            }
                         } else {
                             VStack {
                                 ZStack{
