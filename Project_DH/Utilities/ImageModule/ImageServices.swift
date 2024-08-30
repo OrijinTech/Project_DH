@@ -137,11 +137,13 @@ struct ImageManipulation {
     /// - Returns: Optional UI Image which is downsized.
     static func downSizeImage(for image: UIImage) -> UIImage? {
         // Resize the image to the target size
-        let processedImage = resizeImage(image: image, targetSize: CGSize(width: 112, height: 112))
+        let newPercent = 0.4
+        let imageSize = image.size
+        let processedImage = resizeImage(image: image, targetSize: CGSize(width: imageSize.width * newPercent, height: imageSize.height * newPercent))
         
         // Start with the highest quality compression
         var quality: CGFloat = 1.0
-        let megabyte = 15
+        let megabyte = 10
         let maxSize: Int = megabyte * 1024 * 1024 // 15MB in bytes
         
         // Compress the image data until it's below the max size

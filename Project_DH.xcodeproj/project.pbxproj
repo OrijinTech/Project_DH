@@ -299,13 +299,13 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		540CB16B2C4D05490033F69F /* CameraModule */ = {
+		540CB16B2C4D05490033F69F /* ImageModule */ = {
 			isa = PBXGroup;
 			children = (
 				54E926B52BEE47D6001ACDD8 /* ImageTools.swift */,
 				54E926B72BEE4835001ACDD8 /* ImageServices.swift */,
 			);
-			path = CameraModule;
+			path = ImageModule;
 			sourceTree = "<group>";
 		};
 		5416B57D2C7CB2710004D888 /* Frameworks */ = {
@@ -358,7 +358,7 @@
 		547999742BE3DE63007A7CCE /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				540CB16B2C4D05490033F69F /* CameraModule */,
+				540CB16B2C4D05490033F69F /* ImageModule */,
 				043097362BE701430016FCD8 /* MockData */,
 				5479997B2BE3DF7D007A7CCE /* FirebaseConstants.swift */,
 				547999752BE3DE70007A7CCE /* AlertContent.swift */,
