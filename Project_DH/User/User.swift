@@ -25,6 +25,9 @@ struct User: Codable, Identifiable, Hashable {
     var userName: String?
     var profileImageUrl: String?
     var address: String?
+    var maxCalorieAPIUsageNum: Int? = 5 // The number of times user can estimate calories.
+    var maxAssistantTokenNum: Int? = 10000 // The number of tokens available when user is using AI Assistant.
+    
     
     var id: String { // Use this to work with instead of the uid
         return uid ?? NSUUID().uuidString
