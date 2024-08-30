@@ -820,7 +820,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Project-DH-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = DH;
+				INFOPLIST_KEY_CFBundleDisplayName = "Eat Up";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
@@ -860,7 +860,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Project-DH-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = DH;
+				INFOPLIST_KEY_CFBundleDisplayName = "Eat Up";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
