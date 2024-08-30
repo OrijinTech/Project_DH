@@ -50,7 +50,7 @@ struct DashboardView: View {
                     }
                 }
 //                .navigationTitle(isGreetingVisible ? "\(getGreeting()), \(viewModel.profileViewModel.currentUser?.userName ?? "The Healthy One!")" : "\(DateTools().formattedDate(viewModel.selectedDate))")
-                .navigationTitle("EatUp")
+                .navigationTitle("CalZone")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar(content: {
                     ToolbarItem(placement: .topBarTrailing) {
